@@ -1,0 +1,87 @@
+[
+  {
+    "description": "Blank Table Name",
+    "databaseConnection": {
+      "username": "ALPHA",
+      "port": "3306",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "mysql.create-table",
+    "data": {
+      "databaseName": "XE",
+      "tableName": " ",
+      "columnsList": [
+        {
+          "constraints": [
+            "NOT NULL",
+            "PRIMARY KEY"
+          ],
+          "dataType": "int",
+          "colName": "empid"
+        }
+      ]
+    }
+  },
+  {
+    "description": "Invalid columnsList - Empty",
+    "databaseConnection": {
+      "username": "ALPHA",
+      "port": "3306",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "mysql.create-table",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "columnsList": []
+    }
+  },
+  {
+    "description": "Invalid columnsList - DataType is missing",
+    "databaseConnection": {
+      "username": "ALPHA",
+      "port": "3306",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "mysql.create-table",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "columnsList": [
+        {
+          "ColName": "empName"
+        },
+        {
+          "datatype": "int",
+          "colname": "empNumber"
+        }
+      ]
+    }
+  },
+  {
+    "description": "Invalid columnsList - colName is missing",
+    "databaseConnection": {
+      "username": "ALPHA",
+      "port": "3306",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "mysql.create-table",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "columnsList": [
+        {
+          "constraints": [
+            "NOT NULL",
+            "PRIMARY KEY"
+          ],
+          "dataType": "int"
+        }
+      ]
+    }
+  }
+]

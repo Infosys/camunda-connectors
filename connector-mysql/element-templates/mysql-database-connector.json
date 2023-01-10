@@ -1,0 +1,790 @@
+{
+  "$schema": "https://unpkg.com/@camunda/zeebe-element-templates-json-schema/resources/schema.json",
+  "name": "MySQL Database Connector",
+  "id": "com.infosys.camundaconnectors.db.mysql.v1",
+  "description": "Database operations on MySQL Database",
+  "version": 1,
+  "entriesVisible": false,
+  "appliesTo": [
+    "bpmn:ServiceTask"
+  ],
+  "icon": {
+    "contents": "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='18' height='18' viewBox='0 0 18 18'%3E%3Cimage xlink:href='data:image/png;base64,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' x='0' y='0' height='100%25' width='100%25'/%3E%3C/svg%3E"
+  },
+  "category": {
+    "id": "connectors",
+    "name": "Connectors"
+  },
+  "groups": [
+    {
+      "id": "databaseConnection",
+      "label": "Database Connection"
+    },
+    {
+      "id": "operation",
+      "label": "Operation"
+    },
+    {
+      "id": "method",
+      "label": "Method Type"
+    },
+    {
+      "id": "inputs",
+      "label": "Input Mapping"
+    },
+    {
+      "id": "output",
+      "label": "Output Mapping"
+    },
+    {
+      "id": "errors",
+      "label": "Error Handling"
+    }
+  ],
+  "properties": [
+    {
+      "type": "Hidden",
+      "value": "com.infosys.camundaconnectors.db:mysql:1",
+      "editable": false,
+      "binding": {
+        "type": "zeebe:taskDefinition:type"
+      }
+    },
+    {
+      "id": "operation",
+      "label": "Operation",
+      "description": "Operation to be done",
+      "type": "Dropdown",
+      "value": "mysql.create-database",
+      "choices": [
+        {
+          "name": "Alter Table",
+          "value": "mysql.alter-table"
+        },
+        {
+          "name": "Create Database",
+          "value": "mysql.create-database"
+        },
+        {
+          "name": "Create Table",
+          "value": "mysql.create-table"
+        },
+        {
+          "name": "Delete Data",
+          "value": "mysql.delete-data"
+        },
+        {
+          "name": "Insert Data",
+          "value": "mysql.insert-data"
+        },
+        {
+          "name": "Read Data",
+          "value": "mysql.read-data"
+        },
+        {
+          "name": "Update Data",
+          "value": "mysql.update-data"
+        }
+      ],
+      "group": "operation",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "operation"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "host",
+      "description": "Hostname/computer name or IP address of mysql server host. e.g. localhost",
+      "type": "String",
+      "feel": "optional",
+      "group": "databaseConnection",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "databaseConnection.host"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "port",
+      "description": "Port for MySQL server. e.g. 3306",
+      "type": "String",
+      "feel": "optional",
+      "group": "databaseConnection",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "databaseConnection.port"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "username",
+      "description": "Username with DB access",
+      "type": "String",
+      "feel": "optional",
+      "group": "databaseConnection",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "databaseConnection.username"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "password",
+      "description": "Password for username e.g. secrets.TOKEN, Secrets can be used to reference encrypted authentication credentials in Connectors. See the <a href= \"https://docs.camunda.io/docs/components/console/manage-clusters/manage-secrets/\" target=\"_blank\"> Secrets</a> documentation for more details.",
+      "type": "String",
+      "feel": "optional",
+      "group": "databaseConnection",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "databaseConnection.password"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "databaseName",
+      "description": "Name of the database containing the table",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.databaseName"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.alter-table"
+      }
+    },
+    {
+      "label": "tableName",
+      "description": "Name of the table which needs to be altered",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.tableName"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.alter-table"
+      }
+    },
+    {
+      "id": "method",
+      "label": "Method Type",
+      "description": "Operation to be done",
+      "type": "Dropdown",
+      "value": "RENAME_TABLE",
+      "choices": [
+        {
+          "name": "Rename Table",
+          "value": "RENAME_TABLE"
+        },
+        {
+          "name": "Rename Column",
+          "value": "RENAME_COLUMN"
+        },
+        {
+          "name": "Add Constraint",
+          "value": "ADD_CONSTRAINT"
+        },
+        {
+          "name": "Drop",
+          "value": "DROP"
+        },
+        {
+          "name": "Modify Column",
+          "value": "MODIFY_COLUMN"
+        },
+        {
+          "name": "Add Column",
+          "value": "ADD_COLUMN"
+        }
+      ],
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.method"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.alter-table"
+      }
+    },
+    {
+      "label": "constraintDetails",
+      "description": "Details of constraints in the following format. e.g. [{'Name':'unique','Symbol':'constraint_symbol', 'Definition':'columnName' }]",
+      "type": "Text",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.constraintDetails"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "method",
+        "equals": "ADD_CONSTRAINT"
+      }
+    },
+    {
+      "label": "newTableName",
+      "description": "New name of the table",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.newTableName"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "method",
+        "equals": "RENAME_TABLE"
+      }
+    },
+    {
+      "label": "newColumnDetail",
+      "description": "Map of (oldColName, newColName) e.g. {'oldColName':'OldColumnName', 'newColName':'NewColumnName'}",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.newColumnDetail"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "method",
+        "equals": "RENAME_COLUMN"
+      }
+    },
+    {
+      "label": "columnsDetails",
+      "description": "List of Columns - Map of (colName, dataType, constraint) to add e.g. [{'colName':'ColumnName', 'dataType':'DataType(SIZE)', 'constraint': 'UNIQUE'}, ...]",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.columnsDetails"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "method",
+        "equals": "ADD_COLUMN"
+      }
+    },
+    {
+      "label": "modifyColumnsDetails",
+      "description": "List of columns details to modify e.g. [{'colName':'city', 'dataType': 'varchar(20)', 'constraint': 'NOT NULL'}, ...]",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.modifyColumnsDetails"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "method",
+        "equals": "MODIFY_COLUMN"
+      }
+    },
+    {
+      "label": "dropEntityDetails",
+      "description": "Details of entity to be dropped in the following format. e.g. [{'entityToDrop':'FOREIGN KEY', 'name':'fk_address'}, ...]",
+      "type": "Text",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.dropEntityDetails"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "method",
+        "equals": "DROP"
+      }
+    },
+    {
+      "label": "databaseName",
+      "description": "New database name",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.databaseName"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.create-database"
+      }
+    },
+    {
+      "label": "databaseName",
+      "description": "Name of the database containing the table",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.databaseName"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.create-table"
+      }
+    },
+    {
+      "label": "tableName",
+      "description": "New table name",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.tableName"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.create-table"
+      }
+    },
+    {
+      "label": "columnsList",
+      "description": "List of the columns in format: [{'colName':'Age', 'dataType': 'varchar(255)', 'constraints': ['UNIQUE']}]. Following constraints are allowed: \"NOT NULL\", \"PRIMARY KEY\", \"UNIQUE\", \"AUTO_INCREMENT\"",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.columnsList"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.create-table"
+      }
+    },
+    {
+      "label": "databaseName",
+      "description": "Name of the database containing the table",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.databaseName"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.delete-data"
+      }
+    },
+    {
+      "label": "tableName",
+      "description": "Table/collection name to delete data from",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.tableName"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.delete-data"
+      }
+    },
+    {
+      "label": "filters",
+      "description": "Data Type: Map.of(String, Object), Desc: Filter Map can have 3 keys filter, logicalOperator & filterList. Simple filter e.g. {\"filter\": {\"colName\": \"ColumnName\", \"operator\": \"=\", \"value\": ColumnValue}}",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.filters"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.delete-data"
+      }
+    },
+    {
+      "label": "orderBy",
+      "description": "Data Type: List.of(Map.of(String, String)), Desc: List of Maps will have 2 keys: sortOn and order. sortOn value will be column name for orderBy and order as ascending/descending. e.g. [{\"sortOn\":\"ColumnName\", \"order\":\"ascending\"}]",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "value": "=null",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.orderBy"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.delete-data"
+      }
+    },
+    {
+      "label": "limit",
+      "description": "Maximum number of rows to delete",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "=null",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.limit"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.delete-data"
+      }
+    },
+    {
+      "label": "databaseName",
+      "description": "Name of the database containing the table",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.databaseName"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.insert-data"
+      }
+    },
+    {
+      "label": "tableName",
+      "description": "Name of the table in which data needs to be inserted",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.tableName"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.insert-data"
+      }
+    },
+    {
+      "label": "dataToInsert",
+      "description": "[{\"columnName1\": row1Col1Value, \"columnName2\": row1Col2Value...}, {\"columnName1\", row2Col1Value, \"columnName2\", row2Col2Value...}...] Data to insert into the table",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.dataToInsert"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.insert-data"
+      }
+    },
+    {
+      "label": "databaseName",
+      "description": "Name of the database containing the table",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.databaseName"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.read-data"
+      }
+    },
+    {
+      "label": "tableName",
+      "description": "Table/collection name to read data from",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.tableName"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.read-data"
+      }
+    },
+    {
+      "label": "columnNames",
+      "description": "List of columns/fields to return in result. If empty will return all columns/fields.  e.g. [\"columnName1\", \"columnName2\",...]",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "value": "=null",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.columnNames"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.read-data"
+      }
+    },
+    {
+      "label": "filters",
+      "description": "Data Type: Map.of(String, Object), Desc: Filter Map can have 3 keys filter, logicalOperator & filterList. Simple filter e.g. {\"filter\": {\"colName\": \"ColumnName\", \"operator\": \"=\", \"value\": ColumnValue}}",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "value": "=null",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.filters"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.read-data"
+      }
+    },
+    {
+      "label": "orderBy",
+      "description": "Data Type: List.of(Map.of(String, String)), Desc: List of Maps will have 2 keys: sortOn and order. sortOn value will be column name for orderBy and order as ascending/descending. e.g. [{\"sortOn\":\"ColumnName\", \"order\":\"ascending\"}]",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "value": "=null",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.orderBy"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.read-data"
+      }
+    },
+    {
+      "label": "limit",
+      "description": "Data Type: Integer, Desc: Maximum number of rows in output",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "=null",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.limit"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.read-data"
+      }
+    },
+    {
+      "label": "databaseName",
+      "description": "Name of the database containing the table",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.databaseName"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.update-data"
+      }
+    },
+    {
+      "label": "tableName",
+      "description": "Table Name in which data needs to be updated",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.tableName"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.update-data"
+      }
+    },
+    {
+      "label": "updateMap",
+      "description": "Context with column name and value to update data in table. e.g. {\"columnName1\":colValue, \"columnName2\":\"colVal\"}",
+      "type": "Text",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.updateMap"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.update-data"
+      }
+    },
+    {
+      "label": "filters",
+      "description": "Data Type: Map.of(String, Object), Desc: Filter Map can have 3 keys filter, logicalOperator & filterList. Simple filter e.g. {\"filter\": {\"colName\": \"ColumnName\", \"operator\": \"=\", \"value\": ColumnValue}}. If filter is null or empty, all rows in table will be updated",
+      "type": "Text",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "=null",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.filters"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.update-data"
+      }
+    },
+    {
+      "label": "orderBy",
+      "description": "Data Type: List.of(Map.of(String, String)), Desc: List of Maps will have 2 keys: sortOn and order. sortOn value will be column name for orderBy and order as ascending/descending. e.g. [{\"sortOn\":\"ColumnName\", \"order\":\"ascending\"}]",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "value": "=null",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.orderBy"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.update-data"
+      }
+    },
+    {
+      "label": "limit",
+      "description": "Data Type: Integer, Desc: Maximum number of rows to update",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "=null",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.limit"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "mysql.update-data"
+      }
+    },
+    {
+      "label": "Result Variable",
+      "description": "Name of variable to store the response in",
+      "group": "output",
+      "type": "String",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "resultVariable"
+      }
+    },
+    {
+      "label": "Result Expression",
+      "description": "Expression to map the response into process variables",
+      "group": "output",
+      "type": "Text",
+      "feel": "required",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "resultExpression"
+      }
+    },
+    {
+      "label": "Error Expression",
+      "description": "Expression to handle errors. Details in the <a href=\"https://docs.camunda.io/docs/components/connectors/use-connectors/\" target=\"_blank\">documentation</a>.",
+      "group": "errors",
+      "type": "Text",
+      "feel": "required",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "errorExpression"
+      }
+    }
+  ]
+}

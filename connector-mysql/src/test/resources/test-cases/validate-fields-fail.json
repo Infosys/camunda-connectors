@@ -1,0 +1,236 @@
+[
+  {
+    "description": "without password",
+    "databaseConnection": {
+      "username": "ALPHA",
+      "port": "3306",
+      "host": "HOSTNAME"
+    },
+    "operation": "mysql.create-table",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "columnsList": [
+        {
+          "constraints": [
+            "NOT NULL",
+            "PRIMARY KEY"
+          ],
+          "dataType": "int",
+          "colName": "empid"
+        },
+        {
+          "Datatype": "varchar(50)",
+          "ColName": "empName"
+        },
+        {
+          "datatype": "int",
+          "colname": "empNumber"
+        }
+      ]
+    }
+  },
+  {
+    "description": "Blank password",
+    "databaseConnection": {
+      "username": "ALPHA",
+      "port": "3306",
+      "password": "",
+      "host": "HOSTNAME"
+    },
+    "operation": "mysql.create-table",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "columnsList": [
+        {
+          "constraints": [
+            "NOT NULL",
+            "PRIMARY KEY"
+          ],
+          "dataType": "int",
+          "colName": "empid"
+        },
+        {
+          "Datatype": "varchar(50)",
+          "ColName": "empName"
+        },
+        {
+          "datatype": "int",
+          "colname": "empNumber"
+        }
+      ]
+    }
+  },
+  {
+    "description": "Data is null",
+    "databaseConnection": {
+      "username": "ALPHA",
+      "port": "3306",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "mysql.create-table",
+    "data": null
+  },
+  {
+    "description": "port is blank",
+    "databaseConnection": {
+      "username": "ALPHA",
+      "port": " ",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "mysql.create-table",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "columnsList": [
+        {
+          "constraints": [
+            "NOT NULL",
+            "PRIMARY KEY"
+          ],
+          "dataType": "int",
+          "colName": "empid"
+        },
+        {
+          "Datatype": "varchar(50)",
+          "ColName": "empName"
+        },
+        {
+          "datatype": "int",
+          "colname": "empNumber"
+        }
+      ]
+    }
+  },
+  {
+    "description": "blank username",
+    "databaseConnection": {
+      "username": "",
+      "port": "3306",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "mysql.create-table",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "columnsList": [
+        {
+          "constraints": [
+            "NOT NULL",
+            "PRIMARY KEY"
+          ],
+          "dataType": "int",
+          "colName": "empid"
+        },
+        {
+          "Datatype": "varchar(50)",
+          "ColName": "empName"
+        },
+        {
+          "datatype": "int",
+          "colname": "empNumber"
+        }
+      ]
+    }
+  },
+  {
+    "description": "database is blank",
+    "databaseConnection": {
+      "username": "ALPHA",
+      "port": "3306",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "mysql.create-table",
+    "data": {
+      "databaseName": " ",
+      "tableName": "testRio",
+      "columnsList": [
+        {
+          "constraints": [
+            "NOT NULL",
+            "PRIMARY KEY"
+          ],
+          "dataType": "int",
+          "colName": "empid"
+        },
+        {
+          "Datatype": "varchar(50)",
+          "ColName": "empName"
+        },
+        {
+          "datatype": "int",
+          "colname": "empNumber"
+        }
+      ]
+    }
+  },
+  {
+    "description": "table is blank",
+    "databaseConnection": {
+      "username": "ALPHA",
+      "port": "3306",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "mysql.create-table",
+    "data": {
+      "databaseName": "XE",
+      "tableName": null,
+      "columnsList": [
+        {
+          "constraints": [
+            "NOT NULL",
+            "PRIMARY KEY"
+          ],
+          "dataType": "int",
+          "colName": "empid"
+        },
+        {
+          "Datatype": "varchar(50)",
+          "ColName": "empName"
+        },
+        {
+          "datatype": "int",
+          "colname": "empNumber"
+        }
+      ]
+    }
+  },
+  {
+    "description": "host is null",
+    "databaseConnection": {
+      "username": "ALPHA",
+      "port": "3306",
+      "password": "secrets.TOKEN",
+      "host": null
+    },
+    "operation": "mysql.create-table",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "columnsList": [
+        {
+          "constraints": [
+            "NOT NULL",
+            "PRIMARY KEY"
+          ],
+          "dataType": "int",
+          "colName": "empid"
+        },
+        {
+          "Datatype": "varchar(50)",
+          "ColName": "empName"
+        },
+        {
+          "datatype": "int",
+          "colname": "empNumber"
+        }
+      ]
+    }
+  }
+]
