@@ -1,0 +1,175 @@
+[
+  {
+    "description": "minimum input",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "5432",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "postgresql.read-data",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio"
+    }
+  },
+  {
+    "description": " operator 'not' - Simple filter",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "5432",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "postgresql.read-data",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "columnNames": [
+        "firstname"
+      ],
+      "filters": {
+        "logicalOperator": "not",
+        "filter": {
+          "colName": "firstname",
+          "operator": "=",
+          "value": "Xon"
+        }
+      },
+      "orderBy": [
+        {
+          "sortOn": "firstname",
+          "order": "desc"
+        }
+      ],
+      "limit": 1
+    }
+  },
+  {
+    "description": "No logical operator - Simple filter",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "5432",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "postgresql.read-data",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "columnNames": [
+        "firstname"
+      ],
+      "filters": {
+        "filter": {
+          "colName": "firstname",
+          "operator": "=",
+          "value": "Xon"
+        }
+      },
+      "orderBy": [
+        {
+          "sortOn": "firstname",
+          "order": "desc"
+        }
+      ],
+      "limit": 1
+    }
+  },
+  {
+    "description": "Complex filter",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "5432",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "postgresql.read-data",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "columnNames": null,
+      "filters": {
+        "logicalOperator": "AND",
+        "filterList": [
+          {
+            "filter": {
+              "colName": "lastname",
+              "operator": "=",
+              "value": "Ben"
+            }
+          },
+          {
+            "filter": {
+              "colName": "firstname",
+              "operator": "like",
+              "value": "%io"
+            }
+          },
+          {
+            "filter": {
+              "colName": "personId",
+              "operator": ">",
+              "value": 1
+            }
+          }
+        ]
+      },
+      "orderBy": [
+        {
+          "sortOn": "firstname",
+          "order": "desc"
+        }
+      ],
+      "limit": 1
+    }
+  },
+  {
+    "description": "Complex filter with Logical Operator",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "5432",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "postgresql.read-data",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "columnNames": [],
+      "filters": {
+        "logicalOperator": "NOT",
+        "filterList": [
+          {
+            "filter": {
+              "colName": "lastname",
+              "operator": "=",
+              "value": "Ben"
+            }
+          },
+          {
+            "filter": {
+              "colName": "firstname",
+              "operator": "like",
+              "value": "%io"
+            }
+          },
+          {
+            "filter": {
+              "colName": "personId",
+              "operator": ">",
+              "value": 1
+            }
+          }
+        ]
+      },
+      "orderBy": [
+        {
+          "sortOn": "firstname",
+          "order": "desc"
+        }
+      ],
+      "limit": 1
+    }
+  }
+]

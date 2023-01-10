@@ -1,0 +1,36 @@
+[
+  {
+    "description": "Invalid filter",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "5432",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "postgresql.delete-data",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "filters": {
+          "colName": "firstname",
+          "operator": "=",
+          "value": "Xon"
+      }
+    }
+  },
+  {
+    "description": "Empty Filter",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "5432",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "postgresql.delete-data",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "filters": {}
+    }
+  }
+]

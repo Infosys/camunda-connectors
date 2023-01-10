@@ -1,0 +1,63 @@
+[
+  {
+    "description": "simple filter",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "5432",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "postgresql.delete-data",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "filters": {
+        "filter": {
+          "colName": "firstname",
+          "operator": "=",
+          "value": "Xon"
+        }
+      }
+    }
+  },
+  {
+    "description": "complex filter",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "5432",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "postgresql.delete-data",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "filters": {
+        "logicalOperator": "AND",
+        "filterList": [
+          {
+            "filter": {
+              "colName": "lastname",
+              "operator": "=",
+              "value": "Ben"
+            }
+          },
+          {
+            "filter": {
+              "colName": "firstname",
+              "operator": "like",
+              "value": "%io"
+            }
+          },
+          {
+            "filter": {
+              "colName": "personId",
+              "operator": ">",
+              "value": 1
+            }
+          }
+        ]
+      }
+    }
+  }
+]
