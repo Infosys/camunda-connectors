@@ -1,0 +1,651 @@
+{
+  "$schema": "https://unpkg.com/@camunda/zeebe-element-templates-json-schema/resources/schema.json",
+  "name": "Oracle Database Connector",
+  "id": "com.infosys.camundaconnectors.db.oracle.v1",
+  "description": "Database operations on Oracle Database",
+  "version": 1,
+  "entriesVisible": false,
+  "icon": {
+    "contents": "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='18' height='18' viewBox='0 0 18 18'%3E%3Cimage xlink:href='data:image/png;base64,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' x='0' y='0' height='18' width='18'/%3E%3C/svg%3E"
+  },
+  "category": {
+    "id": "connectors",
+    "name": "Connectors"
+  },
+  "appliesTo": [
+    "bpmn:Task"
+  ],
+  "elementType": {
+    "value": "bpmn:ServiceTask"
+  },
+  "groups": [
+    {
+      "id": "operation",
+      "label": "Operation"
+    },
+    {
+      "id": "databaseConnection",
+      "label": "Database Connection"
+    },
+    {
+      "id": "tableDetail",
+      "label": "Table Detail"
+    },
+    {
+      "id": "method",
+      "label": "Method Type"
+    },
+    {
+      "id": "inputs",
+      "label": "Input Mapping"
+    },
+    {
+      "id": "output",
+      "label": "Output Mapping"
+    },
+    {
+      "id": "errors",
+      "label": "Error Handling"
+    }
+  ],
+  "properties": [
+    {
+      "type": "Hidden",
+      "value": "com.infosys.camundaconnectors.db:oracle:1",
+      "binding": {
+        "type": "zeebe:taskDefinition:type"
+      }
+    },
+    {
+      "label": "Operation",
+      "group": "operation",
+      "id": "operation",
+      "type": "Dropdown",
+      "value": "oracledb.create-table",
+      "choices": [
+        {
+          "name": "Alter Table",
+          "value": "oracledb.alter-table"
+        },
+        {
+          "name": "Create Table",
+          "value": "oracledb.create-table"
+        },
+        {
+          "name": "Delete Data",
+          "value": "oracledb.delete-data"
+        },
+        {
+          "name": "Insert Data",
+          "value": "oracledb.insert-data"
+        },
+        {
+          "name": "Read Data",
+          "value": "oracledb.read-data"
+        },
+        {
+          "name": "Update Data",
+          "value": "oracledb.update-data"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "operation"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Hostname",
+      "description": "Hostname/computer name or IP address of oracle server host. e.g. localhost",
+      "type": "String",
+      "feel": "optional",
+      "group": "databaseConnection",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "databaseConnection.host"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Port",
+      "description": "Port for Oracle server. e.g. 1521",
+      "type": "String",
+      "feel": "optional",
+      "group": "databaseConnection",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "databaseConnection.port"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Username",
+      "description": "Username with DB access",
+      "type": "String",
+      "feel": "optional",
+      "group": "databaseConnection",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "databaseConnection.username"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Password",
+      "description": "Password for username e.g. secrets.TOKEN, Secrets can be used to reference encrypted authentication credentials in Connectors. See the <a href= \"https://docs.camunda.io/docs/components/console/manage-clusters/manage-secrets/\" target=\"_blank\"> Secrets</a> documentation for more details.",
+      "type": "String",
+      "feel": "optional",
+      "group": "databaseConnection",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "databaseConnection.password"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Database Name",
+      "description": "Name of the database containing the table",
+      "type": "String",
+      "feel": "optional",
+      "group": "tableDetail",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.databaseName"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Table Name",
+      "description": "Table name",
+      "type": "String",
+      "feel": "optional",
+      "group": "tableDetail",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.tableName"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Method Type",
+      "id": "method",
+      "description": "Operation to be done",
+      "type": "Dropdown",
+      "value": "RENAME_TABLE",
+      "choices": [
+        {
+          "name": "Rename Table",
+          "value": "RENAME_TABLE"
+        },
+        {
+          "name": "Rename Column",
+          "value": "RENAME_COLUMN"
+        },
+        {
+          "name": "Add Constraint",
+          "value": "ADD_CONSTRAINT"
+        },
+        {
+          "name": "Drop Constraint",
+          "value": "DROP_CONSTRAINT"
+        },
+        {
+          "name": "Drop Column",
+          "value": "DROP_COLUMN"
+        },
+        {
+          "name": "Modify Column",
+          "value": "MODIFY_COLUMN"
+        },
+        {
+          "name": "Add Column",
+          "value": "ADD_COLUMN"
+        },
+        {
+          "name": "Enable Constraint",
+          "value": "ENABLE_CONSTRAINT"
+        },
+        {
+          "name": "Disable Constraint",
+          "value": "DISABLE_CONSTRAINT"
+        }
+      ],
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.method"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "oracledb.alter-table"
+      }
+    },
+    {
+      "label": "constraintDetails",
+      "description": "Details of constraints in the following format. e.g. [{'Name':'unique','Symbol':'constraint_symbol', 'Definition':'columnName'}, ...]",
+      "type": "Text",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.constraintDetails"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "method",
+        "equals": "ADD_CONSTRAINT"
+      }
+    },
+    {
+      "label": "newTableName",
+      "description": "New name of the table",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.newTableName"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "method",
+        "equals": "RENAME_TABLE"
+      }
+    },
+    {
+      "label": "newColumnDetail",
+      "description": "Map of (oldColName, newColName) e.g. {'oldColName':'OldColumnName', 'newColName':'NewColumnName'}",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.newColumnDetail"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "method",
+        "equals": "RENAME_COLUMN"
+      }
+    },
+    {
+      "label": "columnsDetails",
+      "description": "List of Columns - Map of (colName, dataType, constraint) to add e.g. [{'colName':'column1', 'dataType':'DataType(SIZE)', 'constraint': 'UNIQUE'}, ...]",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.columnsDetails"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "method",
+        "equals": "ADD_COLUMN"
+      }
+    },
+    {
+      "label": "modifyColumnsDetails",
+      "description": "List of columns details to modify e.g. [{'colName':'city', 'dataType': 'varchar(20)', 'constraint': 'NOT NULL'}, ...]",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.modifyColumnsDetails"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "method",
+        "equals": "MODIFY_COLUMN"
+      }
+    },
+    {
+      "label": "dropColumnsList",
+      "description": "List of columns name to drop from the table e.g. ['col1', 'col2', ...]",
+      "type": "Text",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.dropColumnsList"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "method",
+        "equals": "DROP_COLUMN"
+      }
+    },
+    {
+      "label": "dropConstraintsList",
+      "description": "List of constraints name or primaryKey e.g. ['primaryKey', 'check_colName', 'fk_address', ...]",
+      "type": "Text",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.dropConstraintsList"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "method",
+        "equals": "DROP_CONSTRAINT"
+      }
+    },
+    {
+      "label": "constraintName",
+      "description": "Constraint name to enable",
+      "type": "Text",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.constraintName"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "method",
+        "equals": "ENABLE_CONSTRAINT"
+      }
+    },
+    {
+      "label": "constraintName",
+      "description": "Constraint name to disable",
+      "type": "Text",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.constraintName"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "method",
+        "equals": "DISABLE_CONSTRAINT"
+      }
+    },
+    {
+      "label": "Columns List",
+      "description": "List of the columns in format: [{'colName':'Age', 'DataType': 'varchar2(25)', 'Constraints': ['UNIQUE']}]",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.columnsList"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "oracledb.create-table"
+      }
+    },
+    {
+      "label": "filters",
+      "description": "Data Type: Map.of(String, Object), Desc: Filter Map can have 3 keys filter, logicalOperator & filterList. Simple filter e.g. {\"filter\": {\"colName\": \"ColumnName\", \"operator\": \"=\", \"value\": ColumnValue}}",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.filters"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "oracledb.delete-data"
+      }
+    },
+    {
+      "label": "orderBy",
+      "description": "Data Type: List.of(Map.of(String, String)), Desc: List of Maps will have 2 keys: sortOn and order. sortOn value will be column name for orderBy and order as ascending/descending. e.g. [{\"sortOn\":\"ColumnName\", \"order\":\"ascending\"}]",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "value": "=null",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.orderBy"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "oracledb.delete-data"
+      }
+    },
+    {
+      "label": "limit",
+      "description": "Maximum number of rows to delete",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "=null",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.limit"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "oracledb.delete-data"
+      }
+    },
+    {
+      "label": "dataToInsert",
+      "description": "[{\"columnName1\": row1Col1Value, \"columnName2\": row1Col2Value...}, {\"columnName1\", row2Col1Value, \"columnName2\", row2Col2Value...}...] Data to insert into the table",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.dataToInsert"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "oracledb.insert-data"
+      }
+    },
+    {
+      "label": "columnNames",
+      "description": "List of columns/fields to return in result. If empty will return all columns/fields.  e.g. [\"columnName1\", \"columnName2\",...]",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "value": "=null",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.columnNames"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "oracledb.read-data"
+      }
+    },
+    {
+      "label": "filters",
+      "description": "Data Type: Map.of(String, Object), Desc: Filter Map can have 3 keys filter, logicalOperator & filterList. Simple filter e.g. {\"filter\": {\"colName\": \"ColumnName\", \"operator\": \"=\", \"value\": ColumnValue}}",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "value": "=null",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.filters"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "oracledb.read-data"
+      }
+    },
+    {
+      "label": "orderBy",
+      "description": "Data Type: List.of(Map.of(String, String)), Desc: List of Maps will have 2 keys: sortOn and order. sortOn value will be column name for orderBy and order as ascending/descending. e.g. [{\"sortOn\":\"ColumnName\", \"order\":\"ascending\"}]",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "value": "=null",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.orderBy"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "oracledb.read-data"
+      }
+    },
+    {
+      "label": "limit",
+      "description": "Data Type: Integer, Desc: Maximum number of rows in output",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "=null",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.limit"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "oracledb.read-data"
+      }
+    },
+    {
+      "label": "updateMap",
+      "description": "Context with column name and value to update data in table. e.g. {\"columnName1\":colValue, \"columnName2\":\"colVal\"}",
+      "type": "Text",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.updateMap"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "oracledb.update-data"
+      }
+    },
+    {
+      "label": "filters",
+      "description": "Data Type: Map.of(String, Object), Desc: Filter Map can have 3 keys filter, logicalOperator & filterList. A simple filter e.g. {\"filter\": {\"colName\": \"ColumnName\", \"operator\": \"=\", \"value\": ColumnValue}}. If filter is null or empty, all rows in table will be updated",
+      "type": "Text",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "=null",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.filters"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "oracledb.update-data"
+      }
+    },
+    {
+      "label": "orderBy",
+      "description": "Data Type: List.of(Map.of(String, String)), Desc: List of Maps will have 2 keys: sortOn and order. sortOn value will be column name for orderBy and order as ascending/descending. e.g. [{\"sortOn\":\"ColumnName\", \"order\":\"ascending\"}]",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "value": "=null",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.orderBy"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "oracledb.update-data"
+      }
+    },
+    {
+      "label": "limit",
+      "description": "Data Type: Integer, Desc: Maximum number of rows to update",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "=null",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.limit"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "oracledb.update-data"
+      }
+    },
+    {
+      "label": "Result Variable",
+      "description": "Name of variable to store the response in",
+      "group": "output",
+      "type": "String",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "resultVariable"
+      }
+    },
+    {
+      "label": "Result Expression",
+      "description": "Expression to map the response into process variables",
+      "group": "output",
+      "type": "Text",
+      "feel": "required",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "resultExpression"
+      }
+    },
+    {
+      "label": "Error Expression",
+      "description": "Expression to handle errors. Details in the <a href=\"https://docs.camunda.io/docs/components/connectors/use-connectors/\" target=\"_blank\">documentation</a>.",
+      "group": "errors",
+      "type": "Text",
+      "feel": "required",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "errorExpression"
+      }
+    }
+  ]
+}

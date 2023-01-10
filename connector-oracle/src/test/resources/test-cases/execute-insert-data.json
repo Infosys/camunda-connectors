@@ -1,0 +1,52 @@
+[
+  {
+    "description": "Least columns insertion & one row",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1521",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "oracledb.insert-data",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "dataToInsert": [
+        {
+          "PersonID": 1,
+          "FirstName": "Alpha"
+        }
+      ]
+    }
+  },
+  {
+    "description": "All columns insertion & multiple rows",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1521",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "oracledb.insert-data",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "dataToInsert": [
+        {
+          "PersonID": 2,
+          "LastName": "Acro",
+          "FirstName": "Alpha",
+          "Address": "St. Peter Avenue",
+          "City": "New York"
+        },
+        {
+          "PersonID": 3,
+          "LastName": "Ben",
+          "FirstName": "Bob",
+          "Address": "St. Louis Avenue",
+          "City": "New Jersey"
+        }
+      ]
+    }
+  }
+]

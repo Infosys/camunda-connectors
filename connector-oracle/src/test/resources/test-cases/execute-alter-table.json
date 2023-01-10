@@ -1,0 +1,202 @@
+[
+  {
+    "description": "Rename table",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1521",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "oracledb.alter-table",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "method": "renameTable",
+      "newTableName": "Rio"
+    }
+  },
+  {
+    "description": "Rename column",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1521",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "oracledb.alter-table",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "method": "renameColumn",
+      "newColumnDetail": {
+        "oldColName": "street",
+        "newColName": "locality"
+      }
+    }
+  },
+  {
+    "description": "Enable constraint",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1521",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "oracledb.alter-table",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "method": "enableConstraint",
+      "constraintName": "rio_locality_not_null"
+    }
+  },
+  {
+    "description": "Disable constraint",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1521",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "oracledb.alter-table",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "method": "disableConstraint",
+      "constraintName": "rio_locality_not_null"
+    }
+  },
+  {
+    "description": "Drop column",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1521",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "oracledb.alter-table",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "method": "dropColumn",
+      "dropColumnsList": [
+        "column1",
+        "column2"
+      ]
+    }
+  },
+  {
+    "description": "Modify columns",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1521",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "oracledb.alter-table",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "method": "modifyColumn",
+      "modifyColumnsDetails": [
+        {
+          "colName": "empnumber",
+          "dataType": "varchar(20)",
+          "constraint": "NOT NULL"
+        },
+        {
+          "colName": "city",
+          "dataType": "varchar(20)"
+        }
+      ]
+    }
+  },
+  {
+    "description": "Drop constraint",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1521",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "oracledb.alter-table",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "method": "dropConstraint",
+      "dropConstraintsList": [
+        "FK_empID",
+        "ch_id",
+        "UC_EmpNumber",
+        "Primary Key"
+      ]
+    }
+  },
+  {
+    "description": "Add constraint",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1521",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "oracledb.alter-table",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "method": "addConstraint",
+      "constraintDetails": [
+        {
+          "name": "Unique",
+          "sYmbol": "UC_EmpNumber",
+          "Definition": "empNumber"
+        },
+        {
+          "Name": "Primary Key",
+          "Symbol": "PK_EmployeeID",
+          "Definition": "empid"
+        },
+        {
+          "Name": "Foreign Key",
+          "Symbol": "FK_empID",
+          "Definition": "(person_id) REFERENCES testemployee(id)"
+        },
+        {
+          "name": "CHECK",
+          "symbol": "ch_id",
+          "Definition": "empid>0"
+        }
+      ]
+    }
+  },
+  {
+    "description": "Add column",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1521",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "oracledb.alter-table",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "method": "addColumn",
+      "columnsDetails": [
+        {
+          "colName": "adda",
+          "dataType": "varchar(40)",
+          "constraint": "NOT NULL"
+        },
+        {
+          "colName": "kit",
+          "dataType": "int"
+        },
+        {
+          "colName": "dropthis",
+          "dataType": "number"
+        }
+      ]
+    }
+  }
+]

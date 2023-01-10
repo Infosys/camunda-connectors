@@ -1,0 +1,104 @@
+[
+  {
+    "description": "Input data - null",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1521",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "oracledb.read-data",
+    "data": null
+  },
+  {
+    "description": "Input data - not provided",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1521",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "oracledb.read-data"
+  },
+  {
+    "description": "Invalid filter",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1521",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "oracledb.read-data",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "columnNames": [
+        "firstname"
+      ],
+      "filters": {
+        "InvalidKey": {
+          "colName": "firstname",
+          "operator": "=",
+          "value": "Xon"
+        }
+      },
+      "orderBy": [
+        {
+          "sortOn": "firstname",
+          "order": "desc"
+        }
+      ],
+      "limit": 1
+    }
+  },
+  {
+    "description": "Invalid complex filter",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1521",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "oracledb.read-data",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "columnNames": [
+        "firstname"
+      ],
+      "filters": {
+        "logicalOperator": "TOR",
+        "filterList": [
+          {
+            "filter": {
+              "colName": "lastname",
+              "operator": "=",
+              "value": "Ben"
+            }
+          },
+          {
+            "filter": {
+              "colName": "firstname",
+              "operator": "like",
+              "value": "%io"
+            }
+          },
+          {
+            "filter": {
+              "colName": "personId",
+              "operator": ">",
+              "value": 1
+            }
+          }
+        ]
+      },
+      "orderBy": [
+        {
+          "sortOn": "firstname",
+          "order": "desc"
+        }
+      ],
+      "limit": 1
+    }
+  }
+]

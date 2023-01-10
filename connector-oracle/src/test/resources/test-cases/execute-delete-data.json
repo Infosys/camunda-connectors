@@ -1,0 +1,77 @@
+[
+  {
+    "description": "simple filter",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1521",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "oracledb.delete-data",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "filters": {
+        "filter": {
+          "colName": "firstname",
+          "operator": "=",
+          "value": "Xon"
+        }
+      },
+      "orderBy": [
+        {
+          "sortOn": "firstname",
+          "order": "desc"
+        }
+      ],
+      "limit": 1
+    }
+  },
+  {
+    "description": "complex filter",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1521",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "oracledb.delete-data",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "filters": {
+        "logicalOperator": "AND",
+        "filterList": [
+          {
+            "filter": {
+              "colName": "lastname",
+              "operator": "=",
+              "value": "Ben"
+            }
+          },
+          {
+            "filter": {
+              "colName": "firstname",
+              "operator": "like",
+              "value": "%io"
+            }
+          },
+          {
+            "filter": {
+              "colName": "personId",
+              "operator": ">",
+              "value": 1
+            }
+          }
+        ]
+      },
+      "orderBy": [
+        {
+          "sortOn": "firstname",
+          "order": "desc"
+        }
+      ],
+      "limit": 1
+    }
+  }
+]

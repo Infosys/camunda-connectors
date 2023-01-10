@@ -1,0 +1,72 @@
+[
+  {
+    "description": "dataToInsert IS empty",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1521",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "oracledb.insert-data",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "dataToInsert": []
+    }
+  },
+  {
+    "description": "dataToInsert is null",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1521",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "oracledb.insert-data",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "dataToInsert": null
+    }
+  },
+  {
+    "description": "dataToInsert is invalid primary and not null column values are not provided",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1521",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "oracledb.insert-data",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "dataToInsert": [
+        {
+          "City": "New York"
+        }
+      ]
+    }
+  },
+  {
+    "description": "dataToInsert is invalid, column - 'Surname' does not exists",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1521",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "oracledb.insert-data",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "dataToInsert": [
+        {
+          "PersonID": 1,
+          "SurName": "Acro",
+          "FirstName": "Alpha"
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,78 @@
+[
+  {
+    "description": "Invalid filter",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1521",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "oracledb.delete-data",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "filters": {
+          "colName": "firstname",
+          "operator": "=",
+          "value": "Xon"
+      },
+      "orderBy": [
+        {
+          "sortOn": "firstname",
+          "order": "desc"
+        }
+      ],
+      "limit": 1
+    }
+  },
+  {
+    "description": "Empty Filter",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1521",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "oracledb.delete-data",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "filters": {},
+      "orderBy": [
+        {
+          "sortOn": "firstname",
+          "order": "desc"
+        }
+      ],
+      "limit": 1
+    }
+  },
+  {
+    "description": "Invalid Limit",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1521",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "oracledb.delete-data",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "filters": {
+        "filter": {
+          "colName": "firstname",
+          "operator": "=",
+          "value": "Xon"
+        }
+      },
+      "orderBy": [
+        {
+          "sortOn": "firstname",
+          "order": "desc"
+        }
+      ],
+      "limit": "opo"
+    }
+  }
+]
