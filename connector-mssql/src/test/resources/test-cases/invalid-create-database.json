@@ -1,0 +1,28 @@
+[
+  {
+    "description": "Null databaseName",
+    "databaseConnection": {
+      "username": "ALPHA",
+      "port": "1433",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "mssql.create-database",
+    "data": {
+      "databaseName": null
+    }
+  },
+  {
+    "description": "Empty or Blank databaseName",
+    "databaseConnection": {
+      "username": "ALPHA",
+      "port": "1433",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "mssql.create-database",
+    "data": {
+      "databaseName": ""
+    }
+  }
+]

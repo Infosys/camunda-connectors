@@ -1,0 +1,78 @@
+[
+  {
+    "description": "Invalid filter",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1433",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "mssql.delete-data",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "filters": {
+        "colName": "firstname",
+        "operator": "=",
+        "value": "Xon"
+      },
+      "orderBy": [
+        {
+          "sortOn": "firstname",
+          "order": "desc"
+        }
+      ],
+      "top": 1
+    }
+  },
+  {
+    "description": "Empty Filter",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1433",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "mssql.delete-data",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "filters": {},
+      "orderBy": [
+        {
+          "sortOn": "firstname",
+          "order": "desc"
+        }
+      ],
+      "top": 1
+    }
+  },
+  {
+    "description": "Invalid Limit",
+    "databaseConnection": {
+      "username": "USERNAME",
+      "port": "1433",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "mssql.delete-data",
+    "data": {
+      "databaseName": "XE",
+      "tableName": "testRio",
+      "filters": {
+        "filter": {
+          "colName": "firstname",
+          "operator": "=",
+          "value": "Xon"
+        }
+      },
+      "orderBy": [
+        {
+          "sortOn": "firstname",
+          "order": "desc"
+        }
+      ],
+      "top": "opo"
+    }
+  }
+]

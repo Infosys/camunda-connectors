@@ -1,0 +1,28 @@
+[
+  {
+    "description": "Valid databaseName",
+    "databaseConnection": {
+      "username": "ALPHA",
+      "port": "1433",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "mssql.create-database",
+    "data": {
+      "databaseName": "XE"
+    }
+  },
+  {
+    "description": "Long databaseName",
+    "databaseConnection": {
+      "username": "ALPHA",
+      "port": "1433",
+      "password": "secrets.TOKEN",
+      "host": "HOSTNAME"
+    },
+    "operation": "mssql.create-database",
+    "data": {
+      "databaseName": "Pneumonoultramicroscopicsilicovolcanoconiosis"
+    }
+  }
+]

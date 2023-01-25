@@ -1,0 +1,43 @@
+Camunda MS SQL Database Connector
+
+THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
+Do Not Translate or Localize
+
+This project incorporates components with the licenses under which Infosys received them as listed below.
+
+ * com.fasterxml:classmate (Version: 1.5.1 License: Apache License, Version 2.0 (URL: https://www.apache.org/licenses/LICENSE-2.0.txt))
+ * com.google.code.gson:gson (Version: 2.10 License: Apache-2.0 (URL: https://www.apache.org/licenses/LICENSE-2.0.txt))
+ * io.camunda.connector:connector-core (Version: 0.4.0 License: The Apache Software License, Version 2.0 (URL:http://www.apache.org/licenses/LICENSE-2.0.txt))
+ * io.camunda.connector:connector-validation (Version: 0.4.0 License: The Apache Software License, Version 2.0 (URL:http://www.apache.org/licenses/LICENSE-2.0.txt))
+ * jakarta.validation:jakarta.validation-api (Version: 2.0.2 License: Apache License 2.0 (URL: http://www.apache.org/licenses/LICENSE-2.0.txt))
+ * com.microsoft.sqlserver:mssql-jdbc (Version:9.4.1.jre11 License: The MIT License (URL: https://github.com/microsoft/mssql-jdbc/blob/main/LICENSE))
+ * net.bytebuddy:byte-buddy-agent (Version: 1.12.16 License: Apache License, Version 2.0 (URL: https://www.apache
+ .org/licenses/LICENSE-2.0.txt))
+ * net.bytebuddy:byte-buddy (Version: 1.12.21 License: Apache License, Version 2.0 (URL: https://www.apache
+ .org/licenses/LICENSE-2.0.txt))
+ * org.apiguardian:apiguardian-api (Version: 1.1.2 License: The Apache License, Version 2.0 (URL: http://www.apache.org/licenses/LICENSE-2.0.txt))
+ * org.assertj:assertj-core (Version: 3.24.1 License: Apache License, Version 2.0 (URL: http://www.apache.org/licenses/LICENSE-2.0.txt))
+ * org.hibernate.validator:hibernate-validator (Version: 6.2.5 License: Apache License 2.0 (URL: http://www.apache.org/licenses/LICENSE-2.0.txt))
+ * org.jboss.logging:jboss-logging (Version: 3.4.1.Final License: Apache License, version 2.0 (URL: http://www.apache.org/licenses/LICENSE-2.0.txt))
+ * org.junit.jupiter:junit-jupiter-api (Version: 5.9.2 License: Eclipse Public License v2.0 (URL: https://www.eclipse
+ .org/legal/epl-v20.html))
+ * org.junit.jupiter:junit-jupiter-engine (Version: 5.9.2 License: Eclipse Public License v2.0 (URL: https://www.eclipse
+ .org/legal/epl-v20.html))
+ * org.junit.jupiter:junit-jupiter-params (Version: 5.9.2 License: Eclipse Public License v2.0 (URL: https://www.eclipse
+ .org/legal/epl-v20.html))
+ * org.junit.jupiter:junit-jupiter (Version: 5.9.2 License: Eclipse Public License v2.0 (URL: https://www.eclipse
+ .org/legal/epl-v20.html))
+ * org.junit.platform:junit-platform-commons (Version: 1.9.2 License: Eclipse Public License v2.0 (URL: https://www
+ .eclipse.org/legal/epl-v20.html))
+ * org.junit.platform:junit-platform-engine (Version: 1.9.2 License: Eclipse Public License v2.0 (URL: https://www
+ .eclipse.org/legal/epl-v20.html))
+ * org.mockito:mockito-core (Version: 4.11.0 License: The MIT License (URL: https://github
+ .com/mockito/mockito/blob/main/LICENSE))
+ * org.mockito:mockito-junit-jupiter (Version: 4.11.0 License: The MIT License (URL: https://github
+ .com/mockito/mockito/blob/main/LICENSE))
+ * org.objenesis:objenesis (Version: 3.3 License: Apache License, Version 2.0 (URL: http://www.apache
+ .org/licenses/LICENSE-2.0.txt))
+ * org.opentest4j:opentest4j (Version: 1.2.0 License: The Apache License, Version 2.0 (URL: http://www.apache.org/licenses/LICENSE-2.0.txt))
+ * org.slf4j:slf4j-api (Version: 2.0.5 License: MIT License (URL: http://www.opensource.org/licenses/mit-license.php))
+ * org.slf4j:slf4j-simple (Version: 2.0.5 License: MIT License (URL: http://www.opensource.org/licenses/mit-license.php)
+ )
