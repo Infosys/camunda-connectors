@@ -1,0 +1,266 @@
+[
+  {
+    "description": "minimum input params",
+    "authentication": {
+      "username": "USER",
+      "port": "25",
+      "password": "secrets.TOKEN",
+      "hostname": "HOSTNAME"
+    },
+    "smtpEmailMailBoxName": "mailBoxName",
+    "smtpEmailToRecipients": [
+      "dev@localhost"
+    ],
+    "smtpEmailCcRecipients": [],
+    "smtpEmailBccRecipients": [],
+    "smtpEmailSubject": "subject",
+    "smtpEmailContentType": "text",
+    "smtpEmailContent": "Hi there,\nHow u r doing?",
+    "smtpEmailAttachments": [],
+    "smtpEmailImportance": true,
+    "smtpEmailReadReceipt": "",
+    "smtpEmailFollowUp": "",
+    "smtpEmailDirectReplyTo": [],
+    "smtpEmailSensitivity": ""
+  },
+  {
+    "description": "html smtpEmailContentType in input",
+    "authentication": {
+      "username": "USER",
+      "port": "25",
+      "password": "secrets.TOKEN",
+      "hostname": "HOSTNAME"
+    },
+    "smtpEmailMailBoxName": "mailBoxName",
+    "smtpEmailToRecipients": [
+      "dev@localhost"
+    ],
+    "smtpEmailCcRecipients": [],
+    "smtpEmailBccRecipients": [],
+    "smtpEmailSubject": "subject",
+    "smtpEmailContentType": "html",
+    "smtpEmailContent": "D:/Dump/EmailBody.html",
+    "smtpEmailAttachments": [],
+    "smtpEmailImportance": true,
+    "smtpEmailReadReceipt": "",
+    "smtpEmailFollowUp": "",
+    "smtpEmailDirectReplyTo": [],
+    "smtpEmailSensitivity": ""
+  },
+  {
+    "description": "add attachments in input",
+    "authentication": {
+      "username": "USER",
+      "port": "25",
+      "password": "secrets.TOKEN",
+      "hostname": "HOSTNAME"
+    },
+    "smtpEmailMailBoxName": "mailBoxName",
+    "smtpEmailToRecipients": [
+      "dev@localhost"
+    ],
+    "smtpEmailCcRecipients": [],
+    "smtpEmailBccRecipients": [],
+    "smtpEmailSubject": "subject",
+    "smtpEmailContentType": "txt",
+    "smtpEmailContent": "Hi there,\nHow u r doing?",
+    "smtpEmailAttachments": [
+      "D:/Dump/Banner.bmp",
+      "D:/Dump/Notice.txt"
+    ],
+    "smtpEmailImportance": true,
+    "smtpEmailReadReceipt": "",
+    "smtpEmailFollowUp": "",
+    "smtpEmailDirectReplyTo": [],
+    "smtpEmailSensitivity": ""
+  },
+  {
+    "description": "add ccRecipients in input",
+    "authentication": {
+      "username": "USER",
+      "port": "25",
+      "password": "secrets.TOKEN",
+      "hostname": "HOSTNAME"
+    },
+    "smtpEmailMailBoxName": "mailBoxName",
+    "smtpEmailToRecipients": [
+      "dev@localhost"
+    ],
+    "smtpEmailCcRecipients": [
+      "demo@localhost",
+      "test@localhost"
+    ],
+    "smtpEmailBccRecipients": [],
+    "smtpEmailSubject": "subject",
+    "smtpEmailContentType": "text",
+    "smtpEmailContent": "Hi there,\nHow u r doing?",
+    "smtpEmailAttachments": [
+      "D:/Dump/Banner.bmp",
+      "D:/Dump/Notice.txt"
+    ],
+    "smtpEmailImportance": true,
+    "smtpEmailReadReceipt": "",
+    "smtpEmailFollowUp": "",
+    "smtpEmailDirectReplyTo": [],
+    "smtpEmailSensitivity": ""
+  },
+  {
+    "description": "add bccRecipients in input",
+    "authentication": {
+      "username": "USER",
+      "port": "25",
+      "password": "secrets.TOKEN",
+      "hostname": "HOSTNAME"
+    },
+    "smtpEmailMailBoxName": "mailBoxName",
+    "smtpEmailToRecipients": [
+      "dev@localhost"
+    ],
+    "smtpEmailCcRecipients": [
+      "demo@localhost"
+    ],
+    "smtpEmailBccRecipients": [
+      "test@localhost"
+    ],
+    "smtpEmailSubject": "subject",
+    "smtpEmailContentType": "text",
+    "smtpEmailContent": "Hi there,\nHow u r doing?",
+    "smtpEmailAttachments": [
+      "D:/Dump/Banner.bmp",
+      "D:/Dump/Notice.txt"
+    ],
+    "smtpEmailImportance": true,
+    "smtpEmailReadReceipt": "",
+    "smtpEmailFollowUp": "",
+    "smtpEmailDirectReplyTo": [],
+    "smtpEmailSensitivity": ""
+  },
+  {
+    "description": "add smtpEmailReadReceipt in input",
+    "authentication": {
+      "username": "USER",
+      "port": "25",
+      "password": "secrets.TOKEN",
+      "hostname": "HOSTNAME"
+    },
+    "smtpEmailMailBoxName": "mailBoxName",
+    "smtpEmailToRecipients": [
+      "dev@localhost"
+    ],
+    "smtpEmailCcRecipients": [
+      "demo@localhost"
+    ],
+    "smtpEmailBccRecipients": [
+      "test@localhost"
+    ],
+    "smtpEmailSubject": "subject",
+    "smtpEmailContentType": "text",
+    "smtpEmailContent": "Hi there,\nHow u r doing?",
+    "smtpEmailAttachments": [
+      "D:/Dump/Banner.bmp",
+      "D:/Dump/Notice.txt"
+    ],
+    "smtpEmailImportance": true,
+    "smtpEmailReadReceipt": true,
+    "smtpEmailFollowUp": "",
+    "smtpEmailDirectReplyTo": [],
+    "smtpEmailSensitivity": ""
+  },
+  {
+    "description": "add smtpEmailFollowUp in input",
+    "authentication": {
+      "username": "USER",
+      "port": "25",
+      "password": "secrets.TOKEN",
+      "hostname": "HOSTNAME"
+    },
+    "smtpEmailMailBoxName": "mailBoxName",
+    "smtpEmailToRecipients": [
+      "dev@localhost"
+    ],
+    "smtpEmailCcRecipients": [
+      "demo@localhost"
+    ],
+    "smtpEmailBccRecipients": [
+      "test@localhost"
+    ],
+    "smtpEmailSubject": "subject",
+    "smtpEmailContentType": "text",
+    "smtpEmailContent": "Hi there,\nHow u r doing?",
+    "smtpEmailAttachments": [
+      "D:/Dump/Banner.bmp",
+      "D:/Dump/Notice.txt"
+    ],
+    "smtpEmailImportance": true,
+    "smtpEmailReadReceipt": true,
+    "smtpEmailFollowUp": "today",
+    "smtpEmailDirectReplyTo": [],
+    "smtpEmailSensitivity": ""
+  },
+  {
+    "description": "add smtpEmailDirectReplyTo in input",
+    "authentication": {
+      "username": "USER",
+      "port": "25",
+      "password": "secrets.TOKEN",
+      "hostname": "HOSTNAME"
+    },
+    "smtpEmailMailBoxName": "mailBoxName",
+    "smtpEmailToRecipients": [
+      "dev@localhost"
+    ],
+    "smtpEmailCcRecipients": [
+      "demo@localhost"
+    ],
+    "smtpEmailBccRecipients": [
+      "test@localhost"
+    ],
+    "smtpEmailSubject": "subject",
+    "smtpEmailContentType": "text",
+    "smtpEmailContent": "Hi there,\nHow u r doing?",
+    "smtpEmailAttachments": [
+      "D:/Dump/Banner.bmp",
+      "D:/Dump/Notice.txt"
+    ],
+    "smtpEmailImportance": true,
+    "smtpEmailReadReceipt": true,
+    "smtpEmailFollowUp": "today",
+    "smtpEmailDirectReplyTo": [
+      "dev@localhost"
+    ],
+    "smtpEmailSensitivity": ""
+  },
+  {
+    "description": "add smtpEmailSensitivity in input",
+    "authentication": {
+      "username": "USER",
+      "port": "25",
+      "password": "secrets.TOKEN",
+      "hostname": "HOSTNAME"
+    },
+    "smtpEmailMailBoxName": "mailBoxName",
+    "smtpEmailToRecipients": [
+      "dev@localhost"
+    ],
+    "smtpEmailCcRecipients": [
+      "demo@localhost"
+    ],
+    "smtpEmailBccRecipients": [
+      "test@localhost"
+    ],
+    "smtpEmailSubject": "subject",
+    "smtpEmailContentType": "text",
+    "smtpEmailContent": "Hi there,\nHow u r doing?",
+    "smtpEmailAttachments": [
+      "D:/Dump/Banner.bmp",
+      "D:/Dump/Notice.txt"
+    ],
+    "smtpEmailImportance": true,
+    "smtpEmailReadReceipt": true,
+    "smtpEmailFollowUp": "today",
+    "smtpEmailDirectReplyTo": [
+      "dev@localhost"
+    ],
+    "smtpEmailSensitivity": "Private"
+  }
+]

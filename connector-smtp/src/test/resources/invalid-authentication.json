@@ -1,0 +1,30 @@
+[
+  {
+    "description": "Blank username",
+    "username": "",
+    "port": "25",
+    "password": "secrets.TOKEN",
+    "hostname": "HOSTNAME"
+  },
+  {
+    "description": "Invalid port",
+    "username": "USER",
+    "port": "port",
+    "password": "secrets.TOKEN",
+    "hostname": "HOSTNAME"
+  },
+  {
+    "description": "Blank password",
+    "username": "USER",
+    "port": "25",
+    "password": "",
+    "hostname": "HOSTNAME"
+  },
+  {
+    "description": "Blank Hostname",
+    "username": "USER",
+    "port": 25,
+    "password": "secrets.TOKEN",
+    "hostname": "HOSTNAME"
+  }
+]

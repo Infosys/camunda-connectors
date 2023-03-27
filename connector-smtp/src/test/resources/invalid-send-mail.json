@@ -1,0 +1,98 @@
+[
+  {
+    "description": "mailBoxName is blank",
+    "authentication": {
+      "username": "USER",
+      "port": "25",
+      "password": "secrets.TOKEN",
+      "hostname": "HOSTNAME"
+    },
+    "smtpEmailMailBoxName": "",
+    "smtpEmailToRecipients": [
+      "demo@localhost"
+    ],
+    "smtpEmailCcRecipients": [],
+    "smtpEmailBccRecipients": [],
+    "smtpEmailSubject": "subject",
+    "smtpEmailContentType": "text",
+    "smtpEmailContent": "Hi there,\nHow u r doing?",
+    "smtpEmailAttachments": [],
+    "smtpEmailImportance": true,
+    "smtpEmailReadReceipt": "",
+    "smtpEmailFollowUp": "",
+    "smtpEmailDirectReplyTo": [],
+    "smtpEmailSensitivity": ""
+  },
+  {
+    "description": "Invalid html file path",
+    "authentication": {
+      "username": "USER",
+      "port": "25",
+      "password": "secrets.TOKEN",
+      "hostname": "HOSTNAME"
+    },
+    "smtpEmailMailBoxName": "mailBoxName",
+    "smtpEmailToRecipients": [
+      "demo@localhost"
+    ],
+    "smtpEmailCcRecipients": [],
+    "smtpEmailBccRecipients": [],
+    "smtpEmailSubject": "",
+    "smtpEmailContentType": "html",
+    "smtpEmailContent": "Hi there,\nHow u r doing?",
+    "smtpEmailAttachments": [],
+    "smtpEmailImportance": true,
+    "smtpEmailReadReceipt": "",
+    "smtpEmailFollowUp": "",
+    "smtpEmailDirectReplyTo": [],
+    "smtpEmailSensitivity": ""
+  },
+  {
+    "description": "contentType is invalid",
+    "authentication": {
+      "username": "USER",
+      "port": "25",
+      "password": "secrets.TOKEN",
+      "hostname": "HOSTNAME"
+    },
+    "smtpEmailMailBoxName": "mailBoxName",
+    "smtpEmailToRecipients": [
+      "demo@localhost"
+    ],
+    "smtpEmailCcRecipients": [],
+    "smtpEmailBccRecipients": [],
+    "smtpEmailSubject": "subject",
+    "smtpEmailContentType": "jpg",
+    "smtpEmailContent": "Hi there,\nHow u r doing?",
+    "smtpEmailAttachments": [],
+    "smtpEmailImportance": true,
+    "smtpEmailReadReceipt": "",
+    "smtpEmailFollowUp": "",
+    "smtpEmailDirectReplyTo": [],
+    "smtpEmailSensitivity": ""
+  },
+  {
+    "description": "content is blank",
+    "authentication": {
+      "username": "USER",
+      "port": "25",
+      "password": "secrets.TOKEN",
+      "hostname": "HOSTNAME"
+    },
+    "smtpEmailMailBoxName": "mailBoxName",
+    "smtpEmailToRecipients": [
+      "demo@localhost"
+    ],
+    "smtpEmailCcRecipients": [],
+    "smtpEmailBccRecipients": [],
+    "smtpEmailSubject": "subject",
+    "smtpEmailContentType": "html",
+    "smtpEmailContent": "",
+    "smtpEmailAttachments": [],
+    "smtpEmailImportance": null,
+    "smtpEmailReadReceipt": "",
+    "smtpEmailFollowUp": "",
+    "smtpEmailDirectReplyTo": [],
+    "smtpEmailSensitivity": ""
+  }
+]

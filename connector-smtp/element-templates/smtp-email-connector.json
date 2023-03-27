@@ -1,0 +1,366 @@
+{
+  "$schema": "https://unpkg.com/@camunda/zeebe-element-templates-json-schema/resources/schema.json",
+  "name": "SMTP Email Connector",
+  "id": "com.infosys.camundaconnectors.email.smtp.v1",
+  "description": "Email Operations using SMTP protocol",
+  "version": 1,
+  "entriesVisible": false,
+  "appliesTo": [
+    "bpmn:Task"
+  ],
+  "elementType": {
+    "value": "bpmn:ServiceTask"
+  },
+  "icon": {
+    "contents": "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='18' height='18' viewBox='0 0 18 18'%3E%3Cimage xlink:href='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARAAAAEICAYAAACXj6vjAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAB8rSURBVHhe7d0J3FXT/gbwp4sMSUQoiQxFpFBkLkOGkJkut2sqSclQFEmE6papkpKMmTL8L5ndklkyV0pEGUqGlCgN+O/nXevcuu/79r5nr7P3Onuf83w/nz737FVXvXuv9Zy99l77t6v8FYCIiIO/2f8VEQlNASIizuKZwsz9HPh0EvDNDGDeLGDpYvNLRPxYv7r5VXt7oO5OQMO9gTo72N+MTnQBMnMyMOE+4O0ngR++to0ikhi1tgZatAUObg80aG4bc5NbgPD/ysAYe4MJEBFJBwbIKVeYQKlSxTaG5x4gX34MDO8MfPKGbRCR1Gm0H9B5OFB/N9sQTvgA4R9/bCBwX2/gzz9so4ik1t/WAtpfB5x0eeizkXABsmwJ0P9kYPKztkFECkbzo4BejwLrbmAbKpd9gCz6Aeh7NDDzHdsgIgWnwV7BOH8aqFHLNlQsuwDhmUfPVgoPkWLAEBnwclZnIpUvJGO+cNqi8BApDhzrHPNZnFtUHiC8YKprHiLFhWOeY78SFU9heKv2wj10t0WkGPHuzJD3K7zFu+YzEOYK13koPESKE8c+M6CCc4w1BwhXmGqRmEhxYwYwC9ZgzQHC5ekiIhVkQfkBwuda9GyLiFAFeVD+RdQRXYFxw+yGJ1y4ckJ3YI/WtkFE/sf82cCjA0ypDN+O6QJ0Gmo3Vik/QM6sl79H8pseCnS+DdiqgW0QKXLLlwIPXwc8PhhYudw2esZSAPd8ZTdWKTuFYTGgfNbz+PA/QYA0Bu670uw4kWI2aVzwzd8IeOSG/IUHMROYDaWUDZB8nB6Vxh3FHcYdxx0oUmw4Xbn2WPOLn5OgnGwoGyAsQ5gUSdyJInFasSz48rw+mV+e5WRD2QBhDdOk+e9pXLBj83kaJxKnD14CujQxtXaSOH0vJxvKBkhSix9zh3LHXrCbuU4iUih++hYYeBrQu3XwLf+pbUygcrIhPQGSwR185WFmhy+YaxtFUuiPlcD/3QSctzPw6iO2MWZrV7UfHGQVILlocz5QdT27ETPu8I47mQPAAyGSJtNeNw+q3nmpvy9tVhy78nG7EY1oA+SIjsDwqeYf6gN3PA9Atz3NARFJuoXfA7ecDVx2ADB7im2MWa16wfToCaDvM8BmdW1jNKINEOKLbPgP5T+Y/3AfWHaAB4QHhgdIJGn++hN4dkQwXQnOml+62zbGbO11TKHkkdOBfY63jdGKPkAy+A/mP5w/AH8QH3hgeIB4oHjARJLgs3eBS1oAtwVT/F9/to0x260VMOwj4KwBoYokhxVfgBD/4fwB+IPwB/KBB4gHigeMB04kX9gXh18AXLyXv4dTN9kS6PEA0H8CsPXOtjE+8QZIBn8Q/kDdx5gf0AceMB44HkBfqS9CfLxs/H1Ax4bAM8MrLMgTGVYPO/ZC4I5PgZZ/t43x8xMgGa1ONz/gMV3NDxw3HjgeQE5reEB9HEgpbnOmApcfCNz0T/MqFB92Cs62h7wX9PNbgQ02so1++A0Q4g/YaQhwazC94A/uAy+s8oBefpA5wCJR4x3B0T2ALk393RGsvinQ7U5g8JtA/Sa20S//AZKxXbCj+YNfOMrsCB+mvWYOMA900hfMSXq8/qhZDPbEYD81hPn6ycPPBUbNBFqfY7bzJH8BQqvvCP6vjx3BA8wDzQPOAy/iau5nZvl5/1PMcnQf+MV741v2i7embcyf/AZIBncEdwh3DHeQDzzgPPDsAOwIItnic1n3XwWcv6t5AM6Hkqn/UDP1b7i3bcy/ZARIBncMdxB3lK+LQewA7AjsECpgJJWZ/Ix5MpwVwnw9Gc6bDzxLZ1lBHzcfQkhWgBB3EHcUd5iv21HsCOwQ7BjsICKlfT8HuLatecG8r9o0XP4wYKJZ/rDxFrYxWZIXIBncYVwQw5f8elgQU4Idgx2k33Gmw4hkquPxmtmkp2xjzLgA8+x/mQWYjQ+yjcmU3ADJaNzSLskdGOuS3P/BF+mww4ztrwJGxeyjCab+jM/6vPueAIycAZzYw98jIDlIfoBQyUNBl5kdyx3sAzvMvVeYDsSOJMVjwTxgYDvgikP8FfjZcrtgivScedyeFdBTIh0BksEdyx3MHc0d7gM7EDsSOxQ7lhQu1pV58hazBP3Vh21jzNZZFzi9L3D7NGDPI2xjeqQrQDK4o7nDueN5AHxgh2LHYgdTAaPCM/1NU1fmjov9LTJsdqTpx3+/2l8hroilM0CIO5w7ngeAB8IHdix2MHY0djhJv19+NHVkuu9n6sr4kDmTvuZZUz8nxdIbIBk8ADwQPueO7GjscOx47ICSPqwX89xIoEMDfwV+1lrb1McZMd3ftbyYpT9AMnhAeGB4sZUHygd2PHZAdkQVMEqPWe8Dl+wDDOvkr9TD6gV+1qtmG9OvcAKEeGB4u7fk/nlL2xgzdkB2RHZIdkxJrt8Wmfow3ZoDM9+xjTHjeiYuBLthPFCvkW0sHIUVIBk8UJkCRr5W8LFDsmOyg7KjSnKwDsyE+4GOwdliSYEfD2eLVYKhxbo3rH/Dpeh5fGI2ToUZIMQDtnoBIx7QuLFjsoOyo7LDqoBR/s2ZBvQMzkZvbO+v4Dbr3JQ80zUEqFbDNhamwg2QDB7AfBQwYodlx2UHFv+W/mrqvnRtCkx91TbGjHVtut4BDH4D2H5321jYCj9AMnhAeWB5gH0VMGLHZQcuKWAUdGjxg3VeOu1s6r74WLOTqWtzxwzgiA5+znYTonh+UuKB5QHmgfZVwIgdmB2ZHVoFjOLFui5XHWHqvPz4jW2MWUllveCLifVsNtrMNhaP4gqQDB5oHnAeeF8FjNih2bHZwVXAKFrLfwfG9AE6Nwbef8E2xoz1aljEuGRqvI9tLD7FGSAZPPC3TDYdwVcBI3ZwdnR2eHZ8yQ3rt5y/C/BQP2DFMtsYM9ap4YOdfI1Cwgr8+FbcAUJcdMaOwA7hq4AROzo7PDu+Chi5Yb2W604w9Vu++8I2xox1abieg3Vqata2jcVNAZLBDsGOwQ7iq4AROz4HAAeCChhlh/VZHh1gqse99X+2MWasQ3Nmf7NAscnBtlFIAVIaOwg7CjuMrwJGHAgcEBwYKmC0ZqzLwtdy3NMLWLbENsYs847nk3umosCPbwqQ8rCjsMPE+FbzMjggODA4QFTA6H+xDsug001dlq+DY+ID6830DaaXvZ8AatWzjVKaAqQi7DjsQOxIvgoYcYBwoHDAFHsBI94Cf2qIqcMy8UHbGDPWl2nXx5SJaH6UbZQ1UYBkgx2JHYody1cBIw4YDhwOoGIsYDTjLeCi5sFZYDd/BX72ONwc5zOuSW2BH98UINlih2LHYgdjR/OBA4cDqFszM6CKAeurDOkAXLov8MWHtjFmm9UFej0K9Hs+9QV+fFOAhMUOxo7GDseO58OXH5kBdeu5hVvAiA8iPj/KnHW9cKdtjBlv4Z/Q3dzC3/8k2yhhKEBcscOx47ED+ipg9OJoM8A40AqpgNGsD0xADu0ILF5gG2O264Hmbts5gwqqwI9vCpBcsOOxA7IjskP6wAHGgcYBx4GXZqybMqKrmaJ9Osk2xmzjzYHu95s3vhVggR/fFCBRYEcseQVh0DHZQX3ggOPA4wBMWwEj1kl5+QFTN2XcMD9nU3yQ8ugLgDtmAq3O8PMgZRFQgESlpIBR0DHZQdlRfRUw4gDkQOSATEMBo68+AXq1AgYH+8pXgZ8Ge5mH3s4P9lWBF/jxTQESNXZQdlR2WHZcHzgQOSA5MDlAk+j334C7Lwe6NAGmvGIbY7bhJkDXkcBNbxVNgR/fFCBxYYdlx2UBI3ZkHzgwOUDvuswM2KR48wngvJ2Ax/7lb01L67OBUcHZ4BEd/ZwNFint2ThlChixI7ND+8AB+vggM2DfeNw25sm8WUCfI4HrT/RX4Kf+bsCNfMvc6KIs8OObAsQHdmR2aHZsdnAfOGBvOMkMYA5kn1jn5IG+plzBe8/bxpitXx3oeEswdXyvqAv8+KYA8Ykdmx2cHZ0d3gcOYA5kDmgfBYzefc78fQ9e46/Az0HtTPX9tt38rcmREgoQ39jB2dHZ4dnxfeBA5oDmwOYAj8MPX5u6Jlcf5a/AT91gmsb6LZc9qAI/eaIAyRd2eHZ8DgAOBB84sDnAOdA54KOwcoW5OMprLr4K/FRd39RruU0FfvJNAZJvHAAcCBwQHBg+cKCX3BUZaALA1ZSJ5q4Pb8/6KvDToq2p01JS4KeqbZR8UYAkAQfCfwsYHWcbY8YBf3fwdzIAPn7ZNmZp4XxTr6RnK38FfraoD/R9Grjq38Dm29hGyTcFSJJwYPQOzg44UDhgfGAA9ArOghgIP39nG9fgzz+AcUOBDg38FfhhuLa7ChjBAj9tbKMkhQIkiThQOGA4cHydpq9ewIhBUdqMt+2zNxcCS36xjTHbozVw+1TgjGv9Te8kFAVIUnHAcOBwAHEg+cBg+G8BoyAwaPFPpsBPd98FfsYC/V4A6uxoGyWJFCBJxwHEgcQB5auAEYOCgdH/5GC6Ygv8+HhQL1PgZ8QnwP7B3y2JpwBJCw4oDixfBYwYGK8/Zs5AfNjlAGDoB6a+iq9FdpIzBUiacGBxgHGg+SpgFDfWT7nkXmDgK8A2u9pGSQsFSBpxoLGAEQeerwJGUeODhm06m7KQh7Q39VQkdRQgacUBx4HHJfEciGl6ZJ11Um6eBHS+zV+pA4mFAiTtqm1sBuIt7/grYOSKYXHB7aZOyo7NbKOkmQKkUOywpxmYHKBJ/FY/7CxztnRUp3SdLUmFdCQLCQcmBygHKgdsErD+yaDXgYvuAmrUso1SKBQghYgDlQOWA9dXAaPSeMeow02m/kmj/WyjFBoFSCHjwOUA5kD2ubbiwFODs6AZwHEXq8BPgVOAFDoOYA5kTms4sONUtyFw/UvA5Q8DNevYRilkCpBiwQJGHNjX/8cM9CjxuZ321wG3fQw0PdQ2SjFQgBSbpoeYgd7++miecN37GFPH5NQrVeCnCClAihEH+qlXmIHPAHCxxbbA1eOAPk+pwE8RU4AUMw58BgCDgIGQjZLwCc42+GDfXkfbRilWChAxQcBAqGwawusbw6eY6x0q8CMBBYgYmQuhLGBU+kIo76j0fMTcYdmqgW0UUYBIaSxgxKBgAaNa9YDjLzFrOg44xf4BkVUUIFI+FjC6ezZw7o0q8CNrpACRNVONDqmEAkREnClARMSZAkREnClARMSZAkREnClARMSZAkREnClARMSZAkREnClARMSZAkREnClARMSZAkREnClARMSZAkREnClARMRZOQGSQxGZX36yH0QkkXIao2WzoWyAVKthPzj4fo79ICKJlMsYLScbygZI9Zr2g4P3nrMfRCSRchmj5WRD2QCpvYP94ODtJ4F5s+yGiCQKxybHqKtysqFsgNRrZD84WLkCGHYe8OcftkFEEoFjkmOTY9RVOdlQNkAa7Wc/OPpwPHDzWcE/dLltEJG84ljkmOTYzEU52VA2QGrUArZtbDccTbgf6LE/MP1N2yAiecExyLHIMZkLZgKzoZQqfwXs51Uevg64/yq7kaOtdwYaH2Tecrau3qcqErtlS4EfvgKmvAJ8Pd025ugf/YDTetuNVcoPkPmzgXO2A8r5LREpMnzB2OgvgC22tQ2rlJ3CEP9gi+PshogUNWZBOeFB5QcItYtoCiMi6VZBFqw5QLbfHTj0TLshIkWJGcAsWIPyr4FkLPwe6NQIWKxnXESKTvVNgRGfABtvbhvKWvMZCPH/2D3H2z8ikk4c+xWEB1UcINTsyGAO1MduiEhR4Jjn2K9ExVOYDP6RIR2AF0fbBhEpWK3PAS4cZW7fVqLyMxDif6jrSKBNZ9sgIgWJY5xjPYvwoOzOQFY3tj9wX+/grORP2yAiqVclOJdofx1wSi/bkJ3wAULTXgMGnWGWy4pIuvExkx5jgF0OsA3ZcwsQWrYEeKgf8OQtwPLfbaOIpEbV9YC2F5mFYutuYBvDcQ+QjAXzgCcGmwusvy2yjSKSWCxNyAulJ3QHata2jW5yD5CMFcuASU+ZikcfTTDBIiLJULMO0KQV0KItsPexwDrr2t/ITXQBUhqvj3w7E5j7ObB0MfD7b/Y3RCR261UD1q8O1NkB2KqBuc4Rg/gCREQKXnbrQEREyqEAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcaYAERFnChARcVblr4D9HL+F3wNzPwMWzAMW/QCsXAYs/x1YZ93gX1IF2Ggz82uzrYE6O5h2EUmseAPkmxnA208CU18FZrwNLF5gfyMLDJTa2wM77Ans1AJo3BKov1vQnoeTplcfBl4JfkVhs7rA+cPsRoR+/Aa4vYvdiEDHm4Et6tuNiD01BPhogt1IoG12BdpfZzci9vtvwKDT7UZE+EW74SbAxlsAm28D1G0IbNsY2GAj+wfiE32ArAjOKl4eA4wLBskXH9rGiNSoBex9LLDv8cDurYG117G/EbMH+gIPXmM3csRgvH8usMmWtiEiz40EhnWyGxEY+gGwXVO7EbGbzgTG32s3EqjxQcCAiXYjYr8tBE4JBnvc+EW7XRMzTg442XwRxyDar/NXHwHO2wm49dzow4M47XlxNND36OAbYivgjouAr6fb30wJ5vW7z9mNCE1+xn4QCfz1JzAr+BJ4bCDQrRnQdXdg4oOmPULRBMhvi4AbTgIGngbMn20bY8YwefJWoFMj4JHrbWNKvPO0/RARnvV9ON5uiJSDX+icOl2yD/DlR7Yxd7kHCOfePfYD3njcNuRBo+Dv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' x='0' y='0' height='100%25' width='100%25'/%3E%3C/svg%3E"
+  },
+  "category": {
+    "id": "connectors",
+    "name": "Connectors"
+  },
+  "groups": [
+    {
+      "id": "authentication",
+      "label": "Authentication"
+    },
+    {
+      "id": "inputs",
+      "label": "Input Mapping"
+    },
+    {
+      "id": "output",
+      "label": "Output Mapping"
+    },
+    {
+      "id": "errors",
+      "label": "Error Handling"
+    }
+  ],
+  "properties": [
+    {
+      "type": "Hidden",
+      "value": "com.infosys.camundaconnectors.email:smtp:1",
+      "editable": false,
+      "binding": {
+        "type": "zeebe:taskDefinition:type"
+      }
+    },
+    {
+      "label": "hostname",
+      "description": "Hostname/computer name or IP address of smtp email server",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.hostname"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "port",
+      "description": "Port for SMTP e.g. 25",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.port"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "username",
+      "description": "Username for sending mail using SMTP",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.username"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "password",
+      "description": "Password for username e.g. secrets.TOKEN, Secrets can be used to reference encrypted authentication credentials in Connectors. See the <a href= \"https://docs.camunda.io/docs/components/console/manage-clusters/manage-secrets/\" target=\"_blank\"> Secrets</a> documentation for more details.",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.password"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "smtpEmailMailBoxName",
+      "description": "Email address for mailbox",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "smtpEmailMailBoxName"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "smtpEmailToRecipients",
+      "description": "'to' recipients  email list for send email operation",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "smtpEmailToRecipients"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "smtpEmailCcRecipients",
+      "description": "'cc' recipients  email list for send email operation",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "smtpEmailCcRecipients"
+      }
+    },
+    {
+      "label": "smtpEmailBccRecipients",
+      "description": "'bcc' recipients  email list for send email operation",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "smtpEmailBccRecipients"
+      }
+    },
+    {
+      "label": "smtpEmailSubject",
+      "description": "Email Subject line",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "smtpEmailSubject"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Content Type",
+      "id": "smtpEmailContentType",
+      "description": "Type of email content",
+      "type": "Dropdown",
+      "value": "Text",
+      "choices": [
+        {
+          "name": "Text",
+          "value": "Text"
+        },
+        {
+          "name": "HTML",
+          "value": "HTML"
+        }
+      ],
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "smtpEmailContentType"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Email body as text",
+      "description": "Email body in String format",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "smtpEmailContent"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "smtpEmailContentType",
+        "equals": "Text"
+      }
+    },
+    {
+      "label": "Email body as HTML file path",
+      "description": "HTML file path for email content e.g C:/Email/Body.html",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "smtpEmailContent"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "smtpEmailContentType",
+        "equals": "HTML"
+      }
+    },
+    {
+      "label": "smtpEmailAttachments",
+      "description": "Email attachments as list of strings - attachment file path",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "smtpEmailAttachments"
+      }
+    },
+    {
+      "label": "smtpEmailImportance",
+      "description": "Boolean value (true) for marking mail as High importance, default is false i.e., low importance",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "${false}",
+      "choices": [
+        {
+          "name": "True",
+          "value": "${true}"
+        },
+        {
+          "name": "False",
+          "value": "${false}"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "smtpEmailImportance"
+      }
+    },
+    {
+      "label": "smtpEmailReadReceipt",
+      "description": "Boolean value (true) to activate read receipt flag of email, default is false",
+      "type": "Dropdown",
+      "value": "${false}",
+      "choices": [
+        {
+          "name": "True",
+          "value": "${true}"
+        },
+        {
+          "name": "False",
+          "value": "${false}"
+        }
+      ],
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "smtpEmailReadReceipt"
+      }
+    },
+    {
+      "label": "smtpEmailFollowUp",
+      "description": "follow up flag as today or tomorrow",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "smtpEmailFollowUp"
+      }
+    },
+    {
+      "label": "smtpEmailDirectReplyTo",
+      "description": "List of the directly reply to mail id",
+      "type": "Text",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "smtpEmailDirectReplyTo"
+      }
+    },
+    {
+      "label": "smtpEmailSensitivity",
+      "description": "Email sensitivity as - Confidential,Private,Personal,Normal",
+      "type": "Dropdown",
+      "value": "Normal",
+      "choices": [
+        {
+          "name": "Normal",
+          "value": "Normal"
+        },
+        {
+          "name": "Personal",
+          "value": "Personal"
+        },
+        {
+          "name": "Private",
+          "value": "Private"
+        },
+        {
+          "name": "Confidential",
+          "value": "Confidential"
+        }
+      ],
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "smtpEmailSensitivity"
+      }
+    },
+    {
+      "label": "Result Variable",
+      "description": "Name of variable to store the response in",
+      "group": "output",
+      "type": "String",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "resultVariable"
+      }
+    },
+    {
+      "label": "Result Expression",
+      "description": "Expression to map the response into process variables",
+      "group": "output",
+      "type": "Text",
+      "feel": "required",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "resultExpression"
+      }
+    },
+    {
+      "label": "Error Expression",
+      "description": "Expression to handle errors. Details in the <a href=\"https://docs.camunda.io/docs/components/connectors/use-connectors/\" target=\"_blank\">documentation</a>.",
+      "group": "errors",
+      "type": "Text",
+      "feel": "required",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "errorExpression"
+      }
+    }
+  ]
+}
