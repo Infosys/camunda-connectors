@@ -1,0 +1,66 @@
+[
+  {
+    "description": "Valid list emails - all inputs - messageIds",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "keyStorePath": "D:/keystore",
+      "keyStorePassword": "123"
+    },
+    "operation": "pop3.list-emails",
+    "data": {
+      "filters": {
+        "filter": "Subject Like 'Test'"
+      },
+      "sortBy": {
+        "sortOn": "ReceivedTime",
+        "order": "asc"
+      },
+      "maxResults": 100,
+      "outputType": "messageIds"
+    }
+  },
+  {
+    "description": "Valid list emails - all inputs - headerDetails",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "keyStorePath": "D:/keystore",
+      "keyStorePassword": "123"
+    },
+    "operation": "pop3.list-emails",
+    "data": {
+      "filters": {
+        "filter": "Subject Like 'Test'"
+      },
+      "sortBy": {
+        "sortOn": "ReceivedTime",
+        "order": "asc"
+      },
+      "maxResults": 100,
+      "outputType": "headerDetails"
+    }
+  },
+  {
+    "description": "Valid list emails - limited inputs",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com"
+    },
+    "operation": "pop3.list-emails",
+    "data": {
+      "filters": {
+        "filter": "Subject Like 'Test'"
+      }
+    }
+  }
+]

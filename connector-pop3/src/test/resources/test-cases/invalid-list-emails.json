@@ -1,0 +1,92 @@
+[
+  {
+    "description": "Invalid filter",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "keyStorePath": "D:/keystore",
+      "keyStorePassword": "123"
+    },
+    "operation": "pop3.list-emails",
+    "data": {
+      "filters": {
+        "filter": "Subject is like 'Test'"
+      },
+      "sortBy": {
+        "sortOn": "ReceivedTime",
+        "order": "asc"
+      },
+      "maxResults": 100,
+      "outputType": "headerDetails"
+    }
+  },
+  {
+    "description": "Invalid filter - logicalOperator is missing",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com"
+    },
+    "operation": "pop3.list-emails",
+    "data": {
+      "filters": {
+        "filterList": "Subject Like 'Test'"
+      },
+      "sortBy": {
+        "sortOn": "ReceivedTime",
+        "order": "asc"
+      },
+      "maxResults": 100,
+      "outputType": "headerDetails"
+    }
+  },
+  {
+    "description": "Invalid output type",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com"
+    },
+    "operation": "pop3.list-emails",
+    "data": {
+      "filters": {
+        "filter": "Subject Like 'Test'"
+      },
+      "sortBy": {
+        "sortOn": "ReceivedTime",
+        "order": "asc"
+      },
+      "maxResults": 100,
+      "outputType": "email"
+    }
+  },
+  {
+    "description": "Invalid sortBy",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com"
+    },
+    "operation": "pop3.list-emails",
+    "data": {
+      "filters": {
+        "filter": "Subject Like 'Test'"
+      },
+      "sortBy": {
+        "sortOn": "ReceivedTime",
+        "order": "brisks"
+      },
+      "maxResults": 100,
+      "outputType": "headerDetails"
+    }
+  }
+]

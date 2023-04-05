@@ -1,0 +1,32 @@
+[
+  {
+    "description": "Valid delete email - all inputs",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "keyStorePath": "D:/keystore",
+      "keyStorePassword": "123"
+    },
+    "operation": "pop3.delete-email",
+    "data": {
+      "messageId": "XE456OKL"
+    }
+  },
+  {
+    "description": "Valid delete email - limited inputs",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com"
+    },
+    "operation": "pop3.delete-email",
+    "data": {
+      "messageId": "XE456OKL-2"
+    }
+  }
+]

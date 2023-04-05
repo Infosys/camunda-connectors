@@ -1,0 +1,439 @@
+{
+  "$schema": "https://unpkg.com/@camunda/zeebe-element-templates-json-schema/resources/schema.json",
+  "name": "POP3 Email Connector",
+  "id": "com.infosys.camundaconnectors.email.pop3.v1",
+  "description": "Email operations using POP3 protocol",
+  "version": 1,
+  "entriesVisible": false,
+  "appliesTo": [
+    "bpmn:Task"
+  ],
+  "elementType": {
+    "value": "bpmn:ServiceTask"
+  },
+  "icon": {
+    "contents": "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 7 42 38'%3E%3Cpath d='M40.5,31.5v-18c0,0-18.2,12.7-19.97,13.359C18.79,26.23,0.5,13.5,0.5,13.5v18c0,2.5,0.53,3,3,3h34C40.029,34.5,40.5,34.061,40.5,31.5z M40.471,9.971c0-1.821-0.531-2.471-2.971-2.471h-34c-2.51,0-3,0.78-3,2.6l0.03,0.28c0,0,18.069,12.44,20,13.12C22.57,22.71,40.5,10.1,40.5,10.1L40.471,9.971z'/%3E%3Ctext width='50px' x='4' y='44' textLength='80%25' font-weight='bold' font-family='sans-serif' font-size='x-small'%3EPOP3%3C/text%3E%3C/svg%3E"
+  },
+  "category": {
+    "id": "connectors",
+    "name": "Connectors"
+  },
+  "groups": [
+    {
+      "id": "authentication",
+      "label": "Authentication"
+    },
+    {
+      "id": "operation",
+      "label": "Operation"
+    },
+    {
+      "id": "inputs",
+      "label": "Input Mapping"
+    },
+    {
+      "id": "output",
+      "label": "Output Mapping"
+    },
+    {
+      "id": "errors",
+      "label": "Error Handling"
+    }
+  ],
+  "properties": [
+    {
+      "type": "Hidden",
+      "value": "com.infosys.camundaconnectors.email:pop3:1",
+      "editable": false,
+      "binding": {
+        "type": "zeebe:taskDefinition:type"
+      }
+    },
+    {
+      "id": "operation",
+      "label": "Operation",
+      "description": "Operation to be done",
+      "type": "Dropdown",
+      "value": "pop3.list-emails",
+      "choices": [
+        {
+          "name": "List Emails",
+          "value": "pop3.list-emails"
+        },
+        {
+          "name": "Search Emails",
+          "value": "pop3.search-emails"
+        },
+        {
+          "name": "Delete Email",
+          "value": "pop3.delete-email"
+        },
+        {
+          "name": "Download Email",
+          "value": "pop3.download-email"
+        }
+      ],
+      "group": "operation",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "operation"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "hostname",
+      "description": "Hostname/computer name or IP address of mysql server host. e.g. localhost",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.hostname"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "portNumber",
+      "description": "Port number for email server. e.g. 995",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.portNumber"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "username",
+      "description": "Username for email Id",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.username"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "password",
+      "description": "Password for username e.g. secrets.TOKEN, Secrets can be used to reference encrypted authentication credentials in Connectors. See the <a href= \"https://docs.camunda.io/docs/components/console/manage-clusters/manage-secrets/\" target=\"_blank\"> Secrets</a> documentation for more details.",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.password"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "domainName",
+      "description": "Domain name for email Id",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.domainName"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "keyStorePath",
+      "description": "Keystore Path of email server keystore",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.keyStorePath"
+      }
+    },
+    {
+      "label": "keyStorePassword",
+      "description": "keyStorePassword for keystore e.g. secrets.TOKEN, Secrets can be used to reference encrypted authentication credentials in Connectors. See the <a href= \"https://docs.camunda.io/docs/components/console/manage-clusters/manage-secrets/\" target=\"_blank\"> Secrets</a> documentation for more details.",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.keyStorePassword"
+      }
+    },
+    {
+      "label": "messageId",
+      "description": "messageId of the email to be deleted",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.messageId"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "pop3.delete-email"
+      }
+    },
+    {
+      "label": "messageId",
+      "description": "messageId of the email to be downloaded",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.messageId"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "pop3.download-email"
+      }
+    },
+    {
+      "label": "downloadFolderPath",
+      "description": "Folder path where email needs to be downloaded",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.downloadFolderPath"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "pop3.download-email"
+      }
+    },
+    {
+      "label": "filters",
+      "description": "Filters for list emails, e.g. {\"filter\": \"Subject = 'Test'\"} for details check documentation",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.filters"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "pop3.list-emails"
+      }
+    },
+    {
+      "label": "sortBy",
+      "description": "sortBy - Sort By map for sorting emails in list emails. e.g. {\"sortOn\": \"ReceivedTime\", \"order\": \"asc\"}",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.sortBy"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "pop3.list-emails"
+      }
+    },
+    {
+      "label": "maxResults",
+      "description": "maxResults is the maximum results in the output",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.maxResults"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "pop3.list-emails"
+      }
+    },
+    {
+      "label": "outputType",
+      "description": "Output type - messageIds and headerDetails",
+      "type": "Dropdown",
+      "group": "inputs",
+      "value": "messageIds",
+      "choices": [
+        {
+          "name": "Header Details",
+          "value": "headerDetails"
+        },
+        {
+          "name": "Message Ids",
+          "value": "messageIds"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.outputType"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "pop3.list-emails"
+      }
+    },
+    {
+      "label": "searchType",
+      "description": "Search content match type",
+      "type": "Dropdown",
+      "group": "inputs",
+      "value": "partial",
+      "choices": [
+        {
+          "name": "Complete",
+          "value": "complete"
+        },
+        {
+          "name": "Partial",
+          "value": "partial"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.searchType"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "pop3.search-emails"
+      }
+    },
+    {
+      "label": "searchField",
+      "description": "Email field to search against. e.g: subject, sender/from, body/content, attachment, or all (to search in subject/from/body)",
+      "type": "Dropdown",
+      "group": "inputs",
+      "value": "subject",
+      "choices": [
+        {
+          "name": "Subject",
+          "value": "subject"
+        },
+        {
+          "name": "From Address",
+          "value": "from"
+        },
+        {
+          "name": "Body",
+          "value": "body"
+        },
+        {
+          "name": "Attachment",
+          "value": "attachment"
+        },
+        {
+          "name": "All",
+          "value": "all"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.searchField"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "pop3.search-emails"
+      }
+    },
+    {
+      "label": "searchContent",
+      "description": "Content to search in the mails",
+      "type": "Text",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.searchContent"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "pop3.search-emails"
+      }
+    },
+    {
+      "label": "outputType",
+      "description": "Output type - messageIds and headerDetails",
+      "type": "Dropdown",
+      "group": "inputs",
+      "value": "messageIds",
+      "choices": [
+        {
+          "name": "Header Details",
+          "value": "headerDetails"
+        },
+        {
+          "name": "Message Ids",
+          "value": "messageIds"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.outputType"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "pop3.search-emails"
+      }
+    },
+    {
+      "label": "Result Variable",
+      "description": "Name of variable to store the response in",
+      "group": "output",
+      "type": "String",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "resultVariable"
+      }
+    },
+    {
+      "label": "Result Expression",
+      "description": "Expression to map the response into process variables",
+      "group": "output",
+      "type": "Text",
+      "feel": "required",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "resultExpression"
+      }
+    },
+    {
+      "label": "Error Expression",
+      "description": "Expression to handle errors. Details in the <a href=\"https://docs.camunda.io/docs/components/connectors/use-connectors/\" target=\"_blank\">documentation</a>.",
+      "group": "errors",
+      "type": "Text",
+      "feel": "required",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "errorExpression"
+      }
+    }
+  ]
+}

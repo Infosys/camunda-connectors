@@ -1,0 +1,34 @@
+[
+  {
+    "description": "Valid download email - all inputs",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "keyStorePath": "D:/keystore",
+      "keyStorePassword": "123"
+    },
+    "operation": "pop3.download-email",
+    "data": {
+      "messageId": "XE456OKL",
+      "downloadFolderPath": "D:/Dump"
+    }
+  },
+  {
+    "description": "Valid download email - limited inputs",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com"
+    },
+    "operation": "pop3.download-email",
+    "data": {
+      "messageId": "XE456OKL-2",
+      "downloadFolderPath": "D:/Dump"
+    }
+  }
+]
