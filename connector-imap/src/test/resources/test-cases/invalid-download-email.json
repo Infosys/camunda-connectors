@@ -1,0 +1,84 @@
+[
+  {
+    "description": "Invalid Message ID - null",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "keyStorePath": "D:/keystore",
+      "keyStorePassword": "123",
+      "folderPath": "Inbox"
+    },
+    "operation": "imap.download-email",
+    "data": {
+      "messageId": null,
+      "downloadFolderPath": "D:/Email"
+    }
+  },
+  {
+    "description": "Message ID will not match",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "folderPath": "Sent Items"
+    },
+    "operation": "imap.download-email",
+    "data": {
+      "messageId": "$#$",
+      "downloadFolderPath": "D:/Email"
+    }
+  },
+  {
+    "description": "Invalid download path - null",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "folderPath": "Sent Items"
+    },
+    "operation": "imap.download-email",
+    "data": {
+      "messageId": "Kilo-45",
+      "downloadFolderPath": null
+    }
+  },
+  {
+    "description": "Invalid download path - Blank",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "folderPath": "Sent Items"
+    },
+    "operation": "imap.download-email",
+    "data": {
+      "messageId": "Kilo-45",
+      "downloadFolderPath": ""
+    }
+  },
+  {
+    "description": "Invalid download path",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "folderPath": "Sent Items"
+    },
+    "operation": "imap.download-email",
+    "data": {
+      "messageId": "Kilo-45",
+      "downloadFolderPath": "X:/solo"
+    }
+  }
+]

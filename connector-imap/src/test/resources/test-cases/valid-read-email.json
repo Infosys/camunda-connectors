@@ -1,0 +1,57 @@
+[
+  {
+    "description": "Valid read email - all inputs - header",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "keyStorePath": "D:/keystore",
+      "keyStorePassword": "123",
+      "folderPath": "Inbox"
+    },
+    "operation": "imap.read-email",
+    "data": {
+      "messageId": "12-Troy-67",
+      "postReadAction": "Read",
+      "outputType": "header",
+      "readLatestResponse": false
+    }
+  },
+  {
+    "description": "Valid read email - all inputs - detailedHeader",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "keyStorePath": "D:/keystore",
+      "keyStorePassword": "123",
+      "folderPath": "Inbox"
+    },
+    "operation": "imap.read-email",
+    "data": {
+      "messageId": "12-Troy-67",
+      "postReadAction": "Read",
+      "outputType": "detailedHeader",
+      "readLatestResponse": true
+    }
+  },
+  {
+    "description": "Valid read email - limited inputs",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "folderPath": "Inbox"
+    },
+    "operation": "imap.read-email",
+    "data": {
+      "messageId": "12-Troy-67"
+    }
+  }
+]

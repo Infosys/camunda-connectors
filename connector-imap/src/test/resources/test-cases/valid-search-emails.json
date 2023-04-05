@@ -1,0 +1,58 @@
+[
+  {
+    "description": "Valid search emails - all inputs - messageIdList",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "keyStorePath": "D:/keystore",
+      "keyStorePassword": "123",
+      "folderPath": "Inbox"
+    },
+    "operation": "imap.search-emails",
+    "data": {
+      "searchType": "partial",
+      "searchField": "Subject",
+      "searchContent": "Test mail for search",
+      "outputType": "messageIds"
+    }
+  },
+  {
+    "description": "Valid search emails - all inputs - headerDetails",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "keyStorePath": "D:/keystore",
+      "keyStorePassword": "123",
+      "folderPath": "Inbox"
+    },
+    "operation": "imap.search-emails",
+    "data": {
+      "searchType": "partial",
+      "searchField": "Subject",
+      "searchContent": "Test mail for search",
+      "outputType": "headerDetails"
+    }
+  },
+  {
+    "description": "Valid search emails - limited inputs",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "folderPath": "Inbox"
+    },
+    "operation": "imap.search-emails",
+    "data": {
+      "searchField": "Subject",
+      "searchContent": "Test mail for search"
+    }
+  }
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "description": "Invalid search field",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "keyStorePath": "D:/keystore",
+      "keyStorePassword": "123",
+      "folderPath": "Inbox"
+    },
+    "operation": "imap.search-emails",
+    "data": {
+      "searchType": "partial",
+      "searchField": "field",
+      "searchContent": "Test mail for search",
+      "outputType": "messageIdList"
+    }
+  },
+  {
+    "description": "Invalid search emails outputType",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "keyStorePath": "D:/keystore",
+      "keyStorePassword": "123",
+      "folderPath": "Inbox"
+    },
+    "operation": "imap.search-emails",
+    "data": {
+      "searchType": "partial",
+      "searchField": "Subject",
+      "searchContent": "Test mail for search",
+      "outputType": "email"
+    }
+  },
+  {
+    "description": "Invalid search content - null",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "folderPath": "Inbox"
+    },
+    "operation": "imap.search-emails",
+    "data": {
+      "searchField": "Subject",
+      "searchContent": null
+    }
+  },
+  {
+    "description": "Invalid search content - is blank",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "folderPath": "Inbox"
+    },
+    "operation": "imap.search-emails",
+    "data": {
+      "searchField": "Subject",
+      "searchContent": ""
+    }
+  }
+]

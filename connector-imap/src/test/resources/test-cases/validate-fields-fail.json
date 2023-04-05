@@ -1,0 +1,101 @@
+[
+  {
+    "description": "without password",
+    "authentication": {
+      "username": "ALPHA",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "keyStorePath": "D:/keystore",
+      "keyStorePassword": "123",
+      "folderPath": "Inbox"
+    },
+    "operation": "imap.delete-email",
+    "data": {
+      "messageId": "XE456OKL"
+    }
+  },
+  {
+    "description": "Blank password",
+    "authentication": {
+      "username": "ALPHA",
+      "portNumber": "995",
+      "password": " ",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "keyStorePath": "D:/keystore",
+      "keyStorePassword": "123",
+      "folderPath": "Inbox"
+    },
+    "operation": "imap.delete-email",
+    "data": {
+      "messageId": "XE456OKL"
+    }
+  },
+  {
+    "description": "Data is null",
+    "authentication": {
+      "username": "ALPHA",
+      "portNumber": "995",
+      "password": "secrets.TOKEN",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "keyStorePath": "D:/keystore",
+      "keyStorePassword": "123",
+      "folderPath": "Inbox"
+    },
+    "operation": "imap.delete-email",
+    "data": null
+  },
+  {
+    "description": "port is blank",
+    "authentication": {
+      "username": "ALPHA",
+      "portNumber": " ",
+      "password": "secrets.TOKEN",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "keyStorePath": "D:/keystore",
+      "keyStorePassword": "123",
+      "folderPath": "Inbox"
+    },
+    "operation": "imap.delete-email",
+    "data": {
+      "messageId": "XE456OKL"
+    }
+  },
+  {
+    "description": "blank username",
+    "authentication": {
+      "username": "",
+      "portNumber": "995",
+      "password": "secrets.TOKEN",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "keyStorePath": "D:/keystore",
+      "keyStorePassword": "123",
+      "folderPath": "Inbox"
+    },
+    "operation": "imap.delete-email",
+    "data": {
+      "messageId": "XE456OKL"
+    }
+  },
+  {
+    "description": "host is null",
+    "authentication": {
+      "username": "ALPHA",
+      "portNumber": "995",
+      "password": "secrets.TOKEN",
+      "hostname": null,
+      "domainName": "localhost.com",
+      "keyStorePath": "D:/keystore",
+      "keyStorePassword": "123",
+      "folderPath": "Inbox"
+    },
+    "operation": "imap.delete-email",
+    "data": {
+      "messageId": "XE456OKL"
+    }
+  }
+]

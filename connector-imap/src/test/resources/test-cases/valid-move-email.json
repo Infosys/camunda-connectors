@@ -1,0 +1,38 @@
+[
+  {
+    "description": "Valid move email - all inputs",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "keyStorePath": "D:/keystore",
+      "keyStorePassword": "123",
+      "folderPath": "Inbox"
+    },
+    "operation": "imap.move-email",
+    "data": {
+      "messageId": "XE456OKL",
+      "targetFolderPath": "Saved Items",
+      "createTargetFolder": true
+    }
+  },
+  {
+    "description": "Valid move email - limited inputs",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "folderPath": "Sent Items"
+    },
+    "operation": "imap.move-email",
+    "data": {
+      "messageId": "XE456OKL-2",
+      "targetFolderPath": "Sent Items",
+      "createTargetFolder": false
+    }
+  }
+]

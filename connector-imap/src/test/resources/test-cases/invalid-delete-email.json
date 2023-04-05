@@ -1,0 +1,34 @@
+[
+  {
+    "description": "Message ID will not match",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "keyStorePath": "D:/keystore",
+      "keyStorePassword": "123",
+      "folderPath": "Inbox"
+    },
+    "operation": "imap.delete-email",
+    "data": {
+      "messageId": "&*(&("
+    }
+  },
+  {
+    "description": "Invalid Message ID",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "folderPath": "Sent Items"
+    },
+    "operation": "imap.delete-email",
+    "data": {
+      "messageId": null
+    }
+  }
+]

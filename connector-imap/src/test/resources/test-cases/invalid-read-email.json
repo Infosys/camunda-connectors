@@ -1,0 +1,60 @@
+[
+  {
+    "description": "Invalid Message ID - null",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "keyStorePath": "D:/keystore",
+      "keyStorePassword": "123",
+      "folderPath": "Inbox"
+    },
+    "operation": "imap.read-email",
+    "data": {
+      "messageId": null,
+      "postReadAction": "Read",
+      "outputType": "header",
+      "readLatestResponse": false
+    }
+  },
+  {
+    "description": "Message ID will not match",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "folderPath": "Sent Items"
+    },
+    "operation": "imap.read-email",
+    "data": {
+      "messageId": "12-67",
+      "postReadAction": "Read",
+      "outputType": "header",
+      "readLatestResponse": false
+    }
+  },
+  {
+    "description": "Invalid outputType",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "keyStorePath": "D:/keystore",
+      "keyStorePassword": "123",
+      "folderPath": "Inbox"
+    },
+    "operation": "imap.read-email",
+    "data": {
+      "messageId": "12-Troy-67",
+      "postReadAction": "Read",
+      "outputType": "messageID",
+      "readLatestResponse": false
+    }
+  }
+]

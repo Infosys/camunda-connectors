@@ -1,0 +1,36 @@
+[
+  {
+    "description": "Valid download email - all inputs",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "keyStorePath": "D:/keystore",
+      "keyStorePassword": "123",
+      "folderPath": "Inbox"
+    },
+    "operation": "imap.download-email",
+    "data": {
+      "messageId": "XE456OKL",
+      "downloadFolderPath": "D:/Email"
+    }
+  },
+  {
+    "description": "Valid download email - limited inputs",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "folderPath": "Sent Items"
+    },
+    "operation": "imap.download-email",
+    "data": {
+      "messageId": "XE456OKL-2",
+      "downloadFolderPath": "D:/Email"
+    }
+  }
+]

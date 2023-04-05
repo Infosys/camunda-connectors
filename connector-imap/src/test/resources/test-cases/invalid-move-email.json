@@ -1,0 +1,71 @@
+[
+  {
+    "description": "Invalid Message ID - null",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "keyStorePath": "D:/keystore",
+      "keyStorePassword": "123",
+      "folderPath": "Inbox"
+    },
+    "operation": "imap.move-email",
+    "data": {
+      "messageId": null,
+      "targetFolderPath": "Saved Items",
+      "createTargetFolder": true
+    }
+  },
+  {
+    "description": "Message ID will not match",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "folderPath": "Sent Items"
+    },
+    "operation": "imap.move-email",
+    "data": {
+      "messageId": "jio-2",
+      "targetFolderPath": "Sent Items",
+      "createTargetFolder": false
+    }
+  },
+  {
+    "description": "Invalid target path - null",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "folderPath": "Sent Items"
+    },
+    "operation": "imap.move-email",
+    "data": {
+      "messageId": "XE456OKL-2",
+      "targetFolderPath": null,
+      "createTargetFolder": false
+    }
+  },
+  {
+    "description": "Invalid target path - does not exists",
+    "authentication": {
+      "username": "ALPHA",
+      "password": "secrets.TOKEN",
+      "portNumber": "995",
+      "hostname": "HOSTNAME",
+      "domainName": "localhost.com",
+      "folderPath": "Sent Items"
+    },
+    "operation": "imap.move-email",
+    "data": {
+      "messageId": "XE456OKL-2",
+      "targetFolderPath": "Yuna"
+    }
+  }
+]
