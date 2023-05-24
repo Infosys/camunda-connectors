@@ -1,0 +1,104 @@
+[
+  {
+    "description": "without password",
+    "authentication": {
+      "hostname": "HostName",
+      "portNumber": "22",
+      "username": "Username",
+      "known_hostsPath": "known_host_Path"
+    },
+    "operation": "sftp.delete-file",
+    "data": {
+      "folderPath": "C:/Users/Documents",
+      "fileName":"Example.txt"
+    }
+  },
+  {
+    "description": "Blank password",
+    "authentication": {
+      "hostname": "HostName",
+      "portNumber": "22",
+      "username": "Username",
+      "password":" ",
+      "known_hostsPath": "known_host_Path"
+    },
+    "operation": "sftp.delete-file",
+    "data": {
+      "folderPath": "C:/Users/Documents",
+      "fileName":"Example.txt"
+    }
+  },
+  {
+    "description": "Data is null",
+    "authentication": {
+      "hostname": "HostName",
+      "portNumber": "22",
+      "username": "Username",
+      "password":"secrets.TOKEN",
+      "known_hostsPath": "known_host_Path"
+    },
+    "operation": "sftp.delete-file",
+    "data": null
+  },
+  {
+    "description": "port is blank",
+    "authentication": {
+      "hostname": "HostName",
+      "portNumber": " ",
+      "username": "Username",
+      "password":"secrets.TOKEN",
+      "known_hostsPath": "known_host_Path"
+    },
+    "operation": "sftp.delete-file",
+    "data": {
+      "folderPath": "C:/Users/Documents",
+      "fileName":"Example.txt"
+    }
+  },
+  {
+    "description": "blank username",
+    "authentication": {
+      "hostname": "HostName",
+      "portNumber": "22",
+      "username": " ",
+      "password":"secrets.TOKEN",
+      "known_hostsPath": "known_host_Path"
+    },
+    "operation": "sftp.delete-file",
+    "data": {
+      "folderPath": "C:/Users/Documents",
+      "fileName":"Example.txt"
+    }
+  },
+  {
+    "description": "host is null",
+    "authentication": {
+      "hostname": " ",
+      "portNumber": "22",
+      "username": "Username",
+      "password":"secrets.TOKEN",
+      "known_hostsPath": "known_host_Path"
+    },
+    "operation": "sftp.delete-file",
+    "data": {
+      "folderPath": "C:/Users/Documents",
+      "fileName":"Example.txt"
+    }
+  }
+  ,
+  {
+    "description": "Known_hostsPath is blank",
+    "authentication": {
+      "hostname": "HostName",
+      "portNumber": "22",
+      "username": "Username",
+      "password":"secrets.TOKEN",
+      "known_hostsPath": " "
+    },
+    "operation": "sftp.delete-file",
+    "data": {
+      "folderPath": "C:/Users/Documents",
+      "fileName":"Example.txt"
+    }
+  }
+]

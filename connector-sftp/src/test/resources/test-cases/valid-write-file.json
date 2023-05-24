@@ -1,0 +1,32 @@
+[
+    {
+      "description": "Valid write file-all inputs  ",
+      "authentication": {
+   "hostname": "Hostname",
+        "portNumber": "22",
+        "username": "Username",
+        "password": "Password"       ,
+        "knownHostsPath":"pathOf/known_hosts"
+      },
+      "operation": "sftp.write-file",
+      "data": {
+          "filePath":"C:\\Users\\Documents\\Demo1",
+          "content":"Hello world!!!"
+      }
+    },
+  {
+    "description": "Valid write file-all inputs  ",
+    "authentication": {
+      "hostname": "Hostname",
+      "portNumber": "22",
+      "username": "Username",
+      "password": "Password"       ,
+      "knownHostsPath":"pathOf/known_hosts"
+    },
+    "operation": "sftp.write-file",
+    "data": {
+      "filePath":"C:\\Users\\Documents\\Demo1",
+      "content":""
+    }
+  }
+  ]

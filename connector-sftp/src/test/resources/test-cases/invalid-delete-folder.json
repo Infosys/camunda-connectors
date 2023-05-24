@@ -1,0 +1,17 @@
+[
+    {
+      "description": "InValid delete files - invalid fileName ",
+      "authentication": {
+        "hostname": "Hostname",
+        "portNumber": "22",
+        "username": "Username",
+        "password": "Password",
+        "knownHostsPath":"pathOf/known_hosts"
+      },
+      "operation": "sftp.delete-folder",
+      "data": {
+          "folderPath":""
+          
+      }
+    }
+  ]

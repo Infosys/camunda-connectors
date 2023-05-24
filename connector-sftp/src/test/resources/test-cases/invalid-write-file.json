@@ -1,0 +1,17 @@
+[
+    {
+      "description": "Invalid write file-wrong FilePath  ",
+      "authentication": {
+   "hostname": "Hostname",
+        "portNumber": "22",
+        "username": "Username",
+        "password": "Password"       ,
+        "knownHostsPath":"pathOf/known_hosts"
+      },
+      "operation": "sftp.write-file",
+      "data": {
+          "filePath":"",
+          "content":"Hello world!!!"
+      }
+    }
+  ]

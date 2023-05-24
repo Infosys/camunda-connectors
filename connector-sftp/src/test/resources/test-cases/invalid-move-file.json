@@ -1,0 +1,49 @@
+[
+    {
+      "description": "InValid move file-invalid actionIfFileExists ",
+      "authentication": {
+    "hostname": "Hostname",
+        "portNumber": "22",
+        "username": "Username",
+        "password": "Password"       ,
+        "knownHostsPath":"pathOf/known_hosts"
+      },
+      "operation": "sftp.move-file",
+      "data": {
+          "sourceFilePath":"C:\\Users\\Documents\\Demo1",
+          "targetDirectory":"C:\\Users\\Documents\\Demo1",
+          "actionIfFileExists":"rename"
+      }
+    },
+  {
+    "description": "InValid move file-invalid sourceFilePath ",
+    "authentication": {
+      "hostname": "Hostname",
+      "portNumber": "22",
+      "username": "Username",
+      "password": "Password"       ,
+      "knownHostsPath":"pathOf/known_hosts"
+    },
+    "operation": "sftp.move-file",
+    "data": {
+      "sourceFilePath":"",
+      "targetDirectory":"C:\\Users\\Documents\\Demo1",
+      "actionIfFileExists":"remane"
+    }
+  },   {
+  "description": "InValid move file-invalid targetDirectory ",
+  "authentication": {
+    "hostname": "Hostname",
+    "portNumber": "22",
+    "username": "Username",
+    "password": "Password"       ,
+    "knownHostsPath":"pathOf/known_hosts"
+  },
+  "operation": "sftp.move-file",
+  "data": {
+    "sourceFilePath":"C:\\Users\\Documents\\Demo1",
+    "targetDirectory":"",
+    "actionIfFileExists":"rename"
+  }
+}
+  ]

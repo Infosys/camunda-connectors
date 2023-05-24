@@ -1,0 +1,103 @@
+[
+  {
+    "description": "InValid list folders - wrong sortBy",
+    "authentication": {
+      "hostname": "Hostname",
+        "portNumber": "22",
+        "username": "Username",
+        "password": "Password"       ,
+        "knownHostsPath":"pathOf/known_hosts"
+     
+    },
+    "operation": "sftp.list-folders",
+    "data": {
+      "folderPath":"c:/users/Documents",
+      "namePattern":"",
+      "modifiedBefore":"01-4-2023 6:00:00",
+      "modifiedAfter":"31-3-2023 3:00:00",
+      "searchSubFoldersAlso":"True",
+      "maxNumberOfFiles":"23",
+      "maxDepth":"3",
+      "sortBy":{
+        "sortOn":"TempFiles",
+        "order":"asc"
+      },
+      "outputType":"folderPaths"
+    }
+  },{
+  "description": "InValid list folders - wrong folderPath",
+  "authentication": {
+    "hostname": "Hostname",
+    "portNumber": "22",
+    "username": "Username",
+    "password": "Password"       ,
+    "knownHostsPath":"pathOf/known_hosts"
+
+  },
+  "operation": "sftp.list-folders",
+  "data": {
+    "folderPath":"",
+    "namePattern":"",
+    "modifiedBefore":"01-4-2023 6:00:00",
+    "modifiedAfter":"31-3-2023 3:00:00",
+    "searchSubFoldersAlso":"True",
+    "maxNumberOfFiles":"23",
+    "maxDepth":"3",
+    "sortBy":{
+      "sortOn":"TempFiles",
+      "order":"asc"
+    },
+    "outputType":"folderPaths"
+  }
+},{
+  "description": "InValid list folders - wrong namePattern",
+  "authentication": {
+    "hostname": "Hostname",
+    "portNumber": "22",
+    "username": "Username",
+    "password": "Password"       ,
+    "knownHostsPath":"pathOf/known_hosts"
+
+  },
+  "operation": "sftp.list-folders",
+  "data": {
+    "folderPath":"c:/users/Documents",
+    "namePattern":"*txt",
+    "modifiedBefore":"01-4-2023 6:00:00",
+    "modifiedAfter":"31-3-2023 3:00:00",
+    "searchSubFoldersAlso":"True",
+    "maxNumberOfFiles":"23",
+    "maxDepth":"3",
+    "sortBy":{
+      "sortOn":"TempFiles",
+      "order":"asc"
+    },
+    "outputType":"folderPaths"
+  }
+},{
+  "description": "InValid list folders - wrong searchSubFolders",
+  "authentication": {
+    "hostname": "Hostname",
+    "portNumber": "22",
+    "username": "Username",
+    "password": "Password"       ,
+    "knownHostsPath":"pathOf/known_hosts"
+
+  },
+  "operation": "sftp.list-folders",
+  "data": {
+    "folderPath":"c:/users/Documents",
+    "namePattern":"",
+    "modifiedBefore":"01-4-2023 6:00:00",
+    "modifiedAfter":"31-3-2023 3:00:00",
+    "searchSubFoldersAlso":"searchSubFolders",
+    "maxNumberOfFiles":"23",
+    "maxDepth":"3",
+    "sortBy":{
+      "sortOn":"TempFiles",
+      "order":"asc"
+    },
+    "outputType":"filePaths"
+  }
+}
+  ]

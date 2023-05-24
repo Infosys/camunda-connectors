@@ -1,0 +1,17 @@
+[
+    {
+      "description": "Valid delete files - all inputs ",
+      "authentication": {
+        "hostname": "Hostname",
+        "portNumber": "22",
+        "username": "Username",
+        "password": "Password"       ,
+        "knownHostsPath":"pathOf/known_hosts"
+      },
+      "operation": "sftp.delete-file",
+      "data": {
+          "folderPath":"C:/Users/curation.bot/Documents",
+          "fileName":"demo.example"
+      }
+    }
+  ]

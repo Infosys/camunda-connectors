@@ -1,0 +1,1013 @@
+{
+  "$schema": "https://unpkg.com/@camunda/zeebe-element-templates-json-schema/resources/schema.json",
+  "name": "SFTP File Connector",
+  "id": "com.infosys.camundaconnectors.file.sftp.v1",
+  "description": "Files and Folders Operation using SFTP Connector",
+  "version": 1,
+  "entriesVisible": false,
+  "appliesTo": [
+    "bpmn:Task"
+  ],
+  "elementType": {
+    "value": "bpmn:ServiceTask"
+  },
+  "icon": {
+    "contents": "data:image/svg+xml;charset=utf-8,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='18' height='18' viewBox='0 0 18 18'%3E%3Cimage xlink:href='data:image/png;base64,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' x='0' y='0' height='100%25' width='100%25'/%3E%3C/svg%3E"
+  },
+  "category": {
+    "id": "connectors",
+    "name": "Connectors"
+  },
+  "groups": [
+    {
+      "id": "authentication",
+      "label": "Authentication"
+    },
+    {
+      "id": "operation",
+      "label": "Operation"
+    },
+    {
+      "id": "inputs",
+      "label": "Input Mapping"
+    },
+    {
+      "id": "output",
+      "label": "Output Mapping"
+    },
+    {
+      "id": "errors",
+      "label": "Error Handling"
+    }
+  ],
+  "properties": [
+    {
+      "type": "Hidden",
+      "value": "com.infosys.camundaconnectors.files:sftp:1",
+      "editable": false,
+      "binding": {
+        "type": "zeebe:taskDefinition:type"
+      }
+    },
+    {
+      "id": "operation",
+      "label": "Operation",
+      "description": "Operation to be done",
+      "type": "Dropdown",
+      "value": "sftp.list-files",
+      "choices": [
+        {
+          "name": "Copy File",
+          "value": "sftp.copy-file"
+        },
+        {
+          "name": "Copy Folder",
+          "value": "sftp.copy-folder"
+        },
+        {
+          "name": "Create Folder",
+          "value": "sftp.create-folder"
+        },
+        {
+          "name": "Delete File",
+          "value": "sftp.delete-file"
+        },
+        {
+          "name": "Delete Folder",
+          "value": "sftp.delete-folder"
+        },
+        {
+          "name": "List Files",
+          "value": "sftp.list-files"
+        },
+        {
+          "name": "List Folders",
+          "value": "sftp.list-folders"
+        },
+        {
+          "name": "Move File",
+          "value": "sftp.move-file"
+        },
+        {
+          "name": "Move Folder",
+          "value": "sftp.move-folder"
+        },
+        {
+          "name": "Read File",
+          "value": "sftp.read-file"
+        },
+        {
+          "name": "Write File",
+          "value": "sftp.write-file"
+        }
+      ],
+      "group": "operation",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "operation"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Host",
+      "description": "Hostname/computer name or IP address of remote server host.",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.hostname"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Port",
+      "description": "Port number for host server. e.g. 22",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.portNumber"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Username",
+      "description": "Username for remote host server",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.username"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Password",
+      "description": "Password for username e.g. secrets.TOKEN, Secrets can be used to reference encrypted authentication credentials in Connectors. See the <a href= \"https://docs.camunda.io/docs/components/console/manage-clusters/manage-secrets/\" target=\"_blank\"> Secrets</a> documentation for more details.",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.password"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Known Hosts Path",
+      "description": "Enter known_hosts file address present in C:\\user\\.ssh\\known_hosts. If known_hosts file does not exists generate it. Refer Documentation for more details",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.knownHostsPath"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "filePath",
+      "description": "File path in remote server",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.filePath"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.list-files"
+      }
+    },
+    {
+      "label": "File Name Pattern",
+      "description": "Regular expression Simple *.txt kind works",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.fileNamePattern"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.list-files"
+      }
+    },
+     {
+      "label": "ModifiedBefore",
+      "description": "Enter date in the format [dd-M-yyyy hh:mm:ss] which provide list of files modified before this data",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.modifiedBefore"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.list-files"
+      }
+    },
+    {
+      "label": "ModifiedAfter",
+      "description": "Enter date in the format [dd-M-yyyy hh:mm:ss] which provide list of files modified after this data",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.modifiedAfter"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.list-files"
+      }
+    },
+    {
+      "label": "SearchSubFolders",
+      "description": "If the value is True, Search subfolders in given folder path ",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "false",
+      "choices": [
+        {
+          "name": "True",
+          "value": "true"
+        },
+        {
+          "name": "False",
+          "value": "false"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.searchSubFoldersAlso"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.list-files"
+      }
+    },
+    {
+      "label": "maxNumberOfFiles",
+      "description": "The maximum number of files to get as a output.",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.maxNumberOfFiles"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.list-files"
+      }
+    },
+    {
+      "label": "maxDepth",
+      "description": "Max level for search inside folder-path",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.maxDepth"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.list-files"
+      }
+    },
+    {
+      "label": "outputType",
+      "description": "Output Type of the folders. If set as fileNames, output will contain only names of files. If set as FileDetails then output will contain fileDetails",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "folderPaths",
+      "choices": [
+        {
+          "name": "FileNames",
+          "value": "filePaths"
+        },
+        {
+          "name": "FileDetails",
+          "value": "fileDetails"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.outputType"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.list-files"
+      }
+    },
+    {
+      "label": "sortBy",
+      "description": "sortBy - Sort By map for sorting files in list files. e.g. {\"sortOn\": \"size\", \"order\": \"asc\"}",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.sortBy"
+      },
+      "constraints": {
+        "notEmpty": false
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.list-files"
+      }
+    } ,
+    {
+      "label": "sourceFilePath",
+      "description": "Address of Source file which is getting copied",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.sourceFilePath"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.copy-file"
+      }
+    },
+    {
+      "label": "targetDirectory",
+      "description": "Address of Target folder",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.targetDirectory"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.copy-file"
+      }
+    },
+    {
+      
+      "label": "Action If File Exists",
+      "description": "If the file is already present in Target folder, Perform rename, replace or skip operations",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "rename",
+      "choices": [
+        {
+          "name": "Rename",
+          "value": "rename"
+        },
+        {
+          "name": "Replace",
+          "value": "replace"
+        },
+        {
+          "name": "Skip",
+          "value": "Skip"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.actionIfFileExists"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.copy-file"
+      }
+    },
+    {
+      "label": "createTargetFolder",
+      "description": "If set True, it will create new Target folder. Default false",
+      "type": "Dropdown",
+      "group": "inputs",
+      "value": "false",
+      "choices": [
+        {
+          "name": "True",
+          "value": "true"
+        },
+        {
+          "name": "False",
+          "value": "false"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.createNewFolderIfNotExists"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.copy-file"
+      }
+    },
+    {
+      "label": "sourceFilePath",
+      "description": "Address of file along with its extension which you want to read. ",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.sourceFilePath"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.read-file"
+      }
+    },
+    {
+      "label": "sourceDirectory",
+      "description": "Full Address of folder which you want to copy",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.sourceDirectory"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.copy-folder"
+      }
+    },
+    {
+      "label": "targetDirectory",
+      "description": "Address of Target Directory were one want's to paste a folder",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.targetDirectory"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.copy-folder"
+      }
+    },
+    {
+      "label": "Action If Folder Exists",
+      "description": "If the folder is already present in Target folder, rename, replace or skip operation have to be performed",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "rename",
+      "choices": [
+        {
+          "name": "Rename",
+          "value": "rename"
+        },
+        {
+          "name": "Replace",
+          "value": "replace"
+        },
+        {
+          "name": "Skip",
+          "value": "Skip"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.actionIfFileExists"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.copy-folder"
+      }
+    },
+    {
+      "label": "sourceDirectory",
+      "description": "Full Address of folder which you want to move",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.sourceDirectory"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.move-folder"
+      }
+    },
+    {
+      "label": "targetDirectory",
+      "description": "Address of targetDirectory  were you want to Move a folder",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.targetDirectory"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.move-folder"
+      }
+    },
+    {
+      "label": "Action If Folder Exists",
+      "description": "If the folder is already present in Target folder, rename, replace or skip operation have to be performed",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "rename",
+      "choices": [
+        {
+          "name": "Rename",
+          "value": "rename"
+        },
+        {
+          "name": "Replace",
+          "value": "replace"
+        },
+        {
+          "name": "Skip",
+          "value": "Skip"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.actionIfFileExists"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.move-folder"
+      }
+    },
+    
+    {
+      "label": "sourceFilePath",
+      "description": "Full Address of file which you want to move",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.sourceFilePath"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.move-file"
+      }
+    },
+    {
+      "label": "targetDirectory",
+      "description": "Address of targetDirectory  were you want to Move a folder",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.targetDirectory"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.move-file"
+      }
+    },
+    {
+      "label": "Action If File Exists",
+      "description": "If the file is already present in Target folder, rename, replace or skip operation have to be performed",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "rename",
+      "choices": [
+        {
+          "name": "Rename",
+          "value": "rename"
+        },
+        {
+          "name": "Replace",
+          "value": "replace"
+        },
+        {
+          "name": "Skip",
+          "value": "Skip"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.actionIfFileExists"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.move-file"
+      }
+    },
+    {
+      "label": "folderPath",
+      "description": "Folder path in remote server",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.folderPath"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.list-folders"
+      }
+    },
+    {
+      "label": "Folder Name Pattern",
+      "description": "Regular expression Simple *.txt kind works",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.namePattern"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.list-folders"
+      }
+    },
+     {
+      "label": "ModifiedBefore",
+      "description": "Enter date in the format [dd-M-yyyy hh:mm:ss] which provide list of folders modified before this data",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.modifiedBefore"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.list-folders"
+      }
+    },
+    {
+      "label": "ModifiedAfter",
+      "description": "Enter date in the format [dd-M-yyyy hh:mm:ss] which provide list of folders modified after this data",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.modifiedAfter"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.list-folders"
+      }
+    },
+    {
+      "label": "SearchSubFolders",
+      "description": "If the value is True, Search subfolders in given folder path ",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "false",
+      "choices": [
+        {
+          "name": "True",
+          "value": "true"
+        },
+        {
+          "name": "False",
+          "value": "false"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.searchSubFoldersAlso"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.list-folders"
+      }
+    },
+    {
+      "label": "maxNumberOfFiles",
+      "description": "The maximum number of folders to get as a output.",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.maxNumberOfFiles"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.list-folders"
+      }
+    },
+    {
+      "label": "maxDepth",
+      "description": "Max level for search inside folder-path",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.maxDepth"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.list-folders"
+      }
+    },
+    {
+      "label": "outputType",
+      "description": "Output Type of the folders. If set as folderPath, output will contain only paths of folders. If set as FolderDetails then output will contain folderDetails",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "folderPaths",
+      "choices": [
+        {
+          "name": "FolderNames",
+          "value": "folderPaths"
+        },
+        {
+          "name": "folderDetails",
+          "value": "folderDetails"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.outputType"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.list-folders"
+      }
+    },
+    {
+      "label": "sortBy",
+      "description": "sortBy - Sort By map for sorting folders in list folders. e.g. {\"sortOn\": \"size\", \"order\": \"asc\"}",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.sortBy"
+      },
+      "constraints": {
+        "notEmpty": false
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.list-folders"
+      }
+    } ,
+      {
+      "label": "File Path",
+      "description": "Address of file in remote server",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.filePath"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.write-file"
+      }
+    },
+    {
+      "label": "content",
+      "description": "Content which will be appended on a file",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.content"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.write-file"
+      }
+    },
+    {
+      "label": "folderPath",
+      "description": "Folder path in remote server",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.folderPath"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.delete-folder"
+      }
+    },
+    {
+      "label": "folderPath",
+      "description": "Folder path in remote server",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.folderPath"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.delete-file"
+      }
+    },
+    {
+      "label": "fileName",
+      "description": "Name of file which is going to get deleted along with extension e.g. Example.txt",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.fileName"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.delete-file"
+      }
+    },
+    {
+      "label": "folderPath",
+      "description": "Folder path in remote server",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.folderPath"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.create-folder"
+      }
+    },
+    {
+      "label": "newFolderName",
+      "description": "Name of a new folder which one wants to create",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.newFolderName"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.create-folder"
+      }
+    },
+    {
+      "label": "Action If Folder Exists",
+      "description": "If the folder is already present in Target folder, rename, replace or skip operation have to be performed",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "rename",
+      "choices": [
+        {
+          "name": "Rename",
+          "value": "rename"
+        },
+        {
+          "name": "Replace",
+          "value": "replace"
+        },
+        {
+          "name": "Skip",
+          "value": "Skip"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.actionIfFileExists"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "sftp.create-folder"
+      }
+    },
+    {
+      "label": "Result Variable",
+      "description": "Name of variable to store the response in",
+      "group": "output",
+      "type": "String",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "resultVariable"
+      }
+    },
+    {
+      "label": "Result Expression",
+      "description": "Expression to map the response into process variables",
+      "group": "output",
+      "type": "Text",
+      "feel": "required",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "resultExpression"
+      }
+    },
+    {
+      "label": "Error Expression",
+      "description": "Expression to handle errors. Details in the <a href=\"https://docs.camunda.io/docs/components/connectors/use-connectors/\" target=\"_blank\">documentation</a>.",
+      "group": "errors",
+      "type": "Text",
+      "feel": "required",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "errorExpression"
+      }
+    }
+  ]
+}

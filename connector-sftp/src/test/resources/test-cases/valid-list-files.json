@@ -1,0 +1,104 @@
+[
+  {
+    "description": "Valid list files - all inputs - filePaths",
+    "authentication": {
+      "hostname": "Hostname",
+      "portNumber": "22",
+      "username": "Username",
+      "password": "Password"       ,
+      "knownHostsPath":"pathOf/known_hosts"
+     
+    },
+    "operation": "sftp.list-files",
+    "data": {
+      "filePath":"c:/users/Documents",
+      "fileNamePattern":"",
+      "modifiedBefore":"01-4-2023 6:00:00",
+      "modifiedAfter":"31-3-2023 3:00:00",
+      "searchSubFoldersAlso":"True",
+      "maxNumberOfFiles":"23",
+      "maxDepth":"3",
+      "sortBy":{
+        "sortOn":"date",
+        "order":"asc"
+      },
+      "outputType":"filePaths"
+    }
+  },
+  {
+    "description": "Valid list files - all inputs - fileDetails without modifiedAfter",
+    "authentication": {
+      "hostname": "Hostname",
+        "portNumber": "22",
+        "username": "Username",
+        "password": "Password"       ,
+        "knownHostsPath":"pathOf/known_hosts"
+     
+    },
+    "operation": "sftp.list-files",
+    "data": {
+      "filePath":"c:/users/Documents",
+      "fileNamePattern":"c",
+      "modifiedBefore":"01-4-2023 6:00:00",
+      "modifiedAfter":"",
+      "searchSubFoldersAlso":"True",
+      "maxNumberOfFiles":"23",
+      "maxDepth":"3",
+      "sortBy":{
+        "sortOn":"date",
+        "order":"asc"
+      },
+      "outputType":"fileDetails"
+    }
+  },
+  {
+    "description": "Valid list files - all inputs - fileDetails without modifiedBefore",
+    "authentication": {
+      "hostname": "Hostname",
+      "portNumber": "22",
+      "username": "Username",
+      "password": "Password"       ,
+      "knownHostsPath":"pathOf/known_hosts"
+     
+    },
+    "operation": "sftp.list-files",
+    "data": {
+      "filePath":"c:/users/Documents",
+      "fileNamePattern":"c",
+      "modifiedBefore":"",
+      "modifiedAfter":"31-3-2023 3:00:00",
+      "searchSubFoldersAlso":"True",
+      "maxNumberOfFiles":"23",
+      "maxDepth":"3",
+      "sortBy":{
+        "sortOn":"date",
+        "order":"asc"
+      },
+      "outputType":"fileDetails"
+    }
+  },
+  {
+    "description": "Valid list files - all inputs - fileDetails without modifiedBefore",
+    "authentication": {
+      "hostname": "Hostname",
+        "portNumber": "22",
+        "username": "Username",
+        "password": "Password"       ,
+        "knownHostsPath":"pathOf/known_hosts"
+     
+    },
+    "operation": "sftp.list-files",
+    "data": {
+      "filePath":"c:/users/Documents",
+      "fileNamePattern":"c",
+      "modifiedBefore":"",
+      "modifiedAfter":"31-3-2023 3:00:00",
+      "searchSubFoldersAlso":"False",
+      "maxNumberOfFiles":"",
+      "maxDepth":"",
+      "sortBy":{
+      },
+      "outputType":"fileDetails"
+    }
+  }
+]
