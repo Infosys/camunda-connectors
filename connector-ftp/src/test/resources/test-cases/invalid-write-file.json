@@ -1,0 +1,18 @@
+[
+    {
+      "description": "Invalid write file - wrong FolderPath ",
+      "authentication": {
+        "host": "Hostname",
+        "port": "21",
+        "username": "Username",
+        "password": "Password"
+      },
+      "operation": "ftp.write-file",
+      "data": {
+          "folderPath":"",
+          "fileName":"a.txt",
+          "content":"This is the content!!",
+          "appendContent": "false"
+      }
+    }
+  ]

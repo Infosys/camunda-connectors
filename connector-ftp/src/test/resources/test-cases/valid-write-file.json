@@ -1,0 +1,18 @@
+[
+    {
+      "description": "Valid write file",
+      "authentication": {
+        "host": "Hostname",
+        "port": "2",
+        "username": "Username",
+        "password": "Password"
+      },
+      "operation": "ftp.write-file",
+      "data": {
+          "folderPath":"C:\\Users\\Documents\\Demo1",
+          "fileName":"a.txt",
+          "content":"Here is the content!!",
+          "appendContent":"false"
+      }
+    }
+  ]

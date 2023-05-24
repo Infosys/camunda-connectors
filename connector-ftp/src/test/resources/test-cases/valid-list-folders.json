@@ -1,0 +1,65 @@
+[
+  {
+    "description": "Valid list folders without modifiedAfter",
+    "authentication": {
+      "host": "Hostname",
+      "port": "21",
+      "username": "Username",
+      "password": "Password"
+    },
+    "operation": "ftp.list-folders",
+    "data": {
+      "folderPath":"/Documents/ftproot",
+      "foldernamePattern":"folderA",
+      "modifiedBefore":"01/4/2023",
+      "modifiedAfter":"",
+      "searchSubFolders":"true",
+      "maxNumberOfFolders":"30",
+      "maxDepth":"3",
+      "sortBy":"size",
+      "outputType":"folderPaths"
+    }
+  },
+  {
+    "description": "Valid list folders without modifiedBefore",
+    "authentication": {
+      "host": "Hostname",
+      "port": "21",
+      "username": "Username",
+      "password": "Password"
+    },
+    "operation": "ftp.list-folders",
+    "data": {
+      "folderPath":"/Documents/ftproot",
+      "foldernamePattern":"folderA",
+      "modifiedBefore":"",
+      "modifiedAfter":"01/4/2023",
+      "searchSubFolders":"true",
+      "maxNumberOfFolders":"30",
+      "maxDepth":"3",
+      "sortBy":"size",
+      "outputType":"folderPaths"
+    }
+  },
+  {
+    "description": "Valid list folders folderDetails without modifiedBefore",
+    "authentication": {
+      "host": "Hostname",
+      "port": "21",
+      "username": "Username",
+      "password": "Password"
+    },
+    "operation": "ftp.list-folders",
+    "data": {
+      "folderPath":"/Documents/ftproot",
+      "foldernamePattern":"folderA",
+      "modifiedBefore":"",
+      "modifiedAfter":"01/4/2023",
+      "searchSubFolders":"true",
+      "maxNumberOfFolders":"30",
+      "maxDepth":"3",
+      "sortBy":"size",
+      "outputType":"folderPaths"
+    }
+  }
+]

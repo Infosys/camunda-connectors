@@ -1,0 +1,19 @@
+[
+    {
+      "description": "Valid copy file",
+      "authentication": {
+        "hostname": "hostName",
+        "portNumber": "21",
+        "username": "Username",
+        "password": "Password"
+      },
+      "operation": "ftp.copy-file",
+      "data": {
+        "sourceFolderPath": "/Documents/ftproot",
+        "sourceFileName": "a.txt",
+        "targetFolderPath":"/Documents/ftproot/Dir",
+        "createTargetFolder":"True",
+        "actionIfFileExists":"rename"
+      }
+    }
+]

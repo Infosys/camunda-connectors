@@ -1,0 +1,23 @@
+[
+  {
+    "description": "Invalid list files - wrong folderPath",
+    "authentication": {
+      "host": "Hostname",
+      "port": "21",
+      "username": "Username",
+      "password": "Password"
+    },
+    "operation": "ftp.list-files",
+    "data": {
+      "folderPath":"",
+      "fileNamePattern":"",
+      "modifiedBefore":"01/04/2023",
+      "modifiedAfter":"31/03/2023",
+      "searchSubFolders":"true",
+      "maxNumberOfFiles":"30",
+      "maxDepth":"3",
+      "sortBy":"size",
+      "outputType":"filePaths"
+    }
+  }
+]

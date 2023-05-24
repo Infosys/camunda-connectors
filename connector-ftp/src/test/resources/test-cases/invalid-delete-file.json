@@ -1,0 +1,30 @@
+[
+    {
+      "description": "Invalid delete files - invalid fileName",
+      "authentication": {
+        "host": "Hostname",
+        "port": "21",
+        "username": "Username",
+        "password": "Password"
+      },
+      "operation": "ftp.delete-file",
+      "data": {
+          "folderPath":"C:/Users/curation.bot/Documents",
+          "fileName":""
+      }
+    },
+  {
+    "description": "Invalid delete files - invalid folderPath",
+    "authentication": {
+      "host": "Hostname",
+      "port": "21",
+      "username": "Username",
+      "password": "Password"
+    },
+    "operation": "ftp.delete-file",
+    "data": {
+      "folderPath":"",
+      "fileName":"a.txt"
+    }
+  }
+  ]

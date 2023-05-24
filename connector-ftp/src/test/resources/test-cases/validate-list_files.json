@@ -1,0 +1,12 @@
+{
+    "authentication": {
+        "host": "10.81.73.5",
+        "port": "21",
+        "username": "curation.bot",
+        "password": "Impact#2023"
+    },
+    "operation": "ftp.list-files",
+    "data": {
+        "folderPath": "\\Documents\ftproot"
+    }
+}

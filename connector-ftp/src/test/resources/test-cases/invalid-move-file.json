@@ -1,0 +1,36 @@
+[
+    {
+      "description": "Invalid move file - invalid sourceFileName",
+      "authentication": {
+        "host": "Hostname",
+        "port": "21",
+        "username": "Username",
+        "password": "Password"
+      },
+      "operation": "ftp.move-file",
+      "data": {
+          "sourceFolderPath":"C:\\Users\\Documents\\Folder1",
+          "sourceFileName":"",
+          "targetFolderPath":"C:\\Users\\Documents\\Demo1",
+          "actionIfFileExists":"rename",
+          "createTargetFolder":"true"
+      }
+    },
+    {
+      "description": "Invalid move file - invalid targetDirectory",
+      "authentication": {
+        "host": "Hostname",
+        "port": "21",
+        "username": "Username",
+        "password": "Password"
+      },
+      "operation": "ftp.move-file",
+      "data": {
+          "sourceFolderPath":"C:\\Users\\Documents\\Folder1",
+          "sourceFileName":"a.txt",
+          "targetFolderPath":"",
+          "actionIfFileExists":"rename",
+          "createTargetFolder":"true"
+      } 
+    }
+]

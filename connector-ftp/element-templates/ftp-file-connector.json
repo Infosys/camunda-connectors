@@ -1,0 +1,1233 @@
+{
+  "$schema": "https://unpkg.com/@camunda/zeebe-element-templates-json-schema/resources/schema.json",
+  "name": "FTP FILE CONNECTOR",
+  "id": "com.infosys.camundaconnectors.files:ftp:1",
+  "appliesTo": [
+    "bpmn:Task"
+  ],
+  "elementType": {
+    "value": "bpmn:ServiceTask"
+  },
+  "category": {
+    "id": "connectors",
+    "name": "ftp-connector"
+  },
+  "groups": [
+    {
+      "id": "authentication",
+      "label": "Authentication"
+    },
+    {
+      "id": "operation",
+      "label": "Operation"
+    },
+    {
+      "id": "inputs",
+      "label": "Input Mapping"
+    },
+    {
+      "id": "output",
+      "label": "Output Mapping"
+    },
+    {
+      "id": "errors",
+      "label": "Error Handling"
+    }
+  ],
+  "properties": [
+    {
+      "type": "Hidden",
+      "value": "com.infosys.camundaconnectors.files:ftp:1",
+      "editable": false,
+      "binding": {
+        "type": "zeebe:taskDefinition:type"
+      }
+    },
+    {
+      "id": "operation",
+      "label": "Operation",
+      "description": "Operation to be done",
+      "type": "Dropdown",
+      "value": "ftp.list-files",
+      "choices": [
+        {
+          "name": "Create Folder",
+          "value": "ftp.create-folder"
+        },
+        {
+          "name": "List Files",
+          "value": "ftp.list-files"
+        },
+        {
+          "name": "List Folders",
+          "value": "ftp.list-folders"
+        },
+        {
+          "name": "Delete File",
+          "value": "ftp.delete-file"
+        },
+        {
+          "name": "Delete Folder",
+          "value": "ftp.delete-folder"
+        },
+        {
+          "name": "Copy File",
+          "value": "ftp.copy-file"
+        },
+        {
+          "name": "Copy Folder",
+          "value": "ftp.copy-folder"
+        },
+        {
+          "name": "Move File",
+          "value": "ftp.move-file"
+        },
+        {
+          "name": "Move Folder",
+          "value": "ftp.move-folder"
+        },
+        {
+          "name": "Read File",
+          "value": "ftp.read-file"
+        },
+        {
+          "name": "Write File",
+          "value": "ftp.write-file"
+        }
+      ],
+      "group": "operation",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "operation"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "host",
+      "description": "Hostname/computer name or IP address of remote server host",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.host"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "port",
+      "description": "Port number for host server. e.g. 21",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.port"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "username",
+      "description": "Username for remote host server",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.username"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "password",
+      "description": "Password for username e.g. secrets.TOKEN, Secrets can be used to reference encrypted authentication credentials in Connectors. See the <a href= \"https://docs.camunda.io/docs/components/console/manage-clusters/manage-secrets/\" target=\"_blank\"> Secrets</a> documentation for more details.",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.password"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "folderPath",
+      "description": "Folder path in remote server",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.folderPath"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.list-files"
+      }
+    },
+    {
+      "label": "File Name Pattern",
+      "description": "Regular expression Simple *.txt kind works",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.fileNamePattern"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.list-files"
+      }
+    },
+    {
+      "label": "ModifiedBefore",
+      "description": "used to provide list of files modified before[dd/MM/yyyy]",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.modifiedBefore"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.list-files"
+      }
+    },
+    {
+      "label": "ModifiedAfter",
+      "description": "used to provide list of files modified after [dd/MM/yyyy]",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.modifiedAfter"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.list-files"
+      }
+    },
+    {
+      "label": "SearchSubFolders",
+      "description": "If the value is True, Search subfolders in given folder path",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "false",
+      "choices": [
+        {
+          "name": "True",
+          "value": "true"
+        },
+        {
+          "name": "False",
+          "value": "false"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.searchSubFolders"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.list-files"
+      }
+    },
+    {
+      "label": "maxNumberOfFiles",
+      "description": "The maximum number of files to get as a output.",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.maxNumberOfFiles"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.list-files"
+      }
+    },
+    {
+      "label": "maxDepth",
+      "description": "Max level for search inside folderpath",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.maxDepth"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.list-files"
+      }
+    },
+    {
+      "label": "sortBy",
+      "description": "sortBy - Sort By for sorting files/folders based on specified parameter.",
+      "type": "Dropdown",
+      "group": "inputs",
+      "value": "name",
+      "choices": [
+        {
+          "name": "Date Modified",
+          "value": "dateModified"
+        },
+        {
+          "name": "Name",
+          "value": "name"
+        },
+        {
+          "name": "Size",
+          "value": "size"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.sortBy"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.list-files"
+      }
+    },
+    {
+      "label": "outputType",
+      "description": "Output Type of the files. If set as filePaths, output will contain only paths of files. If set as FileDetails then output will contain fileDetails",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "filePaths",
+      "choices": [
+        {
+          "name": "FilePaths",
+          "value": "filePaths"
+        },
+        {
+          "name": "FileDetails",
+          "value": "fileDetails"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.outputType"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.list-files"
+      }
+    },
+    {
+      "label": "sourceFolderPath",
+      "description": "Address of file which you want to copy",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.sourceFolderPath"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.copy-file"
+      }
+    },
+    {
+      "label": "File Name",
+      "description": "Address of folder from were you want to paste a file",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.sourceFileName"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.copy-file"
+      }
+    },
+    {
+      "label": "Target Folder Path",
+      "description": "Address of folder were you want to paste a file",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.targetFolderPath"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.copy-file"
+      }
+    },
+    {
+      "label": "Action If File Exists",
+      "description": "If the file is already present in Target folder, rename, replace or skip operation have to be performed",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "rename",
+      "choices": [
+        {
+          "name": "Rename",
+          "value": "rename"
+        },
+        {
+          "name": "Replace",
+          "value": "replace"
+        },
+        {
+          "name": "Skip",
+          "value": "skip"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.actionIfFileExists"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.copy-file"
+      }
+    },
+    {
+      "label": "createTargetFolder",
+      "description": "Boolean to create target folder, if folder doesn't exists. Default false",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "false",
+      "choices": [
+        {
+          "name": "True",
+          "value": "true"
+        },
+        {
+          "name": "False",
+          "value": "false"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.createTargetFolder"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.copy-file"
+      }
+    },
+    {
+      "label": "sourceFolderPath",
+      "description": "Address of folder",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.sourceFolderPath"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.move-file"
+      }
+    },
+    {
+      "label": "File Name",
+      "description": "Address of folder from where you want to move a file",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.sourceFileName"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.move-file"
+      }
+    },
+    {
+      "label": "Target Folder Path",
+      "description": "Address of folder were you want to paste a file",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.targetFolderPath"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.move-file"
+      }
+    },
+    {
+      "label": "Action If File Exists",
+      "description": "If the file is already present in Target folder, rename, replace or skip operation have to be performed",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "rename",
+      "choices": [
+        {
+          "name": "Rename",
+          "value": "rename"
+        },
+        {
+          "name": "Replace",
+          "value": "replace"
+        },
+        {
+          "name": "Skip",
+          "value": "skip"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.actionIfFileExists"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.move-file"
+      }
+    },
+    {
+      "label": "createTargetFolder",
+      "description": "Boolean to create target folder, if folder doesn't exists. Default false",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "false",
+      "choices": [
+        {
+          "name": "True",
+          "value": "true"
+        },
+        {
+          "name": "False",
+          "value": "false"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.createTargetFolder"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.move-file"
+      }
+    },
+    {
+      "label": "sourceFolderPath",
+      "description": "Full Address of folder from which you want to copy",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.sourcePath"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.copy-folder"
+      }
+    },
+    {
+      "label": "targetFolderPath",
+      "description": "Address of targetFolder in which you want to paste a file",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.targetPath"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.copy-folder"
+      }
+    },
+    {
+      "label": "Action If Folder Exists",
+      "description": "If the file is already present in Target folder, rename, replace or skip operation have to be performed",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "rename",
+      "choices": [
+        {
+          "name": "Rename",
+          "value": "rename"
+        },
+        {
+          "name": "Replace",
+          "value": "replace"
+        },
+        {
+          "name": "Skip",
+          "value": "Skip"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.actionIfFolderExists"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.copy-folder"
+      }
+    },
+    {
+      "label": "createTargetFolder",
+      "description": "Boolean to create target folder, if folder doesn't exists. Default false",
+      "type": "Dropdown",
+      "group": "inputs",
+      "value": "false",
+      "choices": [
+        {
+          "name": "True",
+          "value": "true"
+        },
+        {
+          "name": "False",
+          "value": "false"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.createTargetFolder"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.copy-folder"
+      }
+    },
+    {
+      "label": "sourceFolderPath",
+      "description": "Full Address of folder from which you want to move",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.sourcePath"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.move-folder"
+      }
+    },
+    {
+      "label": "targetFolderPath",
+      "description": "Address of targetFolder in which you want to paste a file",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.targetPath"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.move-folder"
+      }
+    },
+    {
+      "label": "Action If Folder Exists",
+      "description": "If the file is already present in Target folder, rename, replace or skip operation have to be performed",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "rename",
+      "choices": [
+        {
+          "name": "Rename",
+          "value": "rename"
+        },
+        {
+          "name": "Replace",
+          "value": "replace"
+        },
+        {
+          "name": "Skip",
+          "value": "Skip"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.actionIfFolderExists"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.move-folder"
+      }
+    },
+    {
+      "label": "createTargetFolder",
+      "description": "Boolean to create target folder, if folder doesn't exists. Default false",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "false",
+      "choices": [
+        {
+          "name": "True",
+          "value": "true"
+        },
+        {
+          "name": "False",
+          "value": "false"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.createTargetFolder"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.move-folder"
+      }
+    },
+    {
+      "label": "parentFolderPath",
+      "description": "Full Address of folder inside which you want to create a folder",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.parentFolderPath"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.create-folder"
+      }
+    },
+    {
+      "label": "folderName",
+      "description": "New Folder name",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.folderName"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.create-folder"
+      }
+    },
+    {
+      "label": "Action If File Exists",
+      "description": "If the file is already present in Target folder, rename, replace or skip operation have to be performed",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "rename",
+      "choices": [
+        {
+          "name": "Rename",
+          "value": "rename"
+        },
+        {
+          "name": "Replace",
+          "value": "replace"
+        },
+        {
+          "name": "Skip",
+          "value": "skip"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.actionIfFileExists"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.create-folder"
+      }
+    },
+    {
+      "label": "Folder Path",
+      "description": "Folder Path of desired deleting file",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.folderPath"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.delete-file"
+      }
+    },
+    {
+      "label": "File Name",
+      "description": "Name of the file to be deleted",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.fileName"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.delete-file"
+      }
+    },
+    {
+      "label": "Parent Folder Path",
+      "description": "Name of the file to be deleted",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.parentFolderPath"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.delete-folder"
+      }
+    },
+    {
+      "label": "Folder Name",
+      "description": "Name of the file to be deleted",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.folderName"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.delete-folder"
+      }
+    },
+    {
+      "label": "folderPath",
+      "description": "Folder Path",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.folderPath"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.read-file"
+      }
+    },
+    {
+      "label": "File Name",
+      "description": "Address of file which you want to read",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.fileName"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.read-file"
+      }
+    },
+    {
+      "label": "folderPath",
+      "description": "Folder Path",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.folderPath"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.write-file"
+      }
+    },
+    {
+      "label": "File Name",
+      "description": "Address of file which you want to read",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.fileName"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.write-file"
+      }
+    },
+    {
+      "label": "File Content",
+      "description": "Content to be written to file",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.content"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.write-file"
+      }
+    },
+    {
+      "label": "Append Content??",
+      "description": "If the value is True, the content will be appended to existing content of the file.",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "false",
+      "choices": [
+        {
+          "name": "True",
+          "value": "true"
+        },
+        {
+          "name": "False",
+          "value": "false"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.appendContent"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.write-file"
+      }
+    },
+    {
+      "label": "folderPath",
+      "description": "Folder path in remote server",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.folderPath"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.list-folders"
+      }
+    },
+    {
+      "label": "Folder Name Pattern",
+      "description": "Regular expression Simple *.txt kind works",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.folderNamePattern"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.list-folders"
+      }
+    },
+    {
+      "label": "ModifiedBefore",
+      "description": "used to provide list of files modified after[dd/MM/yyyy]",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.modifiedBefore"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.list-folders"
+      }
+    },
+    {
+      "label": "ModifiedAfter",
+      "description": "used to provide list of files modified before[dd/MM/yyyy]",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.modifiedAfter"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.list-folders"
+      }
+    },
+    {
+      "label": "SearchSubFolders",
+      "description": "If the value is True, Search subfolders in given folder path ",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "false",
+      "choices": [
+        {
+          "name": "True",
+          "value": "true"
+        },
+        {
+          "name": "False",
+          "value": "false"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.searchSubFolders"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.list-folders"
+      }
+    },
+    {
+      "label": "maxNumberOfFiles",
+      "description": "The maximum number of files to get as a output.",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.maxNumberOfFiles"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.list-folders"
+      }
+    },
+    {
+      "label": "maxDepth",
+      "description": "Max level for search inside folderpath",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.maxDepth"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.list-folders"
+      }
+    },
+    {
+      "label": "sortBy",
+      "description": "sortBy - Sort By for sorting files/folders based on specified parameter.",
+      "type": "Dropdown",
+      "group": "inputs",
+      "value": "name",
+      "choices": [
+        {
+          "name": "Date Modified",
+          "value": "dateModified"
+        },
+        {
+          "name": "Name",
+          "value": "name"
+        },
+        {
+          "name": "Size",
+          "value": "size"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.sortBy"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.list-folders"
+      }
+    },
+    {
+      "label": "outputType",
+      "description": "Output Type of the folders. If set as folderPaths, output will contain only paths of folders. If set as FolderDetails then output will contain folderDetails",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "folderPaths",
+      "choices": [
+        {
+          "name": "FolderPaths",
+          "value": "folderPaths"
+        },
+        {
+          "name": "FolderDetails",
+          "value": "folderDetails"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.outputType"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ftp.list-folders"
+      }
+    },
+    {
+      "label": "Result Variable",
+      "description": "Name of variable to store the response in",
+      "group": "output",
+      "type": "String",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "resultVariable"
+      }
+    },
+    {
+      "label": "Result Expression",
+      "description": "Expression to map the response into process variables",
+      "group": "output",
+      "type": "Text",
+      "feel": "optional",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "resultExpression"
+      }
+    },
+    {
+      "label": "Error Expression",
+      "description": "Expression to handle errors. Details in the <a href=\"https://docs.camunda.io/docs/components/connectors/use-connectors/\" target=\"_blank\">documentation</a>.",
+      "group": "errors",
+      "type": "Text",
+      "feel": "optional",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "errorExpression"
+      }
+    }
+  ]
+}

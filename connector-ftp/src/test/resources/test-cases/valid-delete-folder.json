@@ -1,0 +1,15 @@
+[
+    {
+      "authentication": {
+        "host": "Hostname",
+        "port": "21",
+        "username": "Username",
+        "password": "Password"    
+      },
+      "operation": "ftp.delete-folder",
+      "data": {
+          "parentFolderPath": "/Documents/ftproot",
+          "folderName": "DirA"
+      }
+    }
+  ]

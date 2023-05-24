@@ -1,0 +1,44 @@
+[
+  {
+    "description": "Invalid list folders - wrong folderPath",
+    "authentication": {
+      "host": "Hostname",
+      "port": "21",
+      "username": "Username",
+      "password": "Password"
+    },
+    "operation": "ftp.list-folders",
+    "data": {
+      "folderPath":"",
+      "folderNamePattern":"",
+      "modifiedBefore":"01/04/2023",
+      "modifiedAfter":"31/03/2023",
+      "searchSubFolders":"true",
+      "maxNumberOfFiles":"23",
+      "maxDepth":"3",
+      "sortBy":"dateModified",
+      "outputType":"folderPaths"
+    }
+  },
+  {
+    "description": "Invalid list folders - wrong searchSubFolders",
+    "authentication": {
+      "hostname": "Hostname",
+      "portNumber": "21",
+      "username": "Username",
+      "password": "Password"
+    },
+    "operation": "ftp.list-folders",
+    "data": {
+      "folderPath":"c:/users/Documents",
+      "folderNamePattern":"",
+      "modifiedBefore":"01/04/2023",
+      "modifiedAfter":"31/03/2023",
+      "searchSubFolders":"true",
+      "maxNumberOfFiles":"30",
+      "maxDepth":"3",
+      "sortBy":"name",
+      "outputType":"filePaths"
+    }
+  }
+]

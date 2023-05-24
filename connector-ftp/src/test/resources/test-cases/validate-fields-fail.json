@@ -1,0 +1,82 @@
+[
+  {
+    "description": "without password",
+    "authentication": {
+      "host": "HostName",
+      "port": "21",
+      "username": "Username"
+    },
+    "operation": "ftp.delete-file",
+    "data": {
+      "folderPath": "C:/Users/Documents",
+      "fileName":"a.txt"
+    }
+  },
+  {
+    "description": "Blank password",
+    "authentication": {
+      "host": "HostName",
+      "port": "21",
+      "username": "Username",
+      "password":""
+    },
+    "operation": "ftp.delete-file",
+    "data": {
+      "folderPath": "C:/Users/Documents",
+      "fileName":"a.txt"
+    }
+  },
+  {
+    "description": "Data is null",
+    "authentication": {
+      "host": "HostName",
+      "port": "21",
+      "username": "Username",
+      "password":"secrets.TOKEN"
+    },
+    "operation": "ftp.delete-file",
+    "data": null
+  },
+  {
+    "description": "port is blank",
+    "authentication": {
+      "host": "HostName",
+      "port": "",
+      "username": "Username",
+      "password":"secrets.TOKEN"
+    },
+    "operation": "ftp.delete-file",
+    "data": {
+      "folderPath": "C:/Users/Documents",
+      "fileName":"Example.txt"
+    }
+  },
+  {
+    "description": "blank username",
+    "authentication": {
+      "host": "HostName",
+      "port": "21",
+      "username": "",
+      "password":"secrets.TOKEN"
+    },
+    "operation": "ftp.delete-file",
+    "data": {
+      "folderPath": "C:/Users/Documents",
+      "fileName":"a.txt"
+    }
+  },
+  {
+    "description": "host is null",
+    "authentication": {
+      "host": "",
+      "port": "21",
+      "username": "Username",
+      "password":"secrets.TOKEN"
+    },
+    "operation": "ftp.delete-file",
+    "data": {
+      "folderPath": "C:/Users/Documents",
+      "fileName":"a.txt"
+    }
+  }
+]

@@ -1,0 +1,53 @@
+[
+    {
+      "description": "Valid move file",
+      "authentication": {
+        "host": "Hostname",
+        "port": "21",
+        "username": "Username",
+        "password": "Password"
+      },
+      "operation": "ftp.move-file",
+      "data": {
+          "sourceFolderPath":"C:\\Users\\Documents\\folder1",
+          "sourceFileName":"a.txt",
+          "targetFolderPath":"C:\\Users\\Documents\\Demo1",
+          "actionIfFileExists":"rename",
+          "createTargetFolder":"false"
+      }
+    },
+  {
+    "description": "Valid move file with replace",
+    "authentication": {
+      "host": "Hostname",
+      "port": "21",
+      "username": "Username",
+      "password": "Password"
+    },
+    "operation": "ftp.move-file",
+    "data": {
+        "sourceFolderPath":"C:\\Users\\Documents\\folder1",
+        "sourceFileName":"a.txt",
+        "targetFolderPath":"C:\\Users\\Documents\\Demo1",
+        "actionIfFileExists":"replace",
+        "createTargetFolder":"true"
+  }
+},
+  {
+    "description": "Valid move file with skip",
+    "authentication": {
+      "host": "Hostname",
+      "port": "21",
+      "username": "Username",
+      "password": "Password"
+    },
+    "operation": "ftp.move-file",
+    "data": {
+        "sourceFolderPath":"C:\\Users\\Documents\\folder1",
+        "sourceFileName":"a.txt",
+        "targetFolderPath":"C:\\Users\\Documents\\Demo1",
+        "actionIfFileExists":"rename",
+        "createTargetFolder":"false"
+    }
+  }
+  ]

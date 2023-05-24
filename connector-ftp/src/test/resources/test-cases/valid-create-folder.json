@@ -1,0 +1,47 @@
+[
+    {
+      "description": "Valid create folder - rename",
+      "authentication": {
+        "host": "Hostname",
+        "port": "21",
+        "username": "Username",
+        "password": "Password"
+      },
+      "operation": "ftp.create-folder",
+      "data": {
+          "parentFolderPath":"/Documents/ftproot",
+          "folderName": "MyDir",
+          "actionIfFolderExists":"rename"
+      }
+    },
+    {
+        "description": "Valid create folder - replace",
+        "authentication": {
+          "host": "Hostname",
+          "port": "21",
+          "username": "Username",
+          "password": "Password"
+        },
+        "operation": "ftp.create-folder",
+        "data": {
+          "parentFolderPath":"/Documents/ftproot",
+          "folderName": "MyDir",
+          "actionIfFolderExists":"replace"
+        }
+    }, 
+    {
+        "description": "Valid create folder - skip",
+        "authentication": {
+          "host": "Hostname",
+          "port": "21",
+          "username": "Username",
+          "password": "Password"
+        },
+        "operation": "ftp.create-folder",
+        "data": {
+          "parentFolderPath":"/Documents/ftproot",
+          "folderName": "MyDir",
+          "actionIfFolderExists":"skip"
+        }
+    }
+]
