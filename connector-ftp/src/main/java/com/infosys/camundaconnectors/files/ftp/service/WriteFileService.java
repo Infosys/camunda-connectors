@@ -86,6 +86,7 @@ public class WriteFileService implements FTPRequestData {
 				client.setFileType(FTPClient.ASCII_FILE_TYPE);
 		        client.changeWorkingDirectory(folderPath);
 		        OutputStream os;
+				byte[] contentInBytes = content.getBytes();
 				if (contentInBytes.length > 32766) {
 					throw new RuntimeException("Fetch overloaded!!");
 				}
