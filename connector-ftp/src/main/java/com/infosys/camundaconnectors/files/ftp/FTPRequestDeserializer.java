@@ -44,7 +44,7 @@ public class FTPRequestDeserializer
     return getTypeElementValue(jsonElement)
         .map(typeRegistry::get)
         .map(FTPRequestDeserializer::getTypeToken)
-        .map(typeToken -> getMySQLRequest(jsonElement, typeToken))
+        .map(typeToken -> getFTPRequest(jsonElement, typeToken))
         .orElse(null);
   }
   private Optional<String> getTypeElementValue(JsonElement jsonElement) {
@@ -52,7 +52,7 @@ public class FTPRequestDeserializer
     JsonElement element = asJsonObject.get(typeElementName);
     return Optional.ofNullable(element).map(JsonElement::getAsString);
   }
-  private FTPRequest<? extends FTPRequestData> getMySQLRequest(
+  private FTPRequest<? extends FTPRequestData> getFTPRequest(
       JsonElement jsonElement, TypeToken<FTPRequest<? extends FTPRequestData>> typeToken) {
     return gson.fromJson(jsonElement, typeToken.getType());
   }
