@@ -239,7 +239,7 @@ See also the [:lock:Camunda Cloud Connector Run-Time](https://github.com/camunda
 ## Element Template
 
 The element templates can be found in
-the [sftp-file-connector.json](element-templates/ftp-file-connector.json) file.
+the [ftp-file-connector.json](element-templates/ftp-file-connector.json) file.
 
 # **Documentation**
 
@@ -255,7 +255,7 @@ To start working with the FTP Connector. user need a server details like - host,
 *The following parameters are necessary for establishing connection* -
 
 -	**host**- A hostname is a distinct name or label assigned to any device connected to a computer network, in this case its location where server is hosted.
--	**port**: Port Number of SFTP server(default is 22)
+-	**port**: Port Number of FTP server(default is 22)
 -	**username** and **password**: Username and password of user with required privilege.
 
 ### **Creating FTP connector task**
@@ -270,7 +270,7 @@ To make the FTP Connector executable, fill out the mandatory fields highlighted 
 
 ### **Authentication for FTP Connector**
 
-SFTP Connector authentication object takes – **host**, **port**, **username** and **password** *(as secrets Token i.e. secrets.Token)*.
+FTP Connector authentication object takes – **host**, **port**, **username** and **password** *(as secrets Token i.e. secrets.Token)*.
 
 
 ## **List Files**
@@ -465,7 +465,7 @@ You can use an output mapping to map the response:
 
 ### **How can I authenticate FTP Connector?**
 
-The SMTP Connector needs the credentials for connection -
+The FTP Connector needs the credentials for connection -
 -	**host**- A hostname is a distinct name or label assigned to any device connected to a computer network, in this case its location server is hosted.
 -	**port**: Port Number of server
 -	**username** and **password**: Username and password of user with required privilege.
