@@ -152,4 +152,11 @@
             </plugin>
         </plugins>
     </build>
+    <distributionManagement>
+        <repository>
+        <id>github</id>
+        <name>GitHub Packages</name>
+        <url>https://maven.pkg.github.com/bulivlad/infosys-camunda-connectors</url>
+        </repository>
+    </distributionManagement>
 </project>
