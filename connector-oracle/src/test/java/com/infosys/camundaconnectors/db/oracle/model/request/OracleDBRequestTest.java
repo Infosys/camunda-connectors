@@ -38,6 +38,31 @@ public class OracleDBRequestTest extends BaseTest {
     assertThat(requestData.getDatabaseConnection().getUsername())
         .isEqualTo(ActualValue.DatabaseConnection.USERNAME);
     assertThat(requestData.getDatabaseConnection().getPassword()).isEqualTo(ActualValue.TOKEN);
+    assertThat(requestData.getDatabaseConnection().getConnectionType()).isEqualTo(ActualValue.DatabaseConnection.CONNECTION_TYPE_SID);
+    assertThat(requestData.getOperation()).isEqualTo(ActualValue.METHOD);
+    assertThat(requestData.getData().getDatabaseName()).isEqualTo(ActualValue.DATABASE_NAME);
+    assertThat(requestData.getData().getTableName()).isEqualTo(ActualValue.TABLE_NAME);
+    assertThat(requestData.getData().getColumnsList()).isNotEmpty();
+  }
+
+  @ParameterizedTest()
+  @MethodSource("replaceSecretsServiceNameSuccessTestCases")
+  @SuppressWarnings("unchecked")
+  public void replaceSecrets_shouldReplaceSecrets_ServiceName(String input) {
+    // Given
+    OracleDBRequest<CreateTableService> requestData = gson.fromJson(input, OracleDBRequest.class);
+    context = getContextBuilderWithSecrets().build();
+    // When
+    context.replaceSecrets(requestData);
+    // Then
+    assertThat(requestData.getDatabaseConnection().getHost())
+            .isEqualTo(ActualValue.DatabaseConnection.HOST);
+    assertThat(requestData.getDatabaseConnection().getPort())
+            .isEqualTo(ActualValue.DatabaseConnection.PORT);
+    assertThat(requestData.getDatabaseConnection().getUsername())
+            .isEqualTo(ActualValue.DatabaseConnection.USERNAME);
+    assertThat(requestData.getDatabaseConnection().getPassword()).isEqualTo(ActualValue.TOKEN);
+    assertThat(requestData.getDatabaseConnection().getConnectionType()).isEqualTo(ActualValue.DatabaseConnection.CONNECTION_TYPE_SERVICE_NAME);
     assertThat(requestData.getOperation()).isEqualTo(ActualValue.METHOD);
     assertThat(requestData.getData().getDatabaseName()).isEqualTo(ActualValue.DATABASE_NAME);
     assertThat(requestData.getData().getTableName()).isEqualTo(ActualValue.TABLE_NAME);

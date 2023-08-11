@@ -33,6 +33,8 @@ public abstract class BaseTest {
       String PORT = "1521";
       String USERNAME = "ALPHA";
       String PASSWORD = "secrets.TOKEN";
+      String CONNECTION_TYPE_SID = "sid";
+      String CONNECTION_TYPE_SERVICE_NAME = "service-name";
     }
   }
 
@@ -47,6 +49,10 @@ public abstract class BaseTest {
 
   protected static Stream<String> replaceSecretsSuccessTestCases() throws IOException {
     return loadTestCasesFromResourceFile(TestCasesPath.REPLACE_SECRETS);
+  }
+
+  protected static Stream<String> replaceSecretsServiceNameSuccessTestCases() throws IOException {
+    return loadTestCasesFromResourceFile(TestCasesPath.REPLACE_SECRETS_CONNECTION_TYPE_SERVICE_NAME);
   }
 
   protected static Stream<String> validateRequiredFieldsFailTestCases() throws IOException {

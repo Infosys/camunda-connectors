@@ -25,7 +25,7 @@ public class DatabaseClient {
             + databaseConnection.getHost().strip()
             + ":"
             + databaseConnection.getPort().strip();
-    if (databaseName != null && !databaseName.isBlank()) dbURL += ":" + databaseName;
+    if (databaseName != null && !databaseName.isBlank()) dbURL += databaseConnection.getConnectionTypeSeparator() + databaseName;
     return connectToDatabase(databaseConnection, dbURL);
   }
 

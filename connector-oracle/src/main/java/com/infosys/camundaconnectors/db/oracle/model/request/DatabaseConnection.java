@@ -6,6 +6,7 @@
 package com.infosys.camundaconnectors.db.oracle.model.request;
 
 import io.camunda.connector.api.annotation.Secret;
+
 import java.util.Objects;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -21,6 +22,8 @@ public class DatabaseConnection {
 
   @NotEmpty @Secret private String username;
   @NotEmpty @Secret private String password;
+
+  private String connectionType = "sid";
 
   public String getHost() {
     return host;
@@ -54,6 +57,18 @@ public class DatabaseConnection {
     this.password = password;
   }
 
+  public String getConnectionType() {
+    return connectionType;
+  }
+
+  public void setConnectionType(String connectionType) {
+    this.connectionType = connectionType;
+  }
+
+  public String getConnectionTypeSeparator() {
+    return "service-name".equals(this.connectionType) ? "/" : ":";
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -62,7 +77,8 @@ public class DatabaseConnection {
     return Objects.equals(host, that.host)
         && Objects.equals(port, that.port)
         && Objects.equals(username, that.username)
-        && Objects.equals(password, that.password);
+        && Objects.equals(password, that.password)
+        && Objects.equals(connectionType, that.connectionType);
   }
 
   @Override
@@ -84,6 +100,9 @@ public class DatabaseConnection {
         + '\''
         + ", password='"
         + password
+        + '\''
+        + ", connectionType='"
+        + connectionType
         + '\''
         + '}';
   }

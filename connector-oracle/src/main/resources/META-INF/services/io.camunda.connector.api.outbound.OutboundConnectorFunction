@@ -5,3 +5,4 @@
 #
 
 com.infosys.camundaconnectors.db.oracle.OracleDBFunction
+com.infosys.camundaconnectors.db.oracle.v2.OracleDBFunction

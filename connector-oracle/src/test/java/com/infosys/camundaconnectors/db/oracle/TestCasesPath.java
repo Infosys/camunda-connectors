@@ -10,6 +10,7 @@ public interface TestCasesPath {
   String PATH = "src/test/resources/test-cases/";
 
   String REPLACE_SECRETS = PATH + "replace-secrets.json";
+  String REPLACE_SECRETS_CONNECTION_TYPE_SERVICE_NAME = PATH + "replace-secrets-connection-type.json";
   String VALIDATE_REQUIRED_FIELDS_FAIL = PATH + "validate-fields-fail.json";
   String EXECUTE_CREATE_TABLE = PATH + "execute-create-table.json";
   String INVALID_CREATE_TABLE = PATH + "invalid-create-table.json";

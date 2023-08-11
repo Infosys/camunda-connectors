@@ -3,9 +3,10 @@
  * Use of this source code is governed by MIT license that can be found in the LICENSE file
  * or at https://opensource.org/licenses/MIT
  */
-package com.infosys.camundaconnectors.db.oracle;
+package com.infosys.camundaconnectors.db.oracle.v2;
 
 import com.google.gson.Gson;
+import com.infosys.camundaconnectors.db.oracle.GsonSupplier;
 import com.infosys.camundaconnectors.db.oracle.model.request.OracleDBRequest;
 import com.infosys.camundaconnectors.db.oracle.utility.DatabaseClient;
 import io.camunda.connector.api.annotation.OutboundConnector;
@@ -15,9 +16,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @OutboundConnector(
-    name = "Oracle",
+    name = "Oracle v2",
     inputVariables = {"databaseConnection", "operation", "data"},
-    type = "com.infosys.camundaconnectors.db:oracle:1")
+    type = "com.infosys.camundaconnectors.db:oracle:2")
 public class OracleDBFunction implements OutboundConnectorFunction {
   private static final Logger LOGGER = LoggerFactory.getLogger(OracleDBFunction.class);
   private final Gson gson;
