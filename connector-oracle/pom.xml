@@ -10,13 +10,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>io.camunda.connector</groupId>
-        <artifactId>connector-parent</artifactId>
-        <version>0.8.1</version>
-        <relativePath/>
-    </parent>
-
     <name>connector-oracle</name>
     <description>Oracle Database Connector</description>
     <groupId>com.infosys.camundaconnectors.db.oracle</groupId>
@@ -34,6 +27,8 @@
         <version.mockito-junit-jupiter>4.8.0</version.mockito-junit-jupiter>
         <plugin.version.maven-shade-plugin>3.4.0</plugin.version.maven-shade-plugin>
         <plugin.version.maven-surefire-plugin>3.0.0-M7</plugin.version.maven-surefire-plugin>
+        <version.camunda.platform>8.1.17</version.camunda.platform>
+        <version.camunda.connectors>0.17.1</version.camunda.connectors>
     </properties>
     <dependencies>
         <dependency>
@@ -41,43 +36,118 @@
             <artifactId>ojdbc10</artifactId>
             <version>${version.ojdbc10}</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.camunda.connector</groupId>-->
+<!--            <artifactId>connector-core</artifactId>-->
+<!--            <version>0.6.0</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>io.camunda.connector</groupId>
-            <artifactId>connector-core</artifactId>
-            <scope>provided</scope>
+            <artifactId>connectors-common-library</artifactId>
+            <version>${version.camunda.connectors}</version>
         </dependency>
-        <dependency>
-            <groupId>io.camunda.connector</groupId>
-            <artifactId>connector-validation</artifactId>
-            <scope>provided</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.camunda.connector</groupId>-->
+<!--            <artifactId>connector-validation</artifactId>-->
+<!--            <version>0.6.0</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
+            <version>2.10.1</version>
         </dependency>
+        <dependency>
+            <groupId>io.camunda</groupId>
+            <artifactId>spring-zeebe-connector-runtime</artifactId>
+            <version>${version.camunda.platform}</version>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>javax.validation</groupId>-->
+<!--            <artifactId>validation-api</artifactId>-->
+<!--            <version>2.0.0.Final</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.hibernate</groupId>-->
+<!--            <artifactId>hibernate-validator</artifactId>-->
+<!--            <version>8.0.0.Final</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>jakarta.el</groupId>-->
+<!--            <artifactId>jakarta.el-api</artifactId>-->
+<!--            <version>5.0.1</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.glassfish</groupId>-->
+<!--            <artifactId>javax.el</artifactId>-->
+<!--            <version>3.0.0</version>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-dependencies</artifactId>
+            <version>3.1.2</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+            <version>3.1.2</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>3.1.2</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.camunda.connector</groupId>-->
+<!--            <artifactId>connector-graphql</artifactId>-->
+<!--            <version>${version.camunda.connectors}</version>-->
+<!--        </dependency>-->
         <!-- Test Dependencies -->
+<!--        <dependency>-->
+<!--            <groupId>org.assertj</groupId>-->
+<!--            <artifactId>assertj-core</artifactId>-->
+<!--            <version>${version.assertj-core}</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.junit.jupiter</groupId>-->
+<!--            <artifactId>junit-jupiter</artifactId>-->
+<!--            <version>${version.junit.jupiter}</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.mockito</groupId>-->
+<!--            <artifactId>mockito-junit-jupiter</artifactId>-->
+<!--            <version>${version.mockito-junit-jupiter}</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.slf4j</groupId>-->
+<!--            <artifactId>slf4j-simple</artifactId>-->
+<!--            <version>${version.slf4j}</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>io.camunda.connector</groupId>-->
+<!--            <artifactId>connector-test</artifactId>-->
+<!--            <version>0.11.0</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
         <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>${version.assertj-core}</version>
+            <groupId>io.camunda</groupId>
+            <artifactId>spring-zeebe-test</artifactId>
+            <version>${version.camunda.platform}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>${version.junit.jupiter}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-junit-jupiter</artifactId>
-            <version>${version.mockito-junit-jupiter}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>${version.slf4j}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>3.1.2</version>
             <scope>test</scope>
         </dependency>
         <!--        Logging Dependency      -->
@@ -89,6 +159,24 @@
     </dependencies>
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>11.0.2</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.eclipse.jetty</groupId>
+                        <artifactId>apache-jsp</artifactId>
+                        <version>11.0.2</version>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>org.mortbay.jasper</groupId>
+                                <artifactId>apache-el</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                </dependencies>
+            </plugin>
             <!-- Disable adding license header -->
             <plugin>
                 <groupId>com.mycila</groupId>

@@ -11,13 +11,15 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 public class DatabaseConnection {
+  @Secret
   @NotEmpty private String host;
 
   @NotEmpty
+  @Secret
   @Pattern(regexp = "^\\d+$", message = "Port must be a number")
   private String port;
 
-  @NotEmpty private String username;
+  @NotEmpty @Secret private String username;
   @NotEmpty @Secret private String password;
 
   public String getHost() {

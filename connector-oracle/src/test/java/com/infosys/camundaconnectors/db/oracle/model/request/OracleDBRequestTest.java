@@ -12,8 +12,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import com.infosys.camundaconnectors.db.oracle.BaseTest;
 import com.infosys.camundaconnectors.db.oracle.model.response.QueryResponse;
 import com.infosys.camundaconnectors.db.oracle.service.CreateTableService;
-import io.camunda.connector.impl.ConnectorInputException;
 import java.sql.Connection;
+
+import io.camunda.connector.impl.ConnectorInputException;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;

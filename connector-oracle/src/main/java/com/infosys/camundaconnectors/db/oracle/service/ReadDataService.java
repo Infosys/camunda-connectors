@@ -13,23 +13,28 @@ import com.infosys.camundaconnectors.db.oracle.utility.ConstructWhereClause;
 import java.sql.*;
 import java.util.*;
 import javax.validation.constraints.NotBlank;
+
+import io.camunda.connector.api.annotation.Secret;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ReadDataService implements OracleDBRequestData {
   private static final Logger LOGGER = LoggerFactory.getLogger(ReadDataService.class);
-  @NotBlank private String databaseName;
+  @NotBlank
+  @Secret
+  private String databaseName;
   @NotBlank private String tableName;
   private List<String> columnNames;
   private Map<String, Object> filters;
   private List<Map<String, String>> orderBy;
   private Integer limit;
+  private Integer offset;
 
   @Override
   public OracleDBResponse invoke(Connection connection) throws SQLException {
     QueryResponse<List<Map<String, Object>>> queryResponse;
     try {
-      String readDataQuery = selectRowsQuery(tableName, columnNames, filters, orderBy, limit);
+      String readDataQuery = selectRowsQuery(tableName, columnNames, filters, orderBy, limit, offset);
       LOGGER.info("Read query: {}", readDataQuery);
       try (Statement st = connection.createStatement()) {
         ResultSet rs = st.executeQuery(readDataQuery);
@@ -55,7 +60,8 @@ public class ReadDataService implements OracleDBRequestData {
       List<String> columnNames,
       Map<String, Object> filters,
       List<Map<String, String>> orderBy,
-      Integer limit) {
+      Integer limit,
+      Integer offset) {
     String whereClause = ConstructWhereClause.getWhereClause(filters);
     if (whereClause == null || whereClause.isBlank())
       LOGGER.debug("WHERE clause is empty, this will return all rows in the table");
@@ -71,6 +77,9 @@ public class ReadDataService implements OracleDBRequestData {
             "SELECT %s FROM %s %s %s", columnString, tableName, whereClause, orderByClause);
     if (limit != null && limit > 0)
       query = "SELECT * FROM ( " + query + " ) WHERE ROWNUM <=  " + limit;
+    if (offset != null) {
+      query += " OFFSET " + offset + " ROWS";
+    }
     return query;
   }
 

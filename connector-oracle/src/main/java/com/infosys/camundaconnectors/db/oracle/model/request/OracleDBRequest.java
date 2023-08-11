@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 public class OracleDBRequest<T extends OracleDBRequestData> {
   @NotNull @Valid @Secret private DatabaseConnection databaseConnection;
   @NotBlank private String operation;
-  @Valid @NotNull private T data;
+  @Valid @NotNull @Secret private T data;
 
   public OracleDBResponse invoke(DatabaseClient databaseClient) throws SQLException {
     Connection connection =
