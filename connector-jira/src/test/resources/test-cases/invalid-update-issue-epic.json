@@ -1,0 +1,27 @@
+[
+    {
+        "description": "Invalid Update Issue Epic - IssueKey",
+        "authentication": {
+          "url": "instanceurl-address",
+          "username": "Username",
+          "password": "secrets.TOKEN"
+        },
+        "operation": "jira.update-issue-epic",
+        "data": {
+            "issueKey": "",
+            "status": "To Do",
+            "summary": "Hey!!",
+            "reporterAccID": "",
+            "description": null,
+            "assigneeAccID": null,
+            "labels": null,
+            "startDate": null,
+            "dueDate": null,
+            "issueColor": null,
+            "attachments": null,
+            "linkedIssuesRelation": null,
+            "linkedIssues": null,
+            "flagged": null
+        }
+    }
+]

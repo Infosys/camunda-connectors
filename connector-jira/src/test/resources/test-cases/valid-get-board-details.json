@@ -1,0 +1,41 @@
+[
+    {
+      "description": "Valid Get Board Details - with name and type",
+      "authentication": {
+        "url": "instanceurl-address",
+        "username": "Username",
+        "password": "secrets.TOKEN"
+      },
+      "operation": "jira.get-board-details",
+      "data": {
+          "boardName":"name",
+          "boardTypes":["type"]
+      }
+    },
+    {
+        "description": "Valid Get Board Details - with name",
+        "authentication": {
+          "url": "instanceurl-address",
+          "username": "Username",
+          "password": "secrets.TOKEN"
+        },
+        "operation": "jira.get-board-details",
+        "data": {
+            "boardName": "name",
+            "boardTypes": null
+        }
+    }, 
+    {
+        "description": "Valid Get Board Details - with type",
+        "authentication": {
+          "url": "instanceurl-address",
+          "username": "Username",
+          "password": "secrets.TOKEN"
+        },
+        "operation": "jira.get-board-details",
+        "data": {
+            "boardName": null,
+            "boardTypes": ["type"]
+        }
+    }
+]

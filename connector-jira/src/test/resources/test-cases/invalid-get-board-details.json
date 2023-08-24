@@ -1,0 +1,15 @@
+[
+    {
+      "description": "Invalid Get Board Details",
+      "authentication": {
+        "url": "instanceurl-address",
+        "username": "Username",
+        "password": "secrets.TOKEN"
+      },
+      "operation": "jira.get-board-details",
+      "data": {
+          "boardName":"",
+          "boardTypes":""
+      }
+    }
+]

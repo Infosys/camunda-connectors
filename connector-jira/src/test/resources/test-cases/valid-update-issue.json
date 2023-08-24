@@ -1,0 +1,132 @@
+[
+    {
+      "description": "Valid Update Issue - Sprint",
+      "authentication": {
+        "url": "instanceurl-address",
+        "username": "Username",
+        "password": "secrets.TOKEN"
+      },
+      "operation": "jira.update-issue",
+      "data": {
+          "issueKey": "key",
+          "sprint": "sprintname",
+          "sprintBoardId": "Id",
+          "issueType": "Story",
+          "status": "Done",
+          "summary": "Hey!!",
+          "reporterAccID": "accId",
+          "description": null,
+          "assigneeAccID": null,
+          "labels": null,
+          "storyPointEstimate": null,
+          "attachments": null,
+          "linkedIssuesRelation": null,
+          "linkedIssues": null,
+          "flagged": null
+      }
+    },
+    {
+        "description": "Valid Update Issue - Story Point Estimate",
+        "authentication": {
+          "url": "instanceurl-address",
+          "username": "Username",
+          "password": "secrets.TOKEN"
+        },
+        "operation": "jira.update-issue",
+        "data": {
+            "issueKey": "key",
+            "storyPointEstimate": "10.5",
+            "issueType": "Story",
+            "status": "Done",
+            "summary": "Hey!!",
+            "reporterAccID": "accId",
+            "description": null,
+            "assigneeAccID": null,
+            "labels": null,
+            "sprint": null,
+            "sprintBoardId": null,
+            "attachments": null,
+            "linkedIssuesRelation": null,
+            "linkedIssues": null,
+            "flagged": null
+        }
+    }, 
+    {
+        "description": "Valid Update Issue - Attachments",
+        "authentication": {
+          "url": "instanceurl-address",
+          "username": "Username",
+          "password": "secrets.TOKEN"
+        },
+        "operation": "jira.update-issue",
+        "data": {
+            "issueKey": "key",
+            "attachments": ["att1","-att2"],
+            "issueType": "Story",
+            "status": "Done",
+            "summary": "Hey!!",
+            "reporterAccID": "accId",
+            "description": null,
+            "assigneeAccID": null,
+            "labels": null,
+            "sprint": null,
+            "sprintBoardId": null,
+            "storyPointEstimate": null,
+            "linkedIssuesRelation": null,
+            "linkedIssues": null,
+            "flagged": null
+        }
+    },
+    {
+        "description": "Valid Update Issue - LinkedIssues",
+        "authentication": {
+          "url": "instanceurl-address",
+          "username": "Username",
+          "password": "secrets.TOKEN"
+        },
+        "operation": "jira.update-issue",
+        "data": {
+            "issueKey": "key",
+            "linkedIssuesRelation": "relation",
+            "linkedIssues": ["issue1", "issue2"],
+            "issueType": "Story",
+            "status": "Done",
+            "summary": "Hey!!",
+            "reporterAccID": "accId",
+            "description": null,
+            "assigneeAccID": null,
+            "labels": null,
+            "sprint": null,
+            "sprintBoardId": null,
+            "storyPointEstimate": null,
+            "attachments": null,
+            "flagged": null
+        }
+    },
+    {
+        "description": "Valid Update Issue - Labels",
+        "authentication": {
+          "url": "instanceurl-address",
+          "username": "Username",
+          "password": "secrets.TOKEN"
+        },
+        "operation": "jira.update-issue",
+        "data": {
+            "issueKey": "key",
+            "labels": ["lab1","lab2"],
+            "issueType": "Story",
+            "status": "Done",
+            "summary": "Hey!!",
+            "reporterAccID": "accId",
+            "description": null,
+            "assigneeAccID": null,
+            "sprint": null,
+            "sprintBoardId": null,
+            "storyPointEstimate": null,
+            "attachments": null,
+            "linkedIssuesRelation": null,
+            "linkedIssues": null,
+            "flagged": null
+        }
+    }
+]

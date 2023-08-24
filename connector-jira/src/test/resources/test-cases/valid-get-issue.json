@@ -1,0 +1,47 @@
+[
+    {
+      "description": "Valid Get Issue - requiredFields",
+      "authentication": {
+        "url": "instanceurl-address",
+        "username": "Username",
+        "password": "secrets.TOKEN"
+      },
+      "operation": "jira.get-issue",
+      "data": {
+          "issueKey": "key",
+          "requiredFields": ["field1","field2"],
+          "excludeFields": null,
+          "expandList": null
+      }
+    },
+    {
+        "description": "Valid Get Issue - excludeFields",
+        "authentication": {
+          "url": "instanceurl-address",
+          "username": "Username",
+          "password": "secrets.TOKEN"
+        },
+        "operation": "jira.get-issue",
+        "data": {
+            "issueKey": "key",
+            "excludeFields": ["field1","field2"],
+            "requiredFields": null,
+            "expandList": null
+        }
+    },
+    {
+        "description": "Valid Get Issue - expandList",
+        "authentication": {
+          "url": "instanceurl-address",
+          "username": "Username",
+          "password": "secrets.TOKEN"
+        },
+        "operation": "jira.get-issue",
+        "data": {
+            "issueKey": "key",
+            "expandList": ["field1","field2"],
+            "requiredFields": null,
+            "excludeFields": null
+        }
+    }
+]

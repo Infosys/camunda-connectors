@@ -1,0 +1,17 @@
+[
+    {
+        "description": "Invalid Get Issue",
+        "authentication": {
+          "url": "instanceurl-address",
+          "username": "Username",
+          "password": "secrets.TOKEN"
+        },
+        "operation": "jira.get-issue",
+        "data": {
+            "issueKey": "",
+            "requiredFields": ["field1","field2"],
+            "excludeFields": null,
+            "expandList": null
+        }
+    }
+]

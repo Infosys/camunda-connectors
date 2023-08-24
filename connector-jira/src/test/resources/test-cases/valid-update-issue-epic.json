@@ -1,0 +1,79 @@
+[
+    {
+        "description": "Valid Update Issue - Attachments",
+        "authentication": {
+          "url": "instanceurl-address",
+          "username": "Username",
+          "password": "secrets.TOKEN"
+        },
+        "operation": "jira.update-issue-epic",
+        "data": {
+            "issueKey": "key",
+            "attachments": ["att1","-att2"],
+            "status": "To Do",
+            "summary": "Hey!!",
+            "reporterAccID": "",
+            "description": null,
+            "assigneeAccID": null,
+            "labels": null,
+            "startDate": null,
+            "dueDate": null,
+            "issueColor": null,
+            "linkedIssuesRelation": null,
+            "linkedIssues": null,
+            "flagged": null
+        }
+    },
+    {
+        "description": "Valid Update Issue - LinkedIssues",
+        "authentication": {
+          "url": "instanceurl-address",
+          "username": "Username",
+          "password": "secrets.TOKEN"
+        },
+        "operation": "jira.update-issue-epic",
+        "data": {
+            "issueKey": "key",
+            "linkedIssuesRelation": "relation",
+            "linkedIssues": ["issue1", "-issue2"],
+            "projectKey": "ddd",
+            "status": "To Do",
+            "summary": "Hey!!",
+            "reporterAccID": "",
+            "description": null,
+            "assigneeAccID": null,
+            "labels": null,
+            "startDate": null,
+            "dueDate": null,
+            "issueColor": null,
+            "attachments": null,
+            "flagged": null
+        }
+    },
+    {
+        "description": "Valid Update Issue - Labels",
+        "authentication": {
+          "url": "instanceurl-address",
+          "username": "Username",
+          "password": "secrets.TOKEN"
+        },
+        "operation": "jira.update-issue-epic",
+        "data": {
+            "issueKey": "key",
+            "labels": ["lab1","-lab2"],
+            "projectKey": "ddd",
+            "status": "To Do",
+            "summary": "Hey!!",
+            "reporterAccID": "",
+            "description": null,
+            "assigneeAccID": null,
+            "startDate": null,
+            "dueDate": null,
+            "issueColor": null,
+            "attachments": null,
+            "linkedIssuesRelation": null,
+            "linkedIssues": null,
+            "flagged": null
+        }
+    }
+]

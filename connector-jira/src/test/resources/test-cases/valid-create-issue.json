@@ -1,0 +1,148 @@
+[
+    {
+      "description": "Valid Create Issue - Issue type - Story",
+      "authentication": {
+        "url": "instanceurl-address",
+        "username": "Username",
+        "password": "secrets.TOKEN"
+      },
+      "operation": "jira.create-issue",
+      "data": {
+          "projectKey": "ddd",
+          "issueType": "Story",
+          "status": "To Do",
+          "summary": "Hey!!",
+          "reporterAccID": "accId"
+      }
+    },
+    {
+        "description": "Valid Create Issue - Issue type - Task",
+        "authentication": {
+          "url": "instanceurl-address",
+          "username": "Username",
+          "password": "secrets.TOKEN"
+        },
+        "operation": "jira.create-issue",
+        "data": {
+            "projectKey": "ddd",
+            "issueType": "Task",
+            "status": "To Do",
+            "summary": "Hey!!",
+            "reporterAccID": "accId",
+            "description": null,
+            "assigneeAccID": null,
+            "labels": null,
+            "sprint": null,
+            "sprintBoardId": null,
+            "storyPointEstimate": null,
+            "attachments": null,
+            "linkedIssuesRelation": null,
+            "linkedIssues": null,
+            "flagged": null
+        }
+    }, 
+    {
+        "description": "Valid Create Issue - Issue type - Bug",
+        "authentication": {
+          "url": "instanceurl-address",
+          "username": "Username",
+          "password": "secrets.TOKEN"
+        },
+        "operation": "jira.create-issue",
+        "data": {
+            "projectKey": "ddd",
+            "issueType": "Bug",
+            "status": "To Do",
+            "summary": "Hey!!",
+            "reporterAccID": "accId",
+            "description": null,
+            "assigneeAccID": null,
+            "labels": null,
+            "sprint": null,
+            "sprintBoardId": null,
+            "storyPointEstimate": null,
+            "attachments": null,
+            "linkedIssuesRelation": null,
+            "linkedIssues": null,
+            "flagged": null
+        }
+    },
+    {
+        "description": "Valid Create Issue - To Do",
+        "authentication": {
+          "url": "instanceurl-address",
+          "username": "Username",
+          "password": "secrets.TOKEN"
+        },
+        "operation": "jira.create-issue",
+        "data": {
+            "projectKey": "ddd",
+            "issueType": "Story",
+            "status": "To Do",
+            "summary": "Hey!!",
+            "reporterAccID": "accId",
+            "description": null,
+            "assigneeAccID": null,
+            "labels": null,
+            "sprint": null,
+            "sprintBoardId": null,
+            "storyPointEstimate": null,
+            "attachments": null,
+            "linkedIssuesRelation": null,
+            "linkedIssues": null,
+            "flagged": null
+        }
+    },
+    {
+          "description": "Valid Create Issue - In Progress",
+          "authentication": {
+            "url": "instanceurl-address",
+            "username": "Username",
+            "password": "secrets.TOKEN"
+          },
+          "operation": "jira.create-issue",
+          "data": {
+              "projectKey": "ddd",
+              "issueType": "Story",
+              "status": "In Progress",
+              "summary": "Hey!!",
+              "reporterAccID": "accId",
+              "description": null,
+              "assigneeAccID": null,
+              "labels": null,
+              "sprint": null,
+              "sprintBoardId": null,
+              "storyPointEstimate": null,
+              "attachments": null,
+              "linkedIssuesRelation": null,
+              "linkedIssues": null,
+              "flagged": null
+          }
+    }, 
+    {
+          "description": "Valid Create Issue - Done",
+          "authentication": {
+            "url": "instanceurl-address",
+            "username": "Username",
+            "password": "secrets.TOKEN"
+          },
+          "operation": "jira.create-issue",
+          "data": {
+              "projectKey": "ddd",
+              "issueType": "Story",
+              "status": "Done",
+              "summary": "Hey!!",
+              "reporterAccID": "accId",
+              "description": null,
+              "assigneeAccID": null,
+              "labels": null,
+              "sprint": null,
+              "sprintBoardId": null,
+              "storyPointEstimate": null,
+              "attachments": null,
+              "linkedIssuesRelation": null,
+              "linkedIssues": null,
+              "flagged": null
+          }
+    }
+]

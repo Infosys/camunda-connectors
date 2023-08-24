@@ -1,0 +1,1767 @@
+{
+    "$schema": "https://unpkg.com/@camunda/zeebe-element-templates-json-schema/resources/schema.json",
+    "name": "JIRA CONNECTOR",
+    "id": "com.infosys.camundaconnectors.agile:jira:1",
+    "appliesTo": [
+      "bpmn:Task"
+    ],
+    "elementType": {
+      "value": "bpmn:ServiceTask"
+    },
+    "icon" : {
+      "contents": "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='18' height='18' viewBox='0 0 18 18'%3E%3Cimage xlink:href='data:image/png;base64,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' x='0' y='0' height='100%25' width='100%25'/%3E%3C/svg%3E"
+    },
+    "category": {
+      "id": "connectors",
+      "name": "jira-connector"
+    },
+    "groups": [
+      {
+        "id": "authentication",
+        "label": "Authentication"
+      },
+      {
+        "id": "operation",
+        "label": "Operation"
+      },
+      {
+        "id": "inputs",
+        "label": "Input Mapping"
+      },
+      {
+        "id": "output",
+        "label": "Output Mapping"
+      },
+      {
+        "id": "errors",
+        "label": "Error Handling"
+      }
+    ],
+    "properties": [
+      {
+        "type": "Hidden",
+        "value": "com.infosys.camundaconnectors.agile:jira:1",
+        "editable": false,
+        "binding": {
+          "type": "zeebe:taskDefinition:type"
+        }
+      },
+      {
+        "id": "operation",
+        "label": "Operation",
+        "description": "Operation to be done",
+        "type": "Dropdown",
+        "value": "jira.create-issue",
+        "choices": [
+          {
+            "name": "Create Issue (Epic)",
+            "value": "jira.create-issue-epic"
+          },
+          {
+            "name": "Create Issue",
+            "value": "jira.create-issue"
+          },
+          {
+            "name": "Update Issue (Epic)",
+            "value": "jira.update-issue-epic"
+          },
+          {
+            "name": "Update Issue",
+            "value": "jira.update-issue"
+          },
+          {
+            "name": "Get Issue",
+            "value": "jira.get-issue"
+          },
+          {
+            "name": "Get Sprints",
+            "value": "jira.get-sprint-details"
+          },
+          {
+            "name": "Get Board",
+            "value": "jira.get-board-details"
+          }
+        ],
+        "group": "operation",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "operation"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "JIRA Instance URL",
+        "description": "URL of the current Jira Instance",
+        "type": "String",
+        "feel": "optional",
+        "group": "authentication",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "authentication.url"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "username",
+        "description": "Username for jira authentication",
+        "type": "String",
+        "feel": "optional",
+        "group": "authentication",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "authentication.username"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "password",
+        "description": "Password for username e.g. secrets.TOKEN, Secrets can be used to reference encrypted authentication credentials in Connectors. See the <a href= \"https://docs.camunda.io/docs/components/console/manage-clusters/manage-secrets/\" target=\"_blank\"> Secrets</a> documentation for more details.",
+        "type": "String",
+        "feel": "optional",
+        "group": "authentication",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "authentication.password"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Project",
+        "description": "Enter project key",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.projectKey"
+        },
+        "constraints": {
+          "notEmpty": true
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue-epic"
+        }
+      },
+      {
+        "label": "Status",
+        "description": "Issue Status",
+        "group": "inputs",
+        "type": "Dropdown",
+        "value": "To Do",
+        "choices": [
+          {
+            "name": "To Do",
+            "value": "To Do"
+          },
+          {
+            "name": "In Progress",
+            "value": "In Progress"
+          },
+          {
+            "name": "Done",
+            "value": "Done"
+          }
+        ],
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.status"
+        },
+        "constraints": {
+          "notEmpty": true
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue-epic"
+        }
+      },
+      {
+        "label": "Summary",
+        "description": "Summary of the issue",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.summary"
+        },
+        "constraints": {
+          "notEmpty": true
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue-epic"
+        }
+      },
+      {
+        "label": "Description",
+        "description": "Issue Description",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.description"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue-epic"
+        }
+      },
+      {
+        "label": "Assignee Account ID",
+        "description": "account Id of the assignee",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.assigneeAccID"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue-epic"
+        }
+      },
+      {
+        "label": "Labels",
+        "description": "List of labels of the issue",
+        "type": "Text",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.labels"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue-epic"
+        }
+      },
+      {
+        "label": "Start Date",
+        "description": "Start Date of the project issue (yyyy-mm-dd)",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.startDate"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue-epic"
+        }
+      },
+      {
+        "label": "Due Date",
+        "description": "Due Date of the project issue (yyyy-mm-dd)",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.dueDate"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue-epic"
+        }
+      },
+      {
+        "label": "Issue Color",
+        "description": "Color of the issue",
+        "group": "inputs",
+        "type": "Dropdown",
+        "value": "purple",
+        "choices": [
+          {
+            "name": "Purple",
+            "value": "purple"
+          },
+          {
+            "name": "Blue",
+            "value": "blue"
+          },
+          {
+            "name": "Green",
+            "value": "green"
+          },
+          {
+            "name": "Teal",
+            "value": "teal"
+          },
+          {
+            "name": "Yellow",
+            "value": "yellow"
+          },
+          {
+            "name": "Orange",
+            "value": "orange"
+          },
+          {
+            "name": "Grey",
+            "value": "grey"
+          },
+          {
+            "name": "Dark Purple",
+            "value": "dark_purple"
+          },
+          {
+            "name": "Dark Blue",
+            "value": "dark_blue"
+          },
+          {
+            "name": "Dark Green",
+            "value": "dark_green"
+          },
+          {
+            "name": "Dark Teal",
+            "value": "dark_teal"
+          },
+          {
+            "name": "Dark Yellow",
+            "value": "dark_yellow"
+          },
+          {
+            "name": "Dark Orange",
+            "value": "dark_orange"
+          },
+          {
+            "name": "Dark Grey",
+            "value": "dark_grey"
+          }
+        ],
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.issueColor"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue-epic"
+        }
+      },
+      {
+        "label": "Reporter Account ID",
+        "description": "Account Id of the issue reporter",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.reporterAccID"
+        },
+        "constraints": {
+          "notEmpty": true
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue-epic"
+        }
+      },
+      {
+        "label": "Attachments",
+        "description": "List of File Attachments of the Issue",
+        "type": "Text",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.attachments"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue-epic"
+        }
+      },
+      {
+        "label": "Linked Issues Relation",
+        "description": "Relationship between linked issues",
+        "group": "inputs",
+        "type": "Dropdown",
+        "value": "Related",
+        "choices": [
+          {
+            "name": "Related",
+            "value": "Related"
+          },
+          {
+            "name": "blocks",
+            "value": "blocks"
+          },
+          {
+            "name": "is blocked by",
+            "value": "is blocked by"
+          },
+          {
+            "name": "clones",
+            "value": "is cloned by"
+          },
+          {
+            "name": "duplicates",
+            "value": "duplicates"
+          },
+          {
+            "name": "is duplicated by",
+            "value": "is duplicated by"
+          },
+          {
+            "name": "git code review opened",
+            "value": "git code review opened"
+          },
+          {
+            "name": "opened during git code review in",
+            "value": "opened during git code review in"
+          },
+          {
+            "name": "split to",
+            "value": "split from"
+          },
+          {
+            "name": "parent to",
+            "value": "parent to"
+          },
+          {
+            "name": "is child of",
+            "value": "is child of"
+          },
+          {
+            "name": "is idea for",
+            "value": "is idea for"
+          },
+          {
+            "name": "added to idea",
+            "value": "added to idea"
+          },
+          {
+            "name": "implements",
+            "value": "implements"
+          },
+          {
+            "name": "is implemented by",
+            "value": "is implemented by"
+          },
+          {
+            "name": "merged from",
+            "value": "merged from"
+          },
+          {
+            "name": "merged into",
+            "value": "merged into"
+          },
+          {
+            "name": "relates to",
+            "value": "relates to"
+          },
+          {
+            "name": "tests",
+            "value": "tests"
+          },
+          {
+            "name": "is tested by",
+            "value": "is tested by"
+          }
+        ],
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.linkedIssuesRelation"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue-epic"
+        }
+      },
+      {
+        "label": "Linked Issues List",
+        "description": "List of issue links with their respective keys",
+        "type": "Text",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.linkedIssues"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue-epic"
+        }
+      },
+      {
+        "label": "Flagged",
+        "description": "flag issue or not",
+        "group": "inputs",
+        "type": "Dropdown",
+        "value": "false",
+        "choices": [
+          {
+            "name": "True",
+            "value": "true"
+          },
+          {
+            "name": "False",
+            "value": "false"
+          }
+        ],
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.flagged"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue-epic"
+        }
+      },
+      {
+        "label": "Project",
+        "description": "Enter project key",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.projectKey"
+        },
+        "constraints": {
+          "notEmpty": true
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue"
+        }
+      },
+      {
+        "label": "Issue Type",
+        "description": "Type of the Issue",
+        "group": "inputs",
+        "type": "Dropdown",
+        "value": "Story",
+        "choices": [
+          {
+            "name": "Story",
+            "value": "Story"
+          },
+          {
+            "name": "Task",
+            "value": "Task"
+          },
+          {
+            "name": "Bug",
+            "value": "Bug"
+          }
+        ],
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.issueType"
+        },
+        "constraints": {
+          "notEmpty": true
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue"
+        }
+      },
+      {
+        "label": "Status",
+        "description": "Issue Status",
+        "group": "inputs",
+        "type": "Dropdown",
+        "value": "To Do",
+        "choices": [
+          {
+            "name": "To Do",
+            "value": "To Do"
+          },
+          {
+            "name": "In Progress",
+            "value": "In Progress"
+          },
+          {
+            "name": "Done",
+            "value": "Done"
+          }
+        ],
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.status"
+        },
+        "constraints": {
+          "notEmpty": true
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue"
+        }
+      },
+      {
+        "label": "Summary",
+        "description": "Summary of the issue",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.summary"
+        },
+        "constraints": {
+          "notEmpty": true
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue"
+        }
+      },
+      {
+        "label": "Description",
+        "description": "Issue Description",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.description"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue"
+        }
+      },
+      {
+        "label": "Assignee Account ID",
+        "description": "account Id of the assignee",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.assigneeAccID"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue"
+        }
+      },
+      {
+        "label": "Labels",
+        "description": "List of labels of the issue",
+        "type": "Text",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.labels"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue"
+        }
+      },
+      {
+        "label": "Sprint",
+        "description": "Add the sprint",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.sprint"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue"
+        }
+      },
+      {
+        "label": "Sprint Board ID",
+        "description": "BoardID of the selected sprint",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.sprintBoardId"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue"
+        }
+      },
+      {
+        "label": "Story Point Estimate",
+        "description": "Estimated no.of story points",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.storyPointEstimate"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue"
+        }
+      },
+      {
+        "label": "Reporter Account ID",
+        "description": "Account Id of the issue reporter",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.reporterAccID"
+        },
+        "constraints": {
+          "notEmpty": true
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue"
+        }
+      },
+      {
+        "label": "Attachments",
+        "description": "List of File Attachments of the Issue",
+        "type": "Text",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.attachments"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue"
+        }
+      },
+      {
+        "label": "Linked Issues Relation",
+        "description": "Relationship between linked issues",
+        "group": "inputs",
+        "type": "Dropdown",
+        "value": "Related",
+        "choices": [
+          {
+            "name": "Related",
+            "value": "Related"
+          },
+          {
+            "name": "blocks",
+            "value": "blocks"
+          },
+          {
+            "name": "is blocked by",
+            "value": "is blocked by"
+          },
+          {
+            "name": "clones",
+            "value": "is cloned by"
+          },
+          {
+            "name": "duplicates",
+            "value": "duplicates"
+          },
+          {
+            "name": "is duplicated by",
+            "value": "is duplicated by"
+          },
+          {
+            "name": "git code review opened",
+            "value": "git code review opened"
+          },
+          {
+            "name": "opened during git code review in",
+            "value": "opened during git code review in"
+          },
+          {
+            "name": "split to",
+            "value": "split from"
+          },
+          {
+            "name": "parent to",
+            "value": "parent to"
+          },
+          {
+            "name": "is child of",
+            "value": "is child of"
+          },
+          {
+            "name": "is idea for",
+            "value": "is idea for"
+          },
+          {
+            "name": "added to idea",
+            "value": "added to idea"
+          },
+          {
+            "name": "implements",
+            "value": "implements"
+          },
+          {
+            "name": "is implemented by",
+            "value": "is implemented by"
+          },
+          {
+            "name": "merged from",
+            "value": "merged from"
+          },
+          {
+            "name": "merged into",
+            "value": "merged into"
+          },
+          {
+            "name": "relates to",
+            "value": "relates to"
+          },
+          {
+            "name": "tests",
+            "value": "tests"
+          },
+          {
+            "name": "is tested by",
+            "value": "is tested by"
+          }
+        ],
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.linkedIssuesRelation"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue"
+        }
+      },
+      {
+        "label": "Linked Issues List",
+        "description": "List of issue links with their respective keys",
+        "type": "Text",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.linkedIssues"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue"
+        }
+      },
+      {
+        "label": "Flagged",
+        "description": "flag issue or not",
+        "group": "inputs",
+        "type": "Dropdown",
+        "value": "false",
+        "choices": [
+          {
+            "name": "True",
+            "value": "true"
+          },
+          {
+            "name": "False",
+            "value": "false"
+          }
+        ],
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.flagged"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.create-issue"
+        }
+      },
+      {
+        "label": "Issue Key",
+        "description": "Enter Issue key",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.issueKey"
+        },
+        "constraints": {
+          "notEmpty": true
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue-epic"
+        }
+      },
+      {
+        "label": "Status",
+        "description": "Issue Status",
+        "group": "inputs",
+        "type": "Dropdown",
+        "value": "To Do",
+        "choices": [
+          {
+            "name": "To Do",
+            "value": "To Do"
+          }, 
+          {
+            "name": "In Progress",
+            "value": "In Progress"
+          },
+          {
+            "name": "Done",
+            "value": "Done"
+          }
+        ],
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.status"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue-epic"
+        }
+      },
+      {
+        "label": "Summary",
+        "description": "Summary of the issue",
+        "type": "String",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.summary"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue-epic"
+        }
+      },
+      {
+        "label": "Description",
+        "description": "Issue Description",
+        "type": "String",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.description"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue-epic"
+        }
+      },
+      {
+        "label": "Assignee Account ID",
+        "description": "account Id of the assignee",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.assigneeAccID"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue-epic"
+        }
+      },
+      {
+        "label": "Labels",
+        "description": "List Labels of the Issue (Add Prefix \"-\" to the label to delete)",
+        "type": "Text",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.labels"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue-epic"
+        }
+      },
+      {
+        "label": "Start Date",
+        "description": "Start Date of the project issue (yyyy-mm-dd)",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.startDate"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue-epic"
+        }
+      },
+      {
+        "label": "Due Date",
+        "description": "Due Date of the project issue (yyyy-mm-dd)",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.dueDate"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue-epic"
+        }
+      },
+      {
+        "label": "Issue Color",
+        "description": "Color of the issue",
+        "group": "inputs",
+        "type": "Dropdown",
+        "value": "purple",
+        "choices": [
+          {
+            "name": "Purple",
+            "value": "purple"
+          },
+          {
+            "name": "Blue",
+            "value": "blue"
+          },
+          {
+            "name": "Green",
+            "value": "green"
+          },
+          {
+            "name": "Teal",
+            "value": "teal"
+          },
+          {
+            "name": "Yellow",
+            "value": "yellow"
+          },
+          {
+            "name": "Orange",
+            "value": "orange"
+          },
+          {
+            "name": "Grey",
+            "value": "grey"
+          },
+          {
+            "name": "Dark Purple",
+            "value": "dark_purple"
+          },
+          {
+            "name": "Dark Blue",
+            "value": "dark_blue"
+          },
+          {
+            "name": "Dark Green",
+            "value": "dark_green"
+          },
+          {
+            "name": "Dark Teal",
+            "value": "dark_teal"
+          },
+          {
+            "name": "Dark Yellow",
+            "value": "dark_yellow"
+          },
+          {
+            "name": "Dark Orange",
+            "value": "dark_orange"
+          },
+          {
+            "name": "Dark Grey",
+            "value": "dark_grey"
+          }
+        ],
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.issueColor"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue-epic"
+        }
+      },
+      {
+        "label": "Reporter Account ID",
+        "description": "Account Id of the issue reporter",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.reporterAccID"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue-epic"
+        }
+      },
+      {
+        "label": "Attachments",
+        "description": "List of File Attachments of the Issue (Add Prefix \"-\" to the attachment to delete)",
+        "type": "Text",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.attachments"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue-epic"
+        }
+      },
+      {
+        "label": "Linked Issues Relation",
+        "description": "Relationship between linked issues",
+        "group": "inputs",
+        "type": "Dropdown",
+        "value": "Related",
+        "choices": [
+          {
+            "name": "Related",
+            "value": "Related"
+          },
+          {
+            "name": "blocks",
+            "value": "blocks"
+          },
+          {
+            "name": "is blocked by",
+            "value": "is blocked by"
+          },
+          {
+            "name": "clones",
+            "value": "is cloned by"
+          },
+          {
+            "name": "duplicates",
+            "value": "duplicates"
+          },
+          {
+            "name": "is duplicated by",
+            "value": "is duplicated by"
+          },
+          {
+            "name": "git code review opened",
+            "value": "git code review opened"
+          },
+          {
+            "name": "opened during git code review in",
+            "value": "opened during git code review in"
+          },
+          {
+            "name": "split to",
+            "value": "split from"
+          },
+          {
+            "name": "parent to",
+            "value": "parent to"
+          },
+          {
+            "name": "is child of",
+            "value": "is child of"
+          },
+          {
+            "name": "is idea for",
+            "value": "is idea for"
+          },
+          {
+            "name": "added to idea",
+            "value": "added to idea"
+          },
+          {
+            "name": "implements",
+            "value": "implements"
+          },
+          {
+            "name": "is implemented by",
+            "value": "is implemented by"
+          },
+          {
+            "name": "merged from",
+            "value": "merged from"
+          },
+          {
+            "name": "merged into",
+            "value": "merged into"
+          },
+          {
+            "name": "relates to",
+            "value": "relates to"
+          },
+          {
+            "name": "tests",
+            "value": "tests"
+          },
+          {
+            "name": "is tested by",
+            "value": "is tested by"
+          }
+        ],
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.linkedIssuesRelation"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue-epic"
+        }
+      },
+      {
+        "label": "Linked Issues List",
+        "description": "List of issue keys of the issues to be linked (Add Prefix \"-\" to the key to delete)",
+        "type": "Text",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.linkedIssues"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue-epic"
+        }
+      },
+      {
+        "label": "Flagged",
+        "description": "flag issue or not",
+        "group": "inputs",
+        "type": "Dropdown",
+        "value": "false",
+        "choices": [
+          {
+            "name": "True",
+            "value": "true"
+          },
+          {
+            "name": "False",
+            "value": "false"
+          }
+        ],
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.flagged"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue-epic"
+        }
+      },
+      {
+        "label": "Issue Key",
+        "description": "Enter Issue key",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.issueKey"
+        },
+        "constraints": {
+          "notEmpty": true
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue"
+        }
+      },
+      {
+        "label": "Issue Type",
+        "description": "Type of the Issue",
+        "group": "inputs",
+        "type": "Dropdown",
+        "value": "Story",
+        "choices": [
+          {
+            "name": "Story",
+            "value": "Story"
+          },
+          {
+            "name": "Task",
+            "value": "Task"
+          },
+          {
+            "name": "Bug",
+            "value": "Bug"
+          }
+        ],
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.issueType"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue"
+        }
+      },
+      {
+        "label": "Status",
+        "description": "Issue Status",
+        "group": "inputs",
+        "type": "Dropdown",
+        "value": "To Do",
+        "choices": [
+          {
+            "name": "To Do",
+            "value": "To Do"
+          },
+          {
+            "name": "In Progress",
+            "value": "In Progress"
+          },
+          {
+            "name": "Done",
+            "value": "Done"
+          }
+        ],
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.status"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue"
+        }
+      },
+      {
+        "label": "Summary",
+        "description": "Summary of the issue",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.summary"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue"
+        }
+      },
+      {
+        "label": "Description",
+        "description": "Issue Description",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.description"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue"
+        }
+      },
+      {
+        "label": "Assignee Account ID",
+        "description": "account Id of the assignee",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.assigneeAccID"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue"
+        }
+      },
+      {
+        "label": "Labels",
+        "description": "List of labels of the issue (Add Prefix \"-\" to the label to delete)",
+        "type": "Text",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.labels"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue"
+        }
+      },
+      {
+        "label": "Sprint",
+        "description": "Add the sprint",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.sprint"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue"
+        }
+      },
+      {
+        "label": "Sprint Board ID",
+        "description": "BoardID of the selected sprint",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.sprintBoardId"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue"
+        }
+      },
+      {
+        "label": "Story Point Estimate",
+        "description": "Estimated no.of story points",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.storyPointEstimate"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue"
+        }
+      },
+      {
+        "label": "Reporter Account ID",
+        "description": "Account Id of the issue reporter",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.reporterAccID"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue"
+        }
+      },
+      {
+        "label": "Attachments",
+        "description": "List of File Attachments of the Issue (Add Prefix \"-\" to the attachment to delete)",
+        "type": "Text",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.attachments"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue"
+        }
+      },
+      {
+        "label": "Linked Issues Relation",
+        "description": "Relationship between linked issues ",
+        "group": "inputs",
+        "type": "Dropdown",
+        "value": "Related",
+        "choices": [
+          {
+            "name": "Related",
+            "value": "Related"
+          },
+          {
+            "name": "blocks",
+            "value": "blocks"
+          },
+          {
+            "name": "is blocked by",
+            "value": "is blocked by"
+          },
+          {
+            "name": "clones",
+            "value": "is cloned by"
+          },
+          {
+            "name": "duplicates",
+            "value": "duplicates"
+          },
+          {
+            "name": "is duplicated by",
+            "value": "is duplicated by"
+          },
+          {
+            "name": "git code review opened",
+            "value": "git code review opened"
+          },
+          {
+            "name": "opened during git code review in",
+            "value": "opened during git code review in"
+          },
+          {
+            "name": "split to",
+            "value": "split from"
+          },
+          {
+            "name": "parent to",
+            "value": "parent to"
+          },
+          {
+            "name": "is child of",
+            "value": "is child of"
+          },
+          {
+            "name": "is idea for",
+            "value": "is idea for"
+          },
+          {
+            "name": "added to idea",
+            "value": "added to idea"
+          },
+          {
+            "name": "implements",
+            "value": "implements"
+          },
+          {
+            "name": "is implemented by",
+            "value": "is implemented by"
+          },
+          {
+            "name": "merged from",
+            "value": "merged from"
+          },
+          {
+            "name": "merged into",
+            "value": "merged into"
+          },
+          {
+            "name": "relates to",
+            "value": "relates to"
+          },
+          {
+            "name": "tests",
+            "value": "tests"
+          },
+          {
+            "name": "is tested by",
+            "value": "is tested by"
+          }
+        ],
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.linkedIssuesRelation"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue"
+        }
+      },
+      {
+        "label": "Linked Issues List",
+        "description": "List of issue keys of the issues to be linked (Add Prefix \"-\" to the key to delete)",
+        "type": "Text",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.linkedIssues"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue"
+        }
+      },
+      {
+        "label": "Flagged",
+        "description": "flag issue or not",
+        "group": "inputs",
+        "type": "Dropdown",
+        "value": "false",
+        "choices": [
+          {
+            "name": "True",
+            "value": "true"
+          },
+          {
+            "name": "False",
+            "value": "false"
+          }
+        ],
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.flagged"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.update-issue"
+        }
+      },
+      {
+        "label": "Issue Key",
+        "description": "Issue Key to get details",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.issueKey"
+        },
+        "constraints": {
+          "notEmpty": true
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.get-issue"
+        }
+      },
+      {
+        "label": "Required Fields",
+        "description": "Fields to be retrieved from the issue",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.requiredFields"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.get-issue"
+        }
+      },
+      {
+        "label": "Exclude Fields",
+        "description": "Fields to be excluded from the issue",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.excludeFields"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.get-issue"
+        }
+      },
+      {
+        "label": "Expand",
+        "description": "List of attributes to be expanded E.g., renderedFields, names, schema, operations, editmeta, changelog, versionedRepresentations",
+        "type": "Text",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.expandList"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.get-issue"
+        }
+      },
+      {
+        "label": "Board ID",
+        "description": "Id of the Board",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.boardId"
+        },
+        "constraints": {
+          "notEmpty": true
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.get-sprint-details"
+        }
+      },
+      {
+        "label": "Sprint State",
+        "description": "State of the Sprint",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.sprintState"
+        },
+        "constraints": {
+          "notEmpty": true
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.get-sprint-details"
+        }
+      },
+      {
+        "label": "Board Name",
+        "description": "Name of the board to be retrieved",
+        "type": "String",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.boardName"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.get-board-details"
+        }
+      },
+      {
+        "label": "Board Type",
+        "description": "List of types of the boards to be retrieved",
+        "type": "Text",
+        "feel": "optional",
+        "group": "inputs",
+        "binding": {
+          "type": "zeebe:input",
+          "name": "data.boardTypes"
+        },
+        "condition": {
+          "property": "operation",
+          "equals": "jira.get-board-details"
+        }
+      },
+      {
+        "label": "Result Variable",
+        "description": "Name of variable to store the response in",
+        "group": "output",
+        "type": "String",
+        "binding": {
+          "type": "zeebe:taskHeader",
+          "key": "resultVariable"
+        }
+      },
+      {
+        "label": "Result Expression",
+        "description": "Expression to map the response into process variables",
+        "group": "output",
+        "type": "Text",
+        "feel": "optional",
+        "binding": {
+          "type": "zeebe:taskHeader",
+          "key": "resultExpression"
+        }
+      },
+      {
+        "label": "Error Expression",
+        "description": "Expression to handle errors. Details in the <a href=\"https://docs.camunda.io/docs/components/connectors/use-connectors/\" target=\"_blank\">documentation</a>.",
+        "group": "errors",
+        "type": "Text",
+        "feel": "optional",
+        "binding": {
+          "type": "zeebe:taskHeader",
+          "key": "errorExpression"
+        }
+      }
+    ]
+  }

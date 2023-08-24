@@ -1,0 +1,51 @@
+[
+  {
+    "description": "Blank password",
+    "authentication": {
+      "url": "instanceurl-address",
+      "username": "Username",
+      "password": ""
+    },
+    "operation": "jira.get-sprint-details",
+    "data": {
+      "boardId":"Id",
+      "sprintState":"future"
+    }
+  },
+  {
+    "description": "Blank username",
+    "authentication": {
+      "url": "instanceurl-address",
+      "username": "",
+      "password": "secrets.TOKEN"
+    },
+    "operation": "jira.get-sprint-details",
+    "data": {
+      "boardId":"Id",
+      "sprintState":"future"
+    }
+  },
+  {
+    "description": "Blank Url",
+    "authentication": {
+      "url": "",
+      "username": "Username",
+      "password": "secrets.TOKEN"
+    },
+    "operation": "jira.get-sprint-details",
+    "data": {
+      "boardId":"Id",
+      "sprintState":"future"
+    }
+  },
+  {
+    "description": "data is null",
+    "authentication": {
+      "url": "instanceurl-address",
+      "username": "Username",
+      "password": "secrets.TOKEN"
+    },
+    "operation": "jira.get-issue",
+    "data" : {}
+  }
+]

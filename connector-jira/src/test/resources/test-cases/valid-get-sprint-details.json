@@ -1,0 +1,15 @@
+[
+    {
+        "description": "Valid Get Sprint Details",
+        "authentication": {
+          "url": "instanceurl-address",
+          "username": "Username",
+          "password": "secrets.TOKEN"
+        },
+        "operation": "jira.get-sprint-details",
+        "data": {
+            "boardId":"Id",
+            "sprintState":"future"
+        }
+    }
+]
