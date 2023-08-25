@@ -1,0 +1,287 @@
+{
+  "$schema": "https://unpkg.com/@camunda/zeebe-element-templates-json-schema/resources/schema.json",
+  "name": "SSH Connector Template",
+  "id": "com.infosys.camundaconnectors.ssh:ssh:1",
+  "description": "SSH Conector for executig non-interactive commands on remote server",
+  "version": 1,
+  "entriesVisible": false,
+  "appliesTo": [
+    "bpmn:Task"
+  ],
+  "elementType": {
+    "value": "bpmn:ServiceTask"
+  },
+  "icon": {
+    "contents": "data:image/svg+xml;charset=utf-8,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='18' height='18' viewBox='0 0 18 18'%3E%3Cimage xlink:href='data:image/png;base64,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' x='0' y='0' height='100%25' width='100%25'/%3E%3C/svg%3E"
+  },
+  "category": {
+    "id": "connectors",
+    "name": "Connectors"
+  },
+  "groups": [
+    {
+      "id": "authentication",
+      "label": "Authentication"
+    },
+    {
+      "id": "operation",
+      "label": "Operation"
+    },
+    {
+      "id": "inputs",
+      "label": "Input Mapping"
+    },
+    {
+      "id": "output",
+      "label": "Output Mapping"
+    },
+    {
+      "id": "errors",
+      "label": "Error Handling"
+    }
+  ],
+  "properties": [
+    {
+      "type": "Hidden",
+      "value": "com.infosys.camundaconnectors.ssh:ssh:1",
+      "editable": false,
+      "binding": {
+        "type": "zeebe:taskDefinition:type"
+      }
+    },
+    {
+      "id": "operation",
+      "label": "Operation",
+      "description": "Operation to be done",
+      "type": "Dropdown",
+      "value": "ssh.executeCommand",
+      "choices": [
+        {
+          "name": "Execute Command",
+          "value": "ssh.executeCommand"
+        }
+      ],
+      "group": "operation",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "operation"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "host",
+      "description": "Hostname/computer name or IP address of remote server host.",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.hostname"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "port",
+      "description": "Port number for host server. e.g. 22",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "value": "22",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.portNumber"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "username",
+      "description": "Username for remote host server",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.username"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "password",
+      "description": "Password for username e.g. secrets.TOKEN, Secrets can be used to reference encrypted authentication credentials in Connectors. See the <a href= \"https://docs.camunda.io/docs/components/console/manage-clusters/manage-secrets/\" target=\"_blank\"> Secrets</a> documentation for more details.",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.password"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "operating system",
+      "description": "Select OS of remote server",
+      "type": "Dropdown",
+      "group": "authentication",
+      "value":"windows",
+      "choices": [
+        {
+          "name": "Windows",
+          "value": "windows"
+        },
+        {
+          "name": "Linux",
+          "value": "linux"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.operatingSystem"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Known Hosts Path",
+      "description": "Enter known_hosts file address present in C:\\user\\.ssh\\known_hosts. If known_hosts file does not exists generate it. Refer Documentation for more details",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.knownHostsPath"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "commands",
+      "description": "Enter commands which is going to executed on remote server.for e.g [\"command 1\",\"command 2\" ]",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.commands"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ssh.executeCommand"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Command Line",
+      "description": "If multiple commands needs to be run on single command line then select single, if multiple command needs to be run on multiple command line then select multiple",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "single",
+      "choices": [
+        {
+          "name": "Single",
+          "value": "single"
+        },
+        {
+          "name": "Multiple",
+          "value": "multiple"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.commandLine"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ssh.executeCommand"
+      }
+    },
+    {
+      "label": "Output Type",
+      "description": "Select Status Code if you want only status code i.e 1, otherwise if one wants the command output then select Command Output",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "statusCode",
+      "choices": [
+        {
+          "name": "Status Code",
+          "value": "statusCode"
+        },
+        {
+          "name": "Command Output",
+          "value": "commandOutput"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.outputType"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ssh.executeCommand"
+      }
+    },
+    {
+      "label": "Timeout",
+      "description": "Enter timeout in seconds.",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.timeout"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "ssh.executeCommand"
+      }
+    },
+    {
+      "label": "Result Variable",
+      "description": "Name of variable to store the response in. Response should not be more than 32KB",
+      "group": "output",
+      "type": "String",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "resultVariable"
+      }
+    },
+    {
+      "label": "Result Expression",
+      "description": "Expression to map the response into process variables",
+      "group": "output",
+      "type": "Text",
+      "feel": "required",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "resultExpression"
+      }
+    },
+    {
+      "label": "Error Expression",
+      "description": "Expression to handle errors. Details in the <a href=\"https://docs.camunda.io/docs/components/connectors/use-connectors/\" target=\"_blank\">documentation</a>.",
+      "group": "errors",
+      "type": "Text",
+      "feel": "required",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "errorExpression"
+      }
+    }
+  ]
+}

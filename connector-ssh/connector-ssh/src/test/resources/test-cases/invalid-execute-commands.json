@@ -1,0 +1,57 @@
+[
+  {
+    "description": "Invalid commands",
+    "authentication": {
+      "hostname": "Hostname",
+      "portNumber": "22",
+      "username": "Username",
+      "password": "Password"       ,
+      "knownHostsPath":"pathOf/known_hosts",
+      "operatingSystem":"windows"    
+    },
+    "operation": "ssh.executeCommand",
+    "data": {
+      "commands":[],
+      "commandLine":"multiple",
+      "outputType":"statusCode",
+      "timeout":"10"
+    }
+  },
+  {
+    "description": "Invalid commandLine",
+    "authentication": {
+      "hostname": "Hostname",
+      "portNumber": "22",
+      "username": "Username",
+      "password": "Password"       ,
+      "knownHostsPath":"pathOf/known_hosts",
+      "operatingSystem":"windows"    
+    },
+    "operation": "ssh.executeCommand",
+    "data": {
+      "commands":["dir","ipconfig","hostname"],
+      "commandLine":"multipurpose",
+      "outputType":"statusCode",
+      "timeout":"10"
+    }
+  },
+  {
+    "description": "Invalid outputType",
+    "authentication": {
+      "hostname": "Hostname",
+      "portNumber": "22",
+      "username": "Username",
+      "password": "Password"       ,
+      "knownHostsPath":"pathOf/known_hosts",
+      "operatingSystem":"linux"    
+    },
+    "operation": "ssh.executeCommand",
+    "data": {
+      "commands":["dir","ipconfig","hostname"],
+      "commandLine":"single",
+      "outputType":"outputCommand",
+      "timeout":"10"
+    }
+  }
+  
+]

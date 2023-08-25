@@ -1,0 +1,109 @@
+  [
+    {
+      "description": "without password",
+      "authentication": {
+        "hostname": "Hostname",
+        "portNumber": "22",
+        "username": "Username",
+        "knownHostsPath":"pathOf/known_hosts",
+        "operatingSystem":"windows"    
+      },
+      "operation": "ssh.executeCommand",
+      "data": {
+        "commands":["dir","ipconfig","hostname"],
+        "commandLine":"multiple",
+        "outputType":"statusCode",
+        "timeout":"10"
+      }
+    },
+      {
+        "description": "Blank Password",
+        "authentication": {
+          "hostname": "Hostname",
+          "portNumber": "22",
+          "username": "Username",
+          "password": ""       ,
+          "knownHostsPath":"pathOf/known_hosts",
+          "operatingSystem":"windows"    
+        },
+        "operation": "ssh.executeCommand",
+        "data": {
+          "commands":["dir","ipconfig","hostname"],
+          "commandLine":"multiple",
+          "outputType":"statusCode",
+          "timeout":"10"
+        }
+      },
+        {
+          "description": "port is blank",
+          "authentication": {
+            "hostname": "Hostname",
+            "portNumber": "",
+            "username": "Username",
+            "password": "Password"       ,
+            "knownHostsPath":"pathOf/known_hosts",
+            "operatingSystem":"windows"    
+          },
+          "operation": "ssh.executeCommand",
+          "data": {
+            "commands":["dir","ipconfig","hostname"],
+            "commandLine":"multiple",
+            "outputType":"statusCode",
+            "timeout":"10"
+          }
+        },
+        {
+          "description": "Blank Username",
+          "authentication": {
+            "hostname": "",
+            "portNumber": "22",
+            "username": "Username",
+            "password": "Password"       ,
+            "knownHostsPath":"pathOf/known_hosts",
+            "operatingSystem":"windows"    
+          },
+          "operation": "ssh.executeCommand",
+          "data": {
+            "commands":["dir","ipconfig","hostname"],
+            "commandLine":"multiple",
+            "outputType":"statusCode",
+            "timeout":"10"
+          }
+        },
+        {
+          "description": "Host is null",
+          "authentication": {
+            "hostname": "",
+            "portNumber": "22",
+            "username": "Username",
+            "password": "Password"       ,
+            "knownHostsPath":"pathOf/known_hosts",
+            "operatingSystem":"windows"    
+          },
+          "operation": "ssh.executeCommand",
+          "data": {
+            "commands":["dir","ipconfig","hostname"],
+            "commandLine":"multiple",
+            "outputType":"statusCode",
+            "timeout":"10"
+          }
+        },
+        {
+          "description": "Known_hostsPath is blank",
+          "authentication": {
+            "hostname": "Hostname",
+            "portNumber": "22",
+            "username": "Username",
+            "password": "Password"       ,
+            "knownHostsPath":"",
+            "operatingSystem":"windows"    
+          },
+          "operation": "ssh.executeCommand",
+          "data": {
+            "commands":["dir","ipconfig","hostname"],
+            "commandLine":"multiple",
+            "outputType":"statusCode",
+            "timeout":"10"
+          }
+        }
+  ]

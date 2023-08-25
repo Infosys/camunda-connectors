@@ -1,0 +1,75 @@
+[
+  {
+    "description": "Valid Execute Commands - all inputs with statusCode as a outputType,commandLine as multiple and OS as windows",
+    "authentication": {
+      "hostname": "Hostname",
+      "portNumber": "22",
+      "username": "Username",
+      "password": "Password"       ,
+      "knownHostsPath":"pathOf/known_hosts",
+      "operatingSystem":"windows"    
+    },
+    "operation": "ssh.executeCommand",
+    "data": {
+      "commands":["dir","ipconfig","hostname"],
+      "commandLine":"multiple",
+      "outputType":"statusCode",
+      "timeout":"10"
+    }
+  },
+  {
+    "description": "Valid Execute Commands - all inputs with statusCode as a outputType,commandLine as single and OS as windows",
+    "authentication": {
+      "hostname": "Hostname",
+      "portNumber": "22",
+      "username": "Username",
+      "password": "Password"       ,
+      "knownHostsPath":"pathOf/known_hosts",
+      "operatingSystem":"windows"    
+    },
+    "operation": "ssh.executeCommand",
+    "data": {
+      "commands":["dir","ipconfig","hostname"],
+      "commandLine":"single",
+      "outputType":"statusCode",
+      "timeout":"10"
+    }
+  },
+  {
+    "description": "Valid Execute Commands - all inputs with statusCode as a outputType,commandLine as single and OS as linux",
+    "authentication": {
+      "hostname": "Hostname",
+      "portNumber": "22",
+      "username": "Username",
+      "password": "Password"       ,
+      "knownHostsPath":"pathOf/known_hosts",
+      "operatingSystem":"linux"    
+    },
+    "operation": "ssh.executeCommand",
+    "data": {
+      "commands":["dir","ipconfig","hostname"],
+      "commandLine":"single",
+      "outputType":"statusCode",
+      "timeout":"10"
+    }
+  },
+  {
+    "description": "Valid Execute Commands - all inputs with statusCode as a outputType,commandLine as multiple and OS as linux",
+    "authentication": {
+      "hostname": "Hostname",
+      "portNumber": "22",
+      "username": "Username",
+      "password": "Password"       ,
+      "knownHostsPath":"pathOf/known_hosts",
+      "operatingSystem":"linux"    
+    },
+    "operation": "ssh.executeCommand",
+    "data": {
+      "commands":["dir","ipconfig","hostname"],
+      "commandLine":"multiple",
+      "outputType":"statusCode",
+      "timeout":"10"
+    }
+  }
+  
+]
