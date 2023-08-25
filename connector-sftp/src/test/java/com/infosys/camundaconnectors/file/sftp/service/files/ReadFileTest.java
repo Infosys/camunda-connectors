@@ -16,7 +16,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import net.schmizz.sshj.sftp.FileAttributes;
@@ -54,7 +53,9 @@ class ReadFileTest {
     String content = "Hello, world";
     InputStream is = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
     ReadFileService readFileServiceSpy = Mockito.spy(service);
-    Mockito.doReturn(is).when(readFileServiceSpy).readFile(any(SFTPClient.class), any(Path.class));
+    Mockito.doReturn(is)
+        .when(readFileServiceSpy)
+        .readFile(any(SFTPClient.class), any(String.class));
     Mockito.when(sftpClient.stat(any(String.class))).thenReturn(file);
     Response result = readFileServiceSpy.invoke(sftpClient);
     SFTPResponse<String> queryResponse = (SFTPResponse<String>) result;

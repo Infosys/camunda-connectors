@@ -13,7 +13,7 @@ public class RenameFolderUtil {
 
   public Path renameUtil(SFTPClient sftpClient, Path newFilePath, Integer count) {
     try {
-      if (sftpClient.stat(newFilePath.toString()) == null) {
+      if (sftpClient.stat(newFilePath.toString().replace("\\", "/")) == null) {
         return newFilePath;
       }
     } catch (Exception e) {

@@ -316,19 +316,19 @@ class ListFilesTest {
     PathComponents path1 = new PathComponents("root", "file_1", "dummypath");
     Map<String, String> m = new HashMap<String, String>();
     m.put("txt", "data");
-    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    SimpleDateFormat df = new SimpleDateFormat("dd-M-yyyy HH:mm:ss");
     df.setLenient(false);
     FileMode file = new FileMode(0100000);
-    Long dummyMTime = (long) 1680234979L;
+    Long dummyMTime = df.parse("23-4-2023 8:30:00").getTime();
     RemoteResourceInfo remoteFiles =
-        new RemoteResourceInfo(path1, new FileAttributes(0040000, 0, 0, 0, file, 0, dummyMTime, m));
+        new RemoteResourceInfo(path1, new FileAttributes(0100000, 0, 0, 0, file, 0, dummyMTime, m));
 
     // input2
 
     PathComponents path2 = new PathComponents("root", "file_2", "dummypath");
     Map<String, String> m1 = new HashMap<String, String>();
-    m.put("txt", "data");
-    dummyMTime = df.parse("2022-12-3 8:30:00").getTime();
+    m1.put("txt", "data");
+    dummyMTime = df.parse("23-4-2023 8:30:00").getTime();
     file = new FileMode(0040000);
     RemoteResourceInfo remoteFiles2 =
         new RemoteResourceInfo(

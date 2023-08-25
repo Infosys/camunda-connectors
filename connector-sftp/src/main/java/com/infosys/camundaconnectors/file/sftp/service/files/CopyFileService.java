@@ -38,7 +38,9 @@ public class CopyFileService implements SFTPRequestData {
   public Response invoke(SFTPClient sftpClient) {
     Path sourceDirectoryPath = Path.of(sourceFilePath);
     Path targetDirectoryPath = Path.of(targetDirectory);
-    createNewFolder = createNewFolderIfNotExists != "false";
+
+    if (createNewFolderIfNotExists.equalsIgnoreCase("false")) createNewFolder = false;
+    else createNewFolder = true;
     try {
       boolean targetFolderExists = true;
       LOGGER.info("Checking if source file already exists or not");
@@ -56,7 +58,7 @@ public class CopyFileService implements SFTPRequestData {
 
       } else if (createNewFolder && !targetFolderExists) {
         try {
-          sftpClient.mkdir(targetDirectoryPath.toString());
+          sftpClient.mkdir(targetDirectoryPath.toString().replace("\\", "/"));
           LOGGER.info("New Folder created successfully" + targetDirectoryPath.toString());
         } catch (IOException e) {
           LOGGER.info("Folder creation failed");
@@ -99,7 +101,7 @@ public class CopyFileService implements SFTPRequestData {
           LOGGER.info("Replacing started");
           Path newTargetFile =
               Path.of(targetDirectory, sourceDirectoryPath.getFileName().toString());
-          sftpClient.rm(newTargetFile.toString());
+          sftpClient.rm(newTargetFile.toString().replace("\\", "/"));
           InputStream inputStream = readFile(sftpClient, sourceDirectoryPath);
           OutputStream outputStream =
               writeFile(sftpClient, targetDirectoryPath, sourceDirectoryPath);
@@ -125,7 +127,7 @@ public class CopyFileService implements SFTPRequestData {
 
   public boolean checkIfFileExists(SFTPClient sftpClient, Path newFilePath) {
     try {
-      if (sftpClient.stat(newFilePath.toString()) == null) {
+      if (sftpClient.stat(newFilePath.toString().replace("\\", "/")) == null) {
         return false;
       }
     } catch (Exception e) {
@@ -136,7 +138,10 @@ public class CopyFileService implements SFTPRequestData {
 
   public InputStream readFile(SFTPClient sftpClient, Path sourceFilePath) throws IOException {
     RemoteFile file;
-    file = sftpClient.getSFTPEngine().open(sourceFilePath.toString(), EnumSet.of(OpenMode.READ));
+    file =
+        sftpClient
+            .getSFTPEngine()
+            .open(sourceFilePath.toString().replace("\\", "/"), EnumSet.of(OpenMode.READ));
     InputStream is =
         file.new RemoteFileInputStream() {
 
@@ -161,7 +166,9 @@ public class CopyFileService implements SFTPRequestData {
     RemoteFile file =
         sftpClient
             .getSFTPEngine()
-            .open(targetFile.toString(), EnumSet.of(OpenMode.CREAT, OpenMode.WRITE));
+            .open(
+                targetFile.toString().replace("\\", "/"),
+                EnumSet.of(OpenMode.CREAT, OpenMode.WRITE));
     OutputStream os =
         file.new RemoteFileOutputStream(0, 10) {
 

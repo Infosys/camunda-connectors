@@ -45,7 +45,7 @@ public class CreateFolderService implements SFTPRequestData {
       LOGGER.info("Checking if folder already exists or not");
       boolean sourceFilePathFlag = checkIfFileExists(sftpClient, newFolderPath);
       if (!sourceFilePathFlag) { // If Folder does not Exists Create folder
-        sftpClient.mkdir(newFolderPath.toString());
+        sftpClient.mkdir(newFolderPath.toString().replace("\\", "/"));
         LOGGER.info("Folder created successfully");
         createFolderResponse = new SFTPResponse<>("Folder created successfully");
       } else {
@@ -61,7 +61,7 @@ public class CreateFolderService implements SFTPRequestData {
               Path.of(newFolderPath.getParent().toString() + File.separator + newFolderName);
           Integer count = 2;
           newPath = renameFolderUtil.renameUtil(sftpClient, newPath, count);
-          sftpClient.mkdir(newPath.toString());
+          sftpClient.mkdir(newPath.toString().replace("\\", "/"));
           LOGGER.info("Folder is created with name" + newFolderName);
           createFolderResponse =
               new SFTPResponse<>("Folder is created with name " + newPath.getNameCount());
@@ -69,14 +69,14 @@ public class CreateFolderService implements SFTPRequestData {
           LOGGER.info("Replacing started");
           deleteDirectoryRecursively(sftpClient, newFolderPath);
           if (checkIfFileExists(sftpClient, newFolderPath)) {
-            sftpClient.rmdir(newFolderPath.toString());
+            sftpClient.rmdir(newFolderPath.toString().replace("\\", "/"));
           }
           LOGGER.info("Folder Removed Successfully");
-          sftpClient.mkdir(newFolderPath.toString());
+          sftpClient.mkdir(newFolderPath.toString().replace("\\", "/"));
           LOGGER.info("Folder Replaced Successfully");
           createFolderResponse = new SFTPResponse<>("Folder created successfully");
         } else if (actionIfFileExists.equalsIgnoreCase("skip")) {
-          LOGGER.info("Folder Skipped Successfully");
+          LOGGER.info("File Skipped Successfully");
           createFolderResponse = new SFTPResponse<>("Folder skipped successfully");
         }
       }
@@ -97,20 +97,22 @@ public class CreateFolderService implements SFTPRequestData {
 
   public void deleteDirectoryRecursively(SFTPClient sftpClient, Path directory) throws IOException {
     sftpClient
-        .ls(directory.toString())
+        .ls(directory.toString().replace("\\", "/"))
         .forEach(
             file -> {
               Path fullAdd = Path.of(directory + File.separator + file.getName());
               if (file.isDirectory()) {
                 try {
                   deleteDirectoryRecursively(sftpClient, fullAdd);
-                  sftpClient.rmdir(Path.of(directory + File.separator + file.getName()).toString());
+                  sftpClient.rmdir(
+                      Path.of(directory + File.separator + file.getName())
+                          .toString()
+                          .replace("\\", "/"));
                 } catch (IOException e) {
-
                 }
               } else {
                 try {
-                  sftpClient.rm(fullAdd.toString());
+                  sftpClient.rm(fullAdd.toString().replace("\\", "/"));
                 } catch (IOException e) {
                   LOGGER.error("Some errors occurred while trying to remove files");
                 }
@@ -120,7 +122,7 @@ public class CreateFolderService implements SFTPRequestData {
 
   public boolean checkIfFileExists(SFTPClient sftpClient, Path newFilePath) {
     try {
-      if (sftpClient.stat(newFilePath.toString()) == null) {
+      if (sftpClient.stat(newFilePath.toString().replace("\\", "/")) == null) {
         return false;
       }
     } catch (Exception e) {

@@ -14,15 +14,19 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import net.schmizz.sshj.SSHClient;
 import net.schmizz.sshj.sftp.SFTPClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SFTPRequest<T extends SFTPRequestData> {
   @NotNull @Valid @Secret private Authentication authentication;
   @NotBlank private String operation;
   @Valid @NotNull private T data;
+  private static final Logger LOGGER = LoggerFactory.getLogger(SftpServerClient.class);
 
   public Response invoke(final SftpServerClient sftpServerClient) throws Exception {
     SSHClient client = sftpServerClient.loginSftp(authentication);
     SFTPClient sftpClient = client.newSFTPClient();
+    LOGGER.info("Connected to the sftp server");
     return data.invoke(sftpClient);
   }
 

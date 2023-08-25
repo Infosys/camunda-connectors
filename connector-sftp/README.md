@@ -44,10 +44,7 @@ mvn clean package
 ```
 > **actionIfFileExists** can be "rename","replace" or "skip". If file which is going to be copied in target folder already exists in target folder, then this three operations can be performed.
 </br>
-
->  **createNewFolderIfNotExists**  is set as a "True" then it will create a "targetDirectory" if not exists.
-
-
+> **createNewFolderIfNotExists** is set as a "True" then it will create a "targetDirectory" if not exists.
 #### Input for Copy Folder
 
 ```json

@@ -12,7 +12,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -37,7 +36,7 @@ public class ReadFileService implements SFTPRequestData {
     try {
       if (sourceFilePath == null || sourceFilePath.isBlank() || sourceFilePath.isEmpty())
         throw new IOException("Source file is null");
-      Path sourceDirectoryPath = Path.of(sourceFilePath);
+      String sourceDirectoryPath = sourceFilePath.replace("\\", "/");
       LOGGER.info("Checking if source file already exists or not");
       boolean sourceFilePathFlag = checkIfFileExists(sftpClient, sourceDirectoryPath);
       if (!sourceFilePathFlag) throw new IOException("Source file does not exists");
@@ -45,6 +44,7 @@ public class ReadFileService implements SFTPRequestData {
         LOGGER.error("cannot read a file having size greater than 32766 bytes");
         throw new RuntimeException("File size is greater than 32766 bytes");
       }
+
       InputStream inputStream = readFile(sftpClient, sourceDirectoryPath);
       InputStreamReader isr = new InputStreamReader(inputStream);
       BufferedReader br = new BufferedReader(isr);
@@ -67,18 +67,17 @@ public class ReadFileService implements SFTPRequestData {
     return readFileResponse;
   }
 
-  public boolean checkIfFileExists(SFTPClient sftpClient, Path newFilePath) {
+  public boolean checkIfFileExists(SFTPClient sftpClient, String newFilePath) {
     try {
-      if (sftpClient.stat(newFilePath.toString()) == null) {}
+      if (sftpClient.stat(newFilePath) == null) {}
     } catch (Exception e) {
       return false;
     }
     return true;
   }
 
-  public InputStream readFile(SFTPClient sftpClient, Path sourceFilePath) throws IOException {
-    RemoteFile file =
-        sftpClient.getSFTPEngine().open(sourceFilePath.toString(), EnumSet.of(OpenMode.READ));
+  public InputStream readFile(SFTPClient sftpClient, String sourceFilePath) throws IOException {
+    RemoteFile file = sftpClient.getSFTPEngine().open(sourceFilePath, EnumSet.of(OpenMode.READ));
     InputStream is =
         file.new RemoteFileInputStream() {
           @Override

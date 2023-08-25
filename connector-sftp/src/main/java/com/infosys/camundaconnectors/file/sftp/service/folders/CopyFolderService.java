@@ -57,7 +57,7 @@ public class CopyFolderService implements SFTPRequestData {
       targetFolderExists = checkIfFileExists(sftpClient, targetDirectoryPath);
       Boolean copiedFolder = false;
       if (!targetFolderExists) {
-        sftpClient.mkdir(targetDirectoryPath.toString());
+        sftpClient.mkdir(targetDirectoryPath.toString().replace("\\", "/"));
       } else {
         Path newPath =
             Path.of(
@@ -73,7 +73,7 @@ public class CopyFolderService implements SFTPRequestData {
                 targetDirectory.toString()
                     + File.separator
                     + sourceDirectoryPath.getFileName().toString());
-        sftpClient.mkdir(newPath.toString());
+        sftpClient.mkdir(newPath.toString().replace("\\", "/"));
         LOGGER.info("Copying folder");
         copyFolder(sftpClient, sourceDirectoryPath, newPath);
         LOGGER.info("Folder copied successfully");
@@ -90,10 +90,10 @@ public class CopyFolderService implements SFTPRequestData {
           Path newPath = Path.of(targetDirectory.toString() + File.separator + newFolderName);
           Integer count = 2;
           newPath = renameFolderUtil.renameUtil(sftpClient, newPath, count);
-          sftpClient.mkdir(newPath.toString());
+          sftpClient.mkdir(newPath.toString().replace("\\", "/"));
           copyFolder(sftpClient, sourceDirectoryPath, newPath);
           LOGGER.info(
-              "Folder name successfully changed and file is copied to its targetDirectory"
+              "File name successfully changed and file is copied to its targetDirectory"
                   + newPath.toString());
           copyFolderResponse =
               new SFTPResponse<>("Folder renamed and copied Successfully with new name as ");
@@ -105,14 +105,14 @@ public class CopyFolderService implements SFTPRequestData {
                       + File.separator
                       + sourceDirectoryPath.getFileName().toString());
           deleteDirectoryRecursively(sftpClient, newPath);
-          sftpClient.rmdir(newPath.toString());
+          sftpClient.rmdir(newPath.toString().replace("\\", "/"));
           LOGGER.info("Folder Removed Successfully");
-          sftpClient.mkdir(newPath.toString());
+          sftpClient.mkdir(newPath.toString().replace("\\", "/"));
           copyFolder(sftpClient, sourceDirectoryPath, newPath);
           LOGGER.info("Folder replaced successfully");
           copyFolderResponse = new SFTPResponse<>("File replaced and copied successfully");
         } else if (actionIfFileExists.equalsIgnoreCase("skip")) {
-          LOGGER.info("Folder Skipped Successfully");
+          LOGGER.info("File Skipped Successfully");
           copyFolderResponse = new SFTPResponse<>("Folder Skipped successfully");
         }
       }
@@ -131,7 +131,7 @@ public class CopyFolderService implements SFTPRequestData {
 
   public boolean checkIfFileExists(SFTPClient sftpClient, Path newFilePath) {
     try {
-      if (sftpClient.stat(newFilePath.toString()) == null) {
+      if (sftpClient.stat(newFilePath.toString().replace("\\", "/")) == null) {
         return false;
       }
     } catch (Exception e) {
@@ -144,7 +144,7 @@ public class CopyFolderService implements SFTPRequestData {
   public void copyFolder(SFTPClient sftpClient, Path sourceDirectoryPath, Path targetDirectoryPath)
       throws IOException {
     sftpClient
-        .ls(sourceDirectoryPath.toString())
+        .ls(sourceDirectoryPath.toString().replace("\\", "/"))
         .forEach(
             file -> {
               if (file.isDirectory()) {
@@ -152,7 +152,7 @@ public class CopyFolderService implements SFTPRequestData {
                 Path subDestPath = Path.of(targetDirectoryPath.toString(), file.getName());
 
                 try {
-                  sftpClient.mkdir(subDestPath.toString());
+                  sftpClient.mkdir(subDestPath.toString().replace("\\", "/"));
                 } catch (IOException e) {
                   throw new RuntimeException(
                       "Some error occurred while trying to create a directory");
@@ -188,7 +188,9 @@ public class CopyFolderService implements SFTPRequestData {
   // Read file into InputStream
   public InputStream readFile(SFTPClient sftpClient, Path sourceFilePath) throws IOException {
     RemoteFile file =
-        sftpClient.getSFTPEngine().open(sourceFilePath.toString(), EnumSet.of(OpenMode.READ));
+        sftpClient
+            .getSFTPEngine()
+            .open(sourceFilePath.toString().replace("\\", "/"), EnumSet.of(OpenMode.READ));
     //
     InputStream is =
         file.new RemoteFileInputStream() {
@@ -213,7 +215,9 @@ public class CopyFolderService implements SFTPRequestData {
     RemoteFile file =
         sftpClient
             .getSFTPEngine()
-            .open(targetFile.toString(), EnumSet.of(OpenMode.CREAT, OpenMode.WRITE));
+            .open(
+                targetFile.toString().replace("\\", "/"),
+                EnumSet.of(OpenMode.CREAT, OpenMode.WRITE));
     OutputStream os =
         file.new RemoteFileOutputStream(0, 10) {
 
@@ -231,19 +235,22 @@ public class CopyFolderService implements SFTPRequestData {
 
   public void deleteDirectoryRecursively(SFTPClient sftpClient, Path directory) throws IOException {
     sftpClient
-        .ls(directory.toString())
+        .ls(directory.toString().replace("\\", "/"))
         .forEach(
             file -> {
               Path fullAdd = Path.of(directory + File.separator + file.getName());
               if (file.isDirectory()) {
                 try {
                   deleteDirectoryRecursively(sftpClient, fullAdd);
-                  sftpClient.rmdir(Path.of(directory + File.separator + file.getName()).toString());
+                  sftpClient.rmdir(
+                      Path.of(directory + File.separator + file.getName())
+                          .toString()
+                          .replace("\\", "/"));
                 } catch (IOException e) {
                 }
               } else {
                 try {
-                  sftpClient.rm(fullAdd.toString());
+                  sftpClient.rm(fullAdd.toString().replace("\\", "/"));
                 } catch (IOException e) {
                   throw new RuntimeException("Some error occurred while trying to delete folder");
                 }

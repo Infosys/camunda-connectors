@@ -9,7 +9,6 @@ import com.infosys.camundaconnectors.file.sftp.model.request.SFTPRequestData;
 import com.infosys.camundaconnectors.file.sftp.model.response.Response;
 import com.infosys.camundaconnectors.file.sftp.model.response.SFTPResponse;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.Objects;
 import net.schmizz.sshj.sftp.SFTPClient;
 import org.slf4j.Logger;
@@ -29,8 +28,8 @@ public class DeleteFileService implements SFTPRequestData {
         throw new RuntimeException("Please Provide a valid fileName");
       if (folderPath == null || folderPath.isBlank() || folderPath.isEmpty())
         throw new RuntimeException("Please provide a valid folderPath");
-      Path fileToBeDeleted = Path.of(folderPath, fileName);
-      sftpClient.rm(fileToBeDeleted.toString());
+      String fileToBeDeleted = folderPath.replace("\\", "/") + "/" + fileName;
+      sftpClient.rm(fileToBeDeleted);
       deleteFileResponse = new SFTPResponse<>("File deleted successfully");
       LOGGER.info("DeleteFileUsingSFTP Process Completed");
     } catch (IOException e) {

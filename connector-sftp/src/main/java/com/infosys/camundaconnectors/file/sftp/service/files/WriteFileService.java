@@ -9,7 +9,6 @@ import com.infosys.camundaconnectors.file.sftp.model.request.SFTPRequestData;
 import com.infosys.camundaconnectors.file.sftp.model.response.Response;
 import com.infosys.camundaconnectors.file.sftp.model.response.SFTPResponse;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.EnumSet;
 import java.util.Objects;
 import javax.validation.constraints.NotBlank;
@@ -29,7 +28,7 @@ public class WriteFileService implements SFTPRequestData {
   public Response invoke(SFTPClient sftpClient) {
     if (filePath == null || filePath.isBlank() || filePath.isEmpty())
       throw new RuntimeException("Source file path is empty");
-    Path sourceFilePath = Path.of(filePath);
+    String sourceFilePath = filePath.replace("\\", "/");
     try {
       if (!checkIfFileExists(sftpClient, sourceFilePath))
         throw new IOException("Source file does not exists");
@@ -38,11 +37,10 @@ public class WriteFileService implements SFTPRequestData {
         LOGGER.error("Content size is greater than 32766 byte");
         throw new RuntimeException("Content size should be less than 32766 byte");
       }
-      FileAttributes attrs = sftpClient.stat(filePath.toString());
+      FileAttributes attrs = sftpClient.stat(sourceFilePath);
       long fileOffset = attrs.getSize();
       LOGGER.info("Writing file");
-      RemoteFile file =
-          sftpClient.getSFTPEngine().open(sourceFilePath.toString(), EnumSet.of(OpenMode.WRITE));
+      RemoteFile file = sftpClient.getSFTPEngine().open(sourceFilePath, EnumSet.of(OpenMode.WRITE));
       file.write(fileOffset, content.getBytes(), 0, content.length());
       writeFileResponse = new SFTPResponse<>("File written successfully");
     } catch (IOException e) {
@@ -57,9 +55,9 @@ public class WriteFileService implements SFTPRequestData {
     return writeFileResponse;
   }
 
-  public boolean checkIfFileExists(SFTPClient sftpClient, Path newFilePath) {
+  public boolean checkIfFileExists(SFTPClient sftpClient, String newFilePath) {
     try {
-      if (sftpClient.stat(newFilePath.toString()) == null) {
+      if (sftpClient.stat(newFilePath) == null) {
         return false;
       }
     } catch (Exception e) {

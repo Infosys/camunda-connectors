@@ -38,10 +38,10 @@ public class MoveFileService implements SFTPRequestData {
             "Incorrect actionIfFileExists. It should be rename,replace or skip");
       }
       boolean targetFolderExists = false;
-      if (sftpClient.stat(sourceDirectoryPath.toString()) == null) {
+      if (sftpClient.stat(sourceDirectoryPath.toString().replace("\\", "/")) == null) {
         throw new IOException("Source file does not exists");
       }
-      if (sftpClient.stat(targetDirectoryPath.toString()) == null) {
+      if (sftpClient.stat(targetDirectoryPath.toString().replace("\\", "/")) == null) {
         targetFolderExists = false;
       } else targetFolderExists = true;
       boolean checkSourceInTarget = false;
@@ -55,7 +55,7 @@ public class MoveFileService implements SFTPRequestData {
         checkSourceInTarget = checkIfFileExists(sftpClient, remoteSourceFile);
       } else if (!targetFolderExists) {
         try {
-          sftpClient.mkdir(targetDirectoryPath.toString());
+          sftpClient.mkdir(targetDirectoryPath.toString().replace("\\", "/"));
           LOGGER.info("New Folder created successfully" + targetDirectoryPath.toString());
         } catch (IOException e) {
           LOGGER.info("Folder creation failed");
@@ -64,7 +64,9 @@ public class MoveFileService implements SFTPRequestData {
       }
       if (!checkSourceInTarget) {
         Path targetFile = Path.of(targetDirectory, sourceDirectoryPath.getFileName().toString());
-        sftpClient.rename(sourceDirectoryPath.toString(), targetFile.toString());
+        sftpClient.rename(
+            sourceDirectoryPath.toString().replace("\\", "/"),
+            targetFile.toString().replace("\\", "/"));
         moveFileResponse = new SFTPResponse<>("File Moved Successfully");
         LOGGER.info("File Moved Successfully");
       } else {
@@ -80,7 +82,9 @@ public class MoveFileService implements SFTPRequestData {
           Path newPath = Path.of(targetDirectory.toString() + File.separator + newFileName);
           Integer count = 2;
           Path newRenamePath = renameFile.renameFileUtil(sftpClient, newPath, count);
-          sftpClient.rename(sourceDirectoryPath.toString(), newRenamePath.toString());
+          sftpClient.rename(
+              sourceDirectoryPath.toString().replace("\\", "/"),
+              newRenamePath.toString().replace("\\", "/"));
           LOGGER.info(
               "File name successfully changed and file is moved to its targetDirectory"
                   + newRenamePath.toString());
@@ -92,8 +96,8 @@ public class MoveFileService implements SFTPRequestData {
         } else if (actionIfFileExists.equalsIgnoreCase("replace")) {
           String newTargetFile =
               targetDirectory + File.separator + sourceDirectoryPath.getFileName().toString();
-          sftpClient.rm(newTargetFile);
-          sftpClient.rename(sourceDirectoryPath.toString(), newTargetFile);
+          sftpClient.rm(newTargetFile.replace("\\", "/"));
+          sftpClient.rename(sourceDirectoryPath.toString().replace("\\", "/"), newTargetFile);
           moveFileResponse =
               new SFTPResponse<>("File replaced successfully" + newTargetFile.toString());
         } else if (actionIfFileExists.equalsIgnoreCase("skip")) {
@@ -116,7 +120,7 @@ public class MoveFileService implements SFTPRequestData {
 
   public boolean checkIfFileExists(SFTPClient sftpClient, Path newFilePath) {
     try {
-      if (sftpClient.stat(newFilePath.toString()) == null) {
+      if (sftpClient.stat(newFilePath.toString().replace("\\", "/")) == null) {
         return false;
       }
     } catch (Exception e) {
@@ -127,7 +131,7 @@ public class MoveFileService implements SFTPRequestData {
 
   public Path renameFileUtil(SFTPClient sftpClient, Path newFilePath) {
     try {
-      if (sftpClient.stat(newFilePath.toString()) == null) {
+      if (sftpClient.stat(newFilePath.toString().replace("\\", "/")) == null) {
         return newFilePath;
       }
     } catch (Exception e) {

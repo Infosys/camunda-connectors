@@ -10,7 +10,6 @@ import com.infosys.camundaconnectors.file.sftp.model.request.SFTPRequestData;
 import com.infosys.camundaconnectors.file.sftp.model.response.Response;
 import com.infosys.camundaconnectors.file.sftp.model.response.SFTPResponse;
 import com.infosys.camundaconnectors.file.sftp.utility.FileSortCondition;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.text.DateFormat;
@@ -56,10 +55,10 @@ public class ListFilesService implements SFTPRequestData {
       modifiedAfter = null;
     if (modifiedBefore == null || modifiedBefore.isBlank() || modifiedBefore.isEmpty())
       modifiedBefore = null;
-    filePath = Path.of(filePath).toString();
+    filePath = Path.of(filePath).toString().replace("\\", "/");
     Date modifiedAfterDate = new Date();
     Date modifiedBeforeDate = new Date();
-    SimpleDateFormat df = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+    SimpleDateFormat df = new SimpleDateFormat("dd-M-yyyy HH:mm:ss");
     df.setTimeZone(TimeZone.getTimeZone("IST"));
 
     if (modifiedAfter != null) {
@@ -106,7 +105,7 @@ public class ListFilesService implements SFTPRequestData {
       try {
         ListFiles(sftpClient, filePath, Integer.parseInt(maxDepth));
       } catch (NumberFormatException | IOException | ParseException e) {
-        throw new RuntimeException("Some error occurred while trying to list files-4");
+        throw new RuntimeException(e.getMessage());
       }
     }
     try {
@@ -148,8 +147,12 @@ public class ListFilesService implements SFTPRequestData {
         checkResponseSize(listFilesResponse);
       } else if (outputType.equalsIgnoreCase("filePaths"))
         listFilesResponse =
-            new SFTPResponse<>(files.stream().limit(100).collect(Collectors.toList()));
+            new SFTPResponse<>(
+                files.stream()
+                    .limit(Long.parseLong(maxNumberOfFiles))
+                    .collect(Collectors.toList()));
       checkResponseSize(listFilesResponse);
+
     } catch (Exception e) {
       throw new RuntimeException(e.getLocalizedMessage());
     } finally {
@@ -174,25 +177,36 @@ public class ListFilesService implements SFTPRequestData {
       int maxDepth)
       throws IOException, ParseException {
 
-    Path folderDirectory = Path.of(folderPath);
-    for (RemoteResourceInfo remoteResourceInfo : sftpClient.ls(folderDirectory.toString())) {
+    Queue<RemoteResourceInfo> q = new LinkedList<>();
+    for (RemoteResourceInfo remoteResourceInfo : sftpClient.ls(folderPath)) {
       Date date = new Date(remoteResourceInfo.getAttributes().getMtime() * 1000);
-      SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss", Locale.ENGLISH);
+      SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy HH:mm:ss", Locale.ENGLISH);
       sdf.setTimeZone(TimeZone.getTimeZone("IST"));
       Date ModifiedFileDate = sdf.parse(sdf.format(date));
+      if (ModifiedFileDate.compareTo(modifiedAfter) > 0
+          && ModifiedFileDate.compareTo(modifiedBefore) < 0) q.add(remoteResourceInfo);
+    }
 
-      if (!remoteResourceInfo.isDirectory()
-          && ModifiedFileDate.compareTo(modifiedAfter) > 0
-          && ModifiedFileDate.compareTo(modifiedBefore) < 0) {
-        if (remoteResourceInfo.getName().matches(fileNamePattern)) {
-          filesArr.add(remoteResourceInfo);
+    while (!q.isEmpty()) {
+      int n = q.size();
+      if (maxDepth == 0) break;
+      for (int i = 0; i < n; i++) {
+        RemoteResourceInfo remoteResourceInfo = q.poll();
+        if (remoteResourceInfo.isDirectory()) {
+          for (RemoteResourceInfo subFolders : sftpClient.ls(remoteResourceInfo.getPath())) {
+            Date date = new Date(subFolders.getAttributes().getMtime() * 1000);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy HH:mm:ss", Locale.ENGLISH);
+            sdf.setTimeZone(TimeZone.getTimeZone("IST"));
+            Date ModifiedFileDate = sdf.parse(sdf.format(date));
+            if (ModifiedFileDate.compareTo(modifiedAfter) > 0
+                && ModifiedFileDate.compareTo(modifiedBefore) < 0) q.add(subFolders);
+          }
+        } else {
+          if (remoteResourceInfo.getName().matches(fileNamePattern))
+            filesArr.add(remoteResourceInfo);
         }
       }
-      if (remoteResourceInfo.isDirectory() && searchSubFolders == true && maxDepth > 0) {
-        String newFolderPath = folderPath + File.separator + remoteResourceInfo.getName();
-        ListFilesAccordingToModifiedAfterAndModifiedBefore(
-            sftpClient, newFolderPath, modifiedBefore, modifiedAfter, maxDepth - 1);
-      }
+      maxDepth--;
     }
   }
 
@@ -200,56 +214,103 @@ public class ListFilesService implements SFTPRequestData {
       SFTPClient sftpClient, String folderPath, Date modifiedAfter, int maxDepth)
       throws IOException, ParseException {
 
+    Queue<RemoteResourceInfo> q = new LinkedList<>();
     for (RemoteResourceInfo remoteResourceInfo : sftpClient.ls(folderPath)) {
       Date date = new Date(remoteResourceInfo.getAttributes().getMtime() * 1000);
-      SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss", Locale.ENGLISH);
+      SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy HH:mm:ss", Locale.ENGLISH);
       sdf.setTimeZone(TimeZone.getTimeZone("IST"));
       Date ModifiedFileDate = sdf.parse(sdf.format(date));
+      if (ModifiedFileDate.compareTo(modifiedAfter) > 0) q.add(remoteResourceInfo);
+    }
 
-      if (!remoteResourceInfo.isDirectory() && ModifiedFileDate.compareTo(modifiedAfter) > 0) {
-        if (remoteResourceInfo.getName().matches(fileNamePattern)) {
-          filesArr.add(remoteResourceInfo);
+    while (!q.isEmpty()) {
+      int n = q.size();
+      if (maxDepth == 0) break;
+      for (int i = 0; i < n; i++) {
+        RemoteResourceInfo remoteResourceInfo = q.poll();
+        if (remoteResourceInfo.isDirectory()) {
+          for (RemoteResourceInfo subFolders : sftpClient.ls(remoteResourceInfo.getPath())) {
+            Date date = new Date(subFolders.getAttributes().getMtime() * 1000);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy HH:mm:ss", Locale.ENGLISH);
+            sdf.setTimeZone(TimeZone.getTimeZone("IST"));
+            Date ModifiedFileDate = sdf.parse(sdf.format(date));
+            if (ModifiedFileDate.compareTo(modifiedAfter) > 0) q.add(subFolders);
+          }
+        } else {
+          if (remoteResourceInfo.getName().matches(fileNamePattern))
+            filesArr.add(remoteResourceInfo);
         }
       }
-      if (remoteResourceInfo.isDirectory() && searchSubFolders == true && maxDepth > 0) {
-        String newFolderPath = folderPath + File.separator + remoteResourceInfo.getName();
-        ListFilesAccordingToModifiedAfter(sftpClient, newFolderPath, modifiedAfter, maxDepth - 1);
-      }
+      maxDepth--;
     }
   }
 
   public void ListFilesAccordingToModifiedBefore(
       SFTPClient sftpClient, String folderPath, Date modifiedBefore, int maxDepth)
       throws IOException, ParseException {
+
+    Queue<RemoteResourceInfo> q = new LinkedList<>();
     for (RemoteResourceInfo remoteResourceInfo : sftpClient.ls(folderPath)) {
       Date date = new Date(remoteResourceInfo.getAttributes().getMtime() * 1000);
-      SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss", Locale.ENGLISH);
+      SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy HH:mm:ss", Locale.ENGLISH);
       sdf.setTimeZone(TimeZone.getTimeZone("IST"));
       Date ModifiedFileDate = sdf.parse(sdf.format(date));
-      if (!remoteResourceInfo.isDirectory() && ModifiedFileDate.compareTo(modifiedBefore) < 0) {
-        if (remoteResourceInfo.getName().matches(fileNamePattern)) {
-          filesArr.add(remoteResourceInfo);
+      if (ModifiedFileDate.compareTo(modifiedBefore) < 0) q.add(remoteResourceInfo);
+    }
+
+    while (!q.isEmpty()) {
+      int n = q.size();
+      if (maxDepth == 0) break;
+      for (int i = 0; i < n; i++) {
+        RemoteResourceInfo remoteResourceInfo = q.poll();
+        if (remoteResourceInfo.isDirectory()) {
+          for (RemoteResourceInfo subFolders : sftpClient.ls(remoteResourceInfo.getPath())) {
+            Date date = new Date(subFolders.getAttributes().getMtime() * 1000);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy HH:mm:ss", Locale.ENGLISH);
+            sdf.setTimeZone(TimeZone.getTimeZone("IST"));
+            Date ModifiedFileDate = sdf.parse(sdf.format(date));
+            if (ModifiedFileDate.compareTo(modifiedBefore) < 0) q.add(subFolders);
+          }
+        } else {
+          if (remoteResourceInfo.getName().matches(fileNamePattern))
+            filesArr.add(remoteResourceInfo);
         }
       }
-      if (remoteResourceInfo.isDirectory() && searchSubFolders == true && maxDepth > 0) {
-        String newFolderPath = folderPath + File.separator + remoteResourceInfo.getName();
-        ListFilesAccordingToModifiedBefore(sftpClient, newFolderPath, modifiedBefore, maxDepth - 1);
-      }
+      maxDepth--;
     }
   }
 
   public void ListFiles(SFTPClient sftpClient, String folderPath, int maxDepth)
       throws IOException, ParseException {
+
+    Queue<RemoteResourceInfo> q = new LinkedList<>();
     for (RemoteResourceInfo remoteResourceInfo : sftpClient.ls(folderPath)) {
-      if (!remoteResourceInfo.isDirectory()) {
-        if (remoteResourceInfo.getName().matches(fileNamePattern)) {
-          filesArr.add(remoteResourceInfo);
+      Date date = new Date(remoteResourceInfo.getAttributes().getMtime() * 1000);
+      SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy HH:mm:ss", Locale.ENGLISH);
+      sdf.setTimeZone(TimeZone.getTimeZone("IST"));
+      Date ModifiedFileDate = sdf.parse(sdf.format(date));
+      q.add(remoteResourceInfo);
+    }
+
+    while (!q.isEmpty()) {
+      int n = q.size();
+      if (maxDepth == 0) break;
+      for (int i = 0; i < n; i++) {
+        RemoteResourceInfo remoteResourceInfo = q.poll();
+        if (remoteResourceInfo.isDirectory()) {
+          for (RemoteResourceInfo subFolders : sftpClient.ls(remoteResourceInfo.getPath())) {
+            Date date = new Date(subFolders.getAttributes().getMtime() * 1000);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy HH:mm:ss", Locale.ENGLISH);
+            sdf.setTimeZone(TimeZone.getTimeZone("IST"));
+            Date ModifiedFileDate = sdf.parse(sdf.format(date));
+            q.add(subFolders);
+          }
+        } else {
+          if (remoteResourceInfo.getName().matches(fileNamePattern))
+            filesArr.add(remoteResourceInfo);
         }
       }
-      if (remoteResourceInfo.isDirectory() && searchSubFolders == true && maxDepth > 0) {
-        String newFolderPath = folderPath + File.separator + remoteResourceInfo.getName();
-        ListFiles(sftpClient, newFolderPath, maxDepth - 1);
-      }
+      maxDepth--;
     }
   }
 

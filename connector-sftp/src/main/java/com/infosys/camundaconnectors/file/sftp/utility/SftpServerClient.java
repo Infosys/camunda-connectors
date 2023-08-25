@@ -19,15 +19,13 @@ public class SftpServerClient {
 
   public SSHClient loginSftp(final Authentication authentication) throws Exception {
     client = new SSHClient();
-
     Path knownHostsFile = Path.of(authentication.getKnownHostsPath());
     client.loadKnownHosts();
     client.addHostKeyVerifier(new OpenSSHKnownHosts(new File(knownHostsFile.toString())));
-    LOGGER.info("Connecting to sftp server" + authentication.getUsername());
+    LOGGER.info("Connecting to server" + authentication.getUsername());
     client.connect(authentication.getHostname(), Integer.parseInt(authentication.getPortNumber()));
     client.authPassword(authentication.getUsername(), authentication.getPassword());
-
-    LOGGER.info("Connected to sftp server");
+    LOGGER.info("Connected to the server");
     return client;
   }
 

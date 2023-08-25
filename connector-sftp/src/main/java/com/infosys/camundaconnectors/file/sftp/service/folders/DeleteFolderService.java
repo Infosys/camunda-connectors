@@ -28,7 +28,7 @@ public class DeleteFolderService implements SFTPRequestData {
         throw new RuntimeException("Please provide a valid folderPath");
       Path folderPath_ = Path.of(folderPath);
       deleteDirectoryRecursively(sftpClient, folderPath_);
-      sftpClient.rmdir(folderPath_.toString());
+      sftpClient.rmdir(folderPath_.toString().replace("\\", "/"));
       deleteFolderResponse = new SFTPResponse<>("Folder deleted successfully");
       LOGGER.info("DeleteFolderUsingSFTP Process Completed");
     } catch (IOException e) {
@@ -47,19 +47,22 @@ public class DeleteFolderService implements SFTPRequestData {
 
   public void deleteDirectoryRecursively(SFTPClient sftpClient, Path directory) throws IOException {
     sftpClient
-        .ls(directory.toString())
+        .ls(directory.toString().replace("\\", "/"))
         .forEach(
             file -> {
               Path fullAdd = Path.of(directory + File.separator + file.getName());
               if (file.isDirectory()) {
                 try {
                   deleteDirectoryRecursively(sftpClient, fullAdd);
-                  sftpClient.rmdir(Path.of(directory + File.separator + file.getName()).toString());
+                  sftpClient.rmdir(
+                      Path.of(directory + File.separator + file.getName())
+                          .toString()
+                          .replace("\\", "/"));
                 } catch (IOException e) {
                 }
               } else {
                 try {
-                  sftpClient.rm(fullAdd.toString());
+                  sftpClient.rm(fullAdd.toString().replace("\\", "/"));
                 } catch (IOException e) {
                 }
               }
