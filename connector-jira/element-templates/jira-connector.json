@@ -13,7 +13,7 @@
     },
     "category": {
       "id": "connectors",
-      "name": "jira-connector"
+      "name": "Connectors"
     },
     "groups": [
       {
