@@ -1,0 +1,34 @@
+[
+    {
+        "description": "Valid add users to group with payload type as userIds",
+        "authentication": {
+            "accountId": "accountId",
+            "accessToken": "accessToken",
+            "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.addUsersToGroup",
+        "data": {
+            "groupId":"groupId",
+            "payloadType": "userIds",
+            "userIds":["userId1","userId2"]          
+        }
+    },
+    {
+        "description": "Valid add users to group with payload type as userIds",
+        "authentication": {
+            "accountId": "accountId",
+            "accessToken": "accessToken",
+            "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.addUsersToGroup",
+        "data": {
+            "groupId":"groupId",
+            "payloadType": "entirePayload",
+            "payload":{
+                "userId":"userId",
+                "userName":"userName",
+                "userStatus":"Active"
+            }          
+        }
+    }
+]

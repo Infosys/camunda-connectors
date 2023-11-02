@@ -1,0 +1,15 @@
+[
+    {
+        "description": "inValid create users",
+        "authentication": {
+            "accountId": "accountId",
+            "accessToken": "accessToken",
+            "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.createUsers",
+        "data": {
+            "payload": null
+                
+        }
+    }
+    ]

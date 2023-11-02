@@ -1,0 +1,27 @@
+[
+    {
+        "description": "inValid custom api request(GET request) with null url ",
+        "authentication": {
+            "accessToken": "accessToken"
+        },
+        "operation": "docusign.customApiRequest",
+        "data": {
+            "url":"",
+            "method":"get",
+            "queryParameter":{"parameter":"value"}
+           
+        }
+    },
+    {
+        "description": "Valid custom api request(POST request) with null method",
+        "authentication": {
+            "accessToken": "accessToken"
+        },
+        "operation": "docusign.customApiRequest",
+        "data": {
+            "url":"Endpoint",
+            "method":"",
+            "payload":{"parameter":"value"}      
+        }
+    }
+]

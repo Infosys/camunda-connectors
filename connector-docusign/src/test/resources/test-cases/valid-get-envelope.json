@@ -1,0 +1,36 @@
+[
+    {
+        "description": "Valid get Envelope",
+        "authentication": {
+          "accountId": "accountId",
+          "accessToken": "accessToken",
+          "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.getEnvelope",
+        "data": {
+            "envelopeId": "123",
+            "advanced_update": "true",
+            "include": [
+                "item1",
+                "item2"
+            ]
+        }
+    },
+    {
+        "description": "Valid get Envelope",
+        "authentication": {
+          "accountId": "accountId",
+          "accessToken": "accessToken",
+          "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.getEnvelope",
+        "data": {
+            "envelopeId": "123",
+            "include": [
+                "item1",
+                "item2"
+            ]
+        }
+    }
+
+]

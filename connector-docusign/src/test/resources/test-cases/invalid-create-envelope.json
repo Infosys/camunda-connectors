@@ -1,0 +1,58 @@
+[
+    {
+        "description": "inValid create Envelope with PayloadType as null",
+        "authentication": {
+            "accountId": "accountId",
+            "accessToken": "accessToken",
+            "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.createEnvelope",
+        "data": {
+            "payloadType": null,
+            "recipients": [
+                {
+                    "name": "abc",
+                    "email": "abc@gmail.com",
+                    "recipientId": "12",
+                    "recipientType": "signers"
+                }
+            ],
+            "emailSubject": "Email Subject",
+            "status": "created",
+            "documents": [
+                {
+                    "documentPath": "Contribution License Agreement.docx",
+                    "documentId": "12"
+                }
+            ]
+        }
+    },
+    {
+        "description": "inValid create Envelope with PayloadType as blank",
+        "authentication": {
+            "accountId": "accountId",
+            "accessToken": "accessToken",
+            "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.createEnvelope",
+        "data": {
+            "payloadType": "",
+            "recipients": [
+                {
+                    "name": "abc",
+                    "email": "abc@gmail.com",
+                    "recipientId": "12",
+                    "recipientType": "signers"
+                }
+            ],
+            "emailSubject": "Email Subject",
+            "status": "created",
+            "documents": [
+                {
+                    "documentPath": "Contribution License Agreement.docx",
+                    "documentId": "12"
+                }
+            ]
+        }
+    }
+]

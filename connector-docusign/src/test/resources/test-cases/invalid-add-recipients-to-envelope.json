@@ -1,0 +1,59 @@
+[
+    {
+        "description": "inValid add recipient to envelope",
+        "authentication": {
+            "accountId": "accountId",
+            "accessToken": "accessToken",
+            "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.addRecipientsToEnvelope",
+        "data": {
+            "envelopeId": "",
+            "resend_envelope": "true",
+            "payloadType": "requiredRecipients",
+            "signers": [
+                {
+                    "email": "abc@gmail.com",
+                    "name":"abc",
+                    "recipientId":"12"
+                }
+            ],
+            "certifiedDelivery": [
+                {
+                    "email": "abc@gmail.com",
+                    "name":"abc",
+                    "recipientId":"12"
+                }
+            ],
+            "inPersonSigners": [
+                {
+                    "name": "abc",
+                    "hostName":"hostName",
+                    "hostEmail":"hostEmail@gmail.com"
+                }
+            ],
+            "carbonCopies": [
+                {
+                    "email": "abc@gmail.com",
+                    "name":"abc",
+                    "recipientId":"12"
+                }
+            ]
+        }
+    },
+    {
+        "description": "inValid add recipient to envelope with payload type as recipientsJson",
+        "authentication": {
+            "accountId": "accountId",
+            "accessToken": "accessToken",
+            "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.addRecipientsToEnvelope",
+        "data": {
+            "envelopeId": null,
+            "resend_envelope": "true",
+            "payloadType": "recipientsJson",
+            "jsonPayload":{"fields":["field1","field2"]}
+        }
+    }
+]

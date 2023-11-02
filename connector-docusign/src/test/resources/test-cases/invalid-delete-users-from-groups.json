@@ -1,0 +1,72 @@
+[
+    {
+        "description": "inValid delete users from groups with groupId as null",
+        "authentication": {
+            "accountId": "accountId",
+            "accessToken": "accessToken",
+            "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.deleteUsersFromGroup",
+        "data": {
+            "groupId":null,
+            "deleteBy":"byUserIds",
+            "userIds":["userId1","userId2"]
+        }
+    },
+    {
+        "description": "inValid delete users from groups with deleteBY as byUserIds and userIds empty",
+        "authentication": {
+            "accountId": "accountId",
+            "accessToken": "accessToken",
+            "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.deleteUsersFromGroup",
+        "data": {
+            "groupId":"groupId",
+            "deleteBy":"byUserIds",
+            "userIds":[]
+        }
+    },
+    {
+        "description": "Valid delete users from groups with deleteBy as null",
+        "authentication": {
+            "accountId": "accountId",
+            "accessToken": "accessToken",
+            "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.deleteUsersFromGroup",
+        "data": {
+            "groupId":"groupId",
+            "deleteBy":null,
+            "payload":[{"fields":"fields"}]
+        }
+    },
+    {
+        "description": "Valid delete users from groups with deleteBy as blank",
+        "authentication": {
+            "accountId": "accountId",
+            "accessToken": "accessToken",
+            "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.deleteUsersFromGroup",
+        "data": {
+            "groupId":"groupId",
+            "deleteBy":"",
+            "payload":[{"fields":"fields"}]
+        }
+    },
+    {
+        "description": "Valid delete users from groups with deleteBy as otherFields and payload empty",
+        "authentication": {
+            "accountId": "accountId",
+            "accessToken": "accessToken",
+            "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.deleteUsersFromGroup",
+        "data": {
+            "groupId":"groupId",
+            "deleteBy":"otherFields",
+            "payload":null
+        }
+    }
+    ]

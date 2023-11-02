@@ -1,0 +1,30 @@
+[
+    {
+        "description": "Valid delete users from groups",
+        "authentication": {
+            "accountId": "accountId",
+            "accessToken": "accessToken",
+            "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.deleteUsersFromGroup",
+        "data": {
+            "groupId":"groupId",
+            "deleteBy":"byUserIds",
+            "userIds":["userId1","userId2"]
+        }
+    },
+    {
+        "description": "Valid delete users from groups with deleteBy other fields",
+        "authentication": {
+            "accountId": "accountId",
+            "accessToken": "accessToken",
+            "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.deleteUsersFromGroup",
+        "data": {
+            "groupId":"groupId",
+            "deleteBy":"otherFields",
+            "payload":[{"fields":"fields"}]
+        }
+    }
+    ]

@@ -1,0 +1,2020 @@
+{
+  "$schema": "https://unpkg.com/@camunda/zeebe-element-templates-json-schema/resources/schema.json",
+  "name": "Docusign Connector",
+  "id": "com.infosys.camundaconnectors.docusign:docusign:1",
+  "description": "Docusign connector",
+  "version": 1,
+  "entriesVisible": false,
+  "appliesTo": [
+    "bpmn:Task"
+  ],
+  "elementType": {
+    "value": "bpmn:ServiceTask"
+  },
+  "icon": {
+    "contents": "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='18' height='18' viewBox='0 0 18 18'%3E%3Cimage xlink:href='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAMAAAD04JH5AAAAeFBMVEXV/wAAAADU/wDd/0TZ/yPh/2XY/wC11wC72gAOEgDD6ADb/wCqxwAABQDH6QAtNgAkLAAdIwB/mACDnQDC5ACw0ADg/1Pm/34fJgBecQBLWwDN8gBnfABjdgB4kAAMDwAYHgClvgBFUgBUZQA1QAA9SgBZawASGABsuCTDAAACvklEQVR4nO3bfVviMAwA8E69AJZD8eVuOJGJd/r9v6EboHZt1ibpcDw+yZ/Drb81abtOMH/OR42/5uJs1PhlLsyYoQAFKEABClBAFgCcGAEA8/LqM8pLISELUDihAAUoQAEKUIACFKAABShAAQr48QArASAnCQFQ3YYXSwEAbgi7dhIAqm1xGzYQB4B5LFZVUkABQPXQtBD0QQrw2BxdJ7NAALT338aTd7E4wL7sDr+mBGkAmH+HNm66F4sBAFaH4w82noUkYN//++jWQQTQ5v8j1vFKTAHc9r0+iAHWzidxQQIAsHVb6Qj6AXbVOSlaBwlA9b/ohlOJfQCAV++kl0gXxAEwKfz4qoMegJt/ND+sHrDPvwPBRx/0AYL2l1NxDzSCuX+5zyzgAOv3f1FPM2qgueB9nwAFhO0vL6NzUXoiQgT7OkAASP7f7jInojYLM/+qu9GIAYL2y2j/0wBYHbSCEGDX/t+9pdqnLcd4JQaAw/rjxPJuiNXQ9NSB9QHh/SfyTwc0fYDMBx4AGf+EZzLyM+Fz2AedabIS5J8DwLLgrpPF1v80Mf7ZAEwQi3pBe05n7AvsfENvv0zXPxuAjcbe+yflnwugCwjjXwSg1kFNqz8BAJsPsPtn7BO5m1NkPgjun5x/CSCdhZqefxEgJaiZ+3TB+4FoHTDqXwyICUjrTzagfz5g5l8M6KsDzvjPA+CCmjP+MwHYjoWf/xxAWAeC/GcB/Cwshe/pMt4T2nsnC6z5fyCAu2MhP38MCviqA2H+swHGTnZZKBfi9nO/SbWrA+76MySgXRdKaf0NAmj6QJ7/QQBG/jWygQCZoYDTBMARgwKoJkcMAgB4+3BebPxZCwNMCNsvaVwvCD2gAAUoQAHhf6q+GzDbzI4UmysCwFTTI4bf2Ekux98aClCAAhSgAAWcBGDsH7+P/fP/d117QR+QGK4yAAAAAElFTkSuQmCC' x='0' y='0' height='100%25' width='100%25'/%3E%3C/svg%3E" },
+  "category": {
+    "id": "connectors",
+    "name": "Connectors"
+  },
+  "groups": [
+    {
+      "id": "authentication",
+      "label": "Authentication"
+    },
+    {
+      "id": "operation",
+      "label": "Operation"
+    },
+    {
+      "id": "inputs",
+      "label": "Input Mapping"
+    },
+    {
+      "id": "output",
+      "label": "Output Mapping"
+    },
+    {
+      "id": "errors",
+      "label": "Error Handling"
+    }
+  ],
+  "properties": [
+    {
+      "type": "Hidden",
+      "value": "com.infosys.camundaconnectors.docusign:docusign:1",
+      "editable": false,
+      "binding": {
+        "type": "zeebe:taskDefinition:type"
+      }
+    },
+    {
+      "id": "operation",
+      "label": "Operation",
+      "description": "Operation to be done",
+      "type": "Dropdown",
+      "value": "docusign.createEnvelope",
+      "choices": [
+        {
+          "name": "Create Or Send Envelope",
+          "value": "docusign.createEnvelope"
+        },
+        {
+          "name": "Get Envelope",
+          "value": "docusign.getEnvelope"
+        },
+        {
+          "name": "Upload Documents to Existing Envelope",
+          "value": "docusign.uploadDocumentsToEnvelope"
+        },
+        {
+          "name": "Send Drafted Envelope's",
+          "value": "docusign.sendDraftEnvelope"
+        },
+        {
+          "name": "Search Envelopes",
+          "value": "docusign.searchEnvelopes"
+        },
+        {
+          "name": "Add Recipients To Envelope",
+          "value": "docusign.addRecipientsToEnvelope"
+        },
+        {
+          "name": "Add Custom Fields to Envelope",
+          "value": "docusign.addEnvelopeCustomeFields"
+        },
+        {
+          "name": "Update Custom Fields to Envelope",
+          "value": "docusign.updateEnvelopeCustomeFields"
+        },
+        {
+          "name": "Search Custom Fields in Envelope",
+          "value": "docusign.searchEnvelopeInCustomeFields"
+        },
+        {
+          "name": "Download Documents from Envelope",
+          "value": "docusign.downloadDocumentsFromEnvelope"
+        },
+        {
+          "name": "Create Users",
+          "value": "docusign.createUsers"
+        },
+        {
+          "name": "Add Users to Group",
+          "value": "docusign.addUsersToGroup"
+        },
+        {
+          "name": "Delete Users",
+          "value": "docusign.deleteUsers"
+        },
+        {
+          "name": "Get User Information",
+          "value": "docusign.getUser"
+        },
+        {
+          "name": "List Users",
+          "value": "docusign.listUsers"
+        },
+        {
+          "name": "Update User",
+          "value": "docusign.updateUser"
+        },
+        {
+          "name": "List Groups",
+          "value": "docusign.listGroups"
+        },
+        {
+          "name": "List Group Users",
+          "value": "docusign.listGroupUsers"
+        },
+        {
+          "name": "Delete Users From Group",
+          "value": "docusign.deleteUsersFromGroup"
+        },
+        {
+          "name": "Custom API Request",
+          "value": "docusign.customApiRequest"
+        }
+      ],
+      "group": "operation",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "operation"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "AccountId",
+      "description": "AccountId of DocuSign",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.accountId"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "oneOf": [
+          "docusign.createEnvelope",
+          "docusign.searchEnvelopes",
+          "docusign.sendDraftEnvelope",
+          "docusign.uploadDocumentsToEnvelope",
+          "docusign.getEnvelope",
+          "docusign.searchEnvelopeInCustomeFields",
+          "docusign.updateEnvelopeCustomeFields",
+          "docusign.addEnvelopeCustomeFields",
+          "docusign.addRecipientsToEnvelope",
+          "docusign.createUsers",
+          "docusign.downloadDocumentsFromEnvelope",
+          "docusign.listUsers",
+          "docusign.getUser",
+          "docusign.deleteUsers",
+          "docusign.addUsersToGroup",
+          "docusign.deleteUsersFromGroup",
+          "docusign.listGroupUsers",
+          "docusign.listGroups",
+          "docusign.updateUser"
+        ]
+      }
+    },
+    {
+      "label": "Access Token",
+      "description": "Access Token for accessing the docusign resources. To get access token refer <a href=\"https://developers.docusign.com/platform/auth/implicit/implicit-get-token/#:~:text=Implicit%20Get%20Token-,How%20to%20get%20an%20access%20token%20with%20Implicit%20Grant,-This%20topic%20demonstrates\" target=\"_blank\">documentation</a>. ",
+      "type": "String",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.accessToken"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "oneOf": [
+          "docusign.createEnvelope",
+          "docusign.searchEnvelopes",
+          "docusign.sendDraftEnvelope",
+          "docusign.uploadDocumentsToEnvelope",
+          "docusign.getEnvelope",
+          "docusign.searchEnvelopeInCustomeFields",
+          "docusign.updateEnvelopeCustomeFields",
+          "docusign.addEnvelopeCustomeFields",
+          "docusign.addRecipientsToEnvelope",
+          "docusign.createUsers",
+          "docusign.downloadDocumentsFromEnvelope",
+          "docusign.listUsers",
+          "docusign.getUser",
+          "docusign.deleteUsers",
+          "docusign.addUsersToGroup",
+          "docusign.deleteUsersFromGroup",
+          "docusign.listGroupUsers",
+          "docusign.listGroups",
+          "docusign.updateUser",
+          "docusign.customApiRequest"
+        ]
+      }
+    },
+    {
+      "label": "Base URI",
+      "description": "Enter Base URI. For e.g. Default Base URI is https://demo.docusign.net/",
+      "type": "String",
+      "value": "https://demo.docusign.net/",
+      "feel": "optional",
+      "group": "authentication",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.baseUri"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "condition": {
+        "property": "operation",
+        "oneOf": [
+          "docusign.createEnvelope",
+          "docusign.searchEnvelopes",
+          "docusign.sendDraftEnvelope",
+          "docusign.uploadDocumentsToEnvelope",
+          "docusign.getEnvelope",
+          "docusign.searchEnvelopeInCustomeFields",
+          "docusign.updateEnvelopeCustomeFields",
+          "docusign.addEnvelopeCustomeFields",
+          "docusign.addRecipientsToEnvelope",
+          "docusign.createUsers",
+          "docusign.downloadDocumentsFromEnvelope",
+          "docusign.listUsers",
+          "docusign.getUser",
+          "docusign.deleteUsers",
+          "docusign.addUsersToGroup",
+          "docusign.deleteUsersFromGroup",
+          "docusign.listGroupUsers",
+          "docusign.listGroups",
+          "docusign.updateUser"
+        ]
+      }
+    },
+    {
+      "id": "payloadType",
+      "label": "Payload Type",
+      "description": "Select \"Required Fields\" if you want to send required payload else \"Json\" for entire payload in json format",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "requiredFields",
+      "choices": [
+        {
+          "name": "Required Fields",
+          "value": "requiredFields"
+        },
+        {
+          "name": "Json",
+          "value": "json"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.payloadType"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.createEnvelope"
+      }
+    },
+    {
+      "label": "Recipient's Details",
+      "description": "Enter Recipient's detail in the format [{\"name\":\"alex\",\"email\":\"xyz@gmail.com\",\"recipientId\":\"12\",\"recipientType\":\"signers\"}]",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.recipients"
+      },
+      "condition": {
+        "property": "payloadType",
+        "equals": "requiredFields"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Email Subject",
+      "description": "The subject of the email used to send the envelope.",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.emailSubject"
+      },
+      "condition": {
+        "property": "payloadType",
+        "equals": "requiredFields"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Upload Documents",
+      "description": "The list of map of paths and documentId of all the documents which needs be to signed. For e.g.[{\"documentPath\":\"fullPath\",\"documentId\":\"12\"}]",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.documents"
+      },
+      "condition": {
+        "property": "payloadType",
+        "equals": "requiredFields"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Status",
+      "description": "Set to \"sent\" to send the envelope to recipients.Set to \"created\" to save the envelope as a draft.",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "single",
+      "choices": [
+        {
+          "name": "Sent",
+          "value": "sent"
+        },
+        {
+          "name": "Created",
+          "value": "created"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.status"
+      },
+      "condition": {
+        "property": "payloadType",
+        "equals": "requiredFields"
+      }
+    },
+    {
+      "label": "Payload",
+      "description": "Enter the payload in json format",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.payload"
+      },
+      "condition": {
+        "property": "payloadType",
+        "equals": "json"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Envelope Id",
+      "description": "Enter Envelope Id",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.envelopeId"
+      },
+      "condition": {
+        "property": "operation",
+        "oneOf": [
+          "docusign.getEnvelope",
+          "docusign.addRecipientsToEnvelope",
+          "docusign.uploadDocumentsToEnvelope",
+          "docusign.updateEnvelopeCustomeFields",
+          "docusign.addEnvelopeCustomeFields",
+          "docusign.searchEnvelopeInCustomeFields",
+          "docusign.downloadDocumentsFromEnvelope"
+        ]
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Advance Update",
+      "description": "",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "true",
+      "optional": true,
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.advanced_update"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.getEnvelope"
+      }
+    },
+    {
+      "label": "Addtional Fields",
+      "description": "Specifies additional information about the envelope to return. Enter a comma-separated list, such as tabs,recipients. ",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "optional": true,
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.include"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.getEnvelope"
+      }
+    },
+    {
+      "label": "Documents Paths",
+      "description": "Enter path of documents in the format [path1,path2]",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.documents"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.uploadDocumentsToEnvelope"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Envelope Id's",
+      "description": "Enter Envelope Id's in the format [EnvelopeId1,EnvelopeId2]",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.envelopeIds"
+      },
+      "condition": {
+        "property": "operation",
+        "oneOf": [
+          "docusign.sendDraftEnvelope",
+          "docusign.searchEnvelopes"
+        ]
+      }
+    },
+    {
+      "label": "Username",
+      "description": "Limit results to envelopes sent by the account user with this username. \"email\" must be given as well",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "",
+      "optional": true,
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.user_name"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.searchEnvelopes"
+      }
+    },
+    {
+      "label": "Email",
+      "description": "Limit results to envelopes sent by the account user with this email. \"Username\" must be given as well",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "",
+      "optional": true,
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.email"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.searchEnvelopes"
+      }
+    },
+    {
+      "label": "UserId",
+      "description": "The ID of the user who created the envelopes to be retrieved. Note that an account can have multiple users, and any user with account access can retrieve envelopes by user_id from the account.",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "",
+      "optional": true,
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.user_id"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.searchEnvelopes"
+      }
+    },
+    {
+      "label": "Folder Types",
+      "description": "A comma-separated list of folder types you want to retrieve envelopes from. For e.g. [\"inbox\",\"draft\",\"sentitems\"]",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "",
+      "optional": true,
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.folder_types"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.searchEnvelopes"
+      }
+    },
+    {
+      "label": "Status",
+      "description": "A comma-separated list of current envelope statuses to included in the response. For e.g.[\"sent\",\"created\",\"voided\"]",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "",
+      "optional": true,
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.status"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.searchEnvelopes"
+      }
+    },
+    {
+      "label": "Search Text",
+      "description": "Free text search criteria that you can use to filter the list of envelopes that is returned",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "",
+      "optional": true,
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.search_text"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.searchEnvelopes"
+      }
+    },
+    {
+      "label": "Count",
+      "description": "The maximum number of results to return.",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "",
+      "optional": true,
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.count"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.searchEnvelopes"
+      }
+    },
+    {
+      "label": "From date",
+      "description": "Specifies the date and time to start looking for status changes. This parameter is required unless envelopeIds or transactionIds are set.",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "",
+      "optional": true,
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.from_date"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.searchEnvelopes"
+      }
+    },
+    {
+      "label": "To date",
+      "description": "Specifies the date and time to stop looking for status changes. The default is the current date and time",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "",
+      "optional": true,
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.to_date"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.searchEnvelopes"
+      }
+    },
+    {
+      "label": "order_by",
+      "description": "Sorts results according to a specific property",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "",
+      "optional": true,
+      "choices": [
+        {
+          "name": "None",
+          "value": "None"
+        },
+        {
+          "name": "Last Modified",
+          "value": "last_modified"
+        },
+        {
+          "name": "Action Required",
+          "value": "action_required"
+        },
+        {
+          "name": "Created",
+          "value": "created"
+        },
+        {
+          "name": "Completed",
+          "value": "completed"
+        },
+        {
+          "name": "Envelope Name",
+          "value": "envelope_name"
+        },
+        {
+          "name": "Expire",
+          "value": "expire"
+        },
+        {
+          "name": "Sent",
+          "value": "sent"
+        },
+        {
+          "name": "Status",
+          "value": "status"
+        },
+        {
+          "name": "Subject",
+          "value": "subject"
+        },
+        {
+          "name": "User Name",
+          "value": "user_name"
+        },
+        {
+          "name": "Status Changed",
+          "value": "status_changed"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.order_by"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.searchEnvelopes"
+      }
+    },
+    {
+      "label": "Order",
+      "description": "Returns envelopes in either ascending (asc) or descending (desc) order.",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "",
+      "optional": true,
+      "choices": [
+        {
+          "name": "None",
+          "value": "None"
+        },
+        {
+          "name": "asc",
+          "value": "asc"
+        },
+        {
+          "name": "desc",
+          "value": "desc"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.order"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.searchEnvelopes"
+      }
+    },
+    {
+      "label": "Other Fields",
+      "description": "If you want to add any other extra field, add it in the format [{\"param1\":\"value1\"},{\"param2\":\"value2\"}]",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "",
+      "optional": true,
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.extraFields"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.searchEnvelopes"
+      }
+    },
+    {
+      "label": "Include in Response",
+      "description": "Specifies additional information to return about the envelopes in the format [\"documents\",\"recipients\",\"folders\"]",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "",
+      "optional": true,
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.include"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.searchEnvelopes"
+      }
+    },
+    {
+      "label": "Resend Envelope",
+      "description": "When true, forces the envelope to be resent if it would not be resent otherwise.",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "",
+      "optional": true,
+      "choices": [
+        {
+          "name": "True",
+          "value": "true"
+        },
+        {
+          "name": "False",
+          "value": "false"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.resend_envelope"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.addRecipientsToEnvelope"
+      }
+    },
+    {
+      "id": "payloadTypeOfAddRecipients",
+      "label": "Payload Type",
+      "description": "When true, forces the envelope to be resent if it would not be resent otherwise.",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "Required Fields",
+      "choices": [
+        {
+          "name": "Required Fields",
+          "value": "requiredRecipients"
+        },
+        {
+          "name": "Json",
+          "value": "recipientsJson"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.payloadType"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.addRecipientsToEnvelope"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Signers",
+      "description": "Enter the signers details in the format [{\"email\":\"abc@gmail.com\",\"name\":\"abc\",\"recipientId\":\"1\"}]",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "",
+      "optional": true,
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.signers"
+      },
+      "condition": {
+        "property": "payloadTypeOfAddRecipients",
+        "equals": "requiredRecipients"
+      }
+    },
+    {
+      "label": "carbonCopies",
+      "description": "Enter the CC's details in the format [{\"email\":\"abc@gmail.com\",\"name\":\"abc\",\"recipientId\":\"1\"}]",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "",
+      "optional": true,
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.carbonCopies"
+      },
+      "condition": {
+        "property": "payloadTypeOfAddRecipients",
+        "equals": "requiredRecipients"
+      }
+    },
+    {
+      "label": "inPersonSigners",
+      "description": "Enter the details in the format [{\"name\":\"abc\",\"hostname\":\"hostName\",\"hostemail\":\"hostEmail@gmail.com\"}]",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "",
+      "optional": true,
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.inPersonSigners"
+      },
+      "condition": {
+        "property": "payloadTypeOfAddRecipients",
+        "equals": "requiredRecipients"
+      }
+    },
+    {
+      "label": "Certified Delivery",
+      "description": "Enter the details in the format [{\"email\":\"abc@gmail.com\",\"name\":\"abc\",\"recipientId\":\"1\"}]",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "",
+      "optional": true,
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.certifiedDelivery"
+      },
+      "condition": {
+        "property": "payloadTypeOfAddRecipients",
+        "equals": "requiredRecipients"
+      }
+    },
+    {
+      "label": "jsonPayload",
+      "description": "Enter the details in the format [{\"email\":\"abc@gmail.com\",\"name\":\"abc\",\"recipientId\":\"1\"}]",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "",
+      "optional": true,
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.jsonPayload"
+      },
+      "condition": {
+        "property": "payloadTypeOfAddRecipients",
+        "equals": "recipientsJson"
+      }
+    },
+    {
+      "label": "Text Custom Field's",
+      "description": "An array of text custom fields. For e.g. []",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "true",
+      "optional": true,
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.textFields"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.addEnvelopeCustomeFields"
+      }
+    },
+    {
+      "label": "List Custom Field's",
+      "description": "An array of list custom fields. For e.g. []",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "true",
+      "optional": true,
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.listFields"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.addEnvelopeCustomeFields"
+      }
+    },
+    {
+      "label": "Text Custom Field's",
+      "description": "An array of text custom fields. For e.g. []",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "true",
+      "optional": true,
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.textFields"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.updateEnvelopeCustomeFields"
+      }
+    },
+    {
+      "label": "List Custom Field's",
+      "description": "An array of list custom fields. For e.g. []",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "true",
+      "optional": true,
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.listFields"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.updateEnvelopeCustomeFields"
+      }
+    },
+    {
+      "label": "DocumentId",
+      "description": "The ID of the document to retrieve. Alternatively, you can use one of the following special keywords combined,archive,certificate,certificate. For more info refer docs",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.documentId"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.downloadDocumentsFromEnvelope"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Path",
+      "description": "Enter the path where to download the documents",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.path"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.downloadDocumentsFromEnvelope"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Document Name",
+      "description": "Enter the name of the documents to save as. Else the default name will be envelopeId_document",
+      "type": "String",
+      "feel": "optional",
+      "optional": true,
+      "group": "inputs",
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.documentName"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.downloadDocumentsFromEnvelope"
+      }
+    },
+    {
+      "label": "Certificate",
+      "description": "When true, the certificate of completion is included in the combined PDF file. Note-Used only when the documentId parameter is the special keyword \"combined\".",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "false",
+      "choices": [
+        {
+          "name": "True",
+          "value": "true"
+        },
+        {
+          "name": "False",
+          "value": "false"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.certificate"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.downloadDocumentsFromEnvelope"
+      }
+    },
+    {
+      "label": "Show Changes",
+      "description": "When true, any changed fields for the returned PDF are highlighted in yellow and optional signatures or initials outlined in red. ",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "false",
+      "optional": true,
+      "choices": [
+        {
+          "name": "True",
+          "value": "true"
+        },
+        {
+          "name": "False",
+          "value": "false"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.showChanges"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.downloadDocumentsFromEnvelope"
+      }
+    },
+    {
+      "label": "Language",
+      "description": "Specifies the language for the Certificate of Completion in the response For more info refer docs",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "true",
+      "optional": true,
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.language"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.downloadDocumentsFromEnvelope"
+      }
+    },
+    {
+      "label": "GroupId",
+      "description": "Enter the Id of the Group",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.groupId"
+      },
+      "condition": {
+        "property": "operation",
+        "oneOf": [
+          "docusign.addUsersToGroup",
+          "docusign.listGroupUsers",
+          "docusign.deleteUsersFromGroup"
+        ]
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "id": "addUserToGroupChoise",
+      "label": "Payload Type",
+      "description": "Select Entire Payload if you want to add extra fields with request otherwise select userId's ",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "userIds",
+      "choices": [
+        {
+          "name": "UserId's",
+          "value": "userIds"
+        },
+        {
+          "name": "Entire Payload",
+          "value": "entirePayload"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.payloadType"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.addUsersToGroup"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Payload",
+      "description": "Add the users details in json format. userName and email properties are neccessary. Refer the documentation for more details",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.payload"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.createUsers"
+      }
+    },
+    {
+      "label": "Payload",
+      "description": "Add the users details in json format. userName and email properties are neccessary. Refer the documentation for more details",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.payload"
+      },
+      "condition": {
+        "property": "addUserToGroupChoise",
+        "equals": "entirePayload"
+      }
+    },
+    {
+      "label": "UserId's",
+      "description": "Enter the UserId's in the format [\"userId1\",\"userId2\"]",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.userIds"
+      },
+      "condition": {
+        "property": "addUserToGroupChoise",
+        "equals": "userIds"
+      }
+    },
+    {
+      "label": "UserId's",
+      "description": "Enter the UserId's in the format [\"userId1\",\"userId2\"] to delete",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.userIds"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.deleteUsers"
+      }
+    },
+    {
+      "label": "Groups",
+      "description": "Set True if you want to delete the given users from all Groups also.",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "true",
+      "optional": true,
+      "choices": [
+        {
+          "name": "True",
+          "value": "true"
+        },
+        {
+          "name": "False",
+          "value": "false"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.groups"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.deleteUsers"
+      }
+    },
+    {
+      "label": "PermissionSet",
+      "description": "Set True if you want to delete the given users from PermissionSet also.",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "true",
+      "optional": true,
+      "choices": [
+        {
+          "name": "True",
+          "value": "true"
+        },
+        {
+          "name": "False",
+          "value": "false"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.permissionSet"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.deleteUsers"
+      }
+    },
+    {
+      "label": "SigningGroupsEmail",
+      "description": "Set True if you want to delete the given users from SigningGroupsEmail also.",
+      "group": "inputs",
+      "type": "Dropdown",
+      "value": "true",
+      "optional": true,
+      "choices": [
+        {
+          "name": "True",
+          "value": "true"
+        },
+        {
+          "name": "False",
+          "value": "false"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.signingGroupsEmail"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.deleteUsers"
+      }
+    },
+    {
+      "label": "UserId",
+      "description": "Enter the UserId",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.userId"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.getUser"
+      }
+    },
+    {
+      "label": "Email",
+      "description": "Filters results based on the email address associated with the user that you want to return. You can use either this parameter or the email_substring parameter, but not both",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.email"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.listUsers"
+      }
+    },
+    {
+      "label": "Email Substring",
+      "description": "Filters results based on a fragment of an email address. For example, you could enter gmail to return all users who have Gmail addresses.",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.emailSubstring"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.listUsers"
+      }
+    },
+    {
+      "label": "groupIds",
+      "description": "Filters results based on one or more group IDs. For eg [\"groupId1\",\"groupId2\"]",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.groupIds"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.listUsers"
+      }
+    },
+    {
+      "label": "Not group ids",
+      "description": "Return user records excluding the specified group IDs.",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.notGroupIds"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.listUsers"
+      }
+    },
+    {
+      "label": "Status",
+      "description": "Filters results by user account status. status can be list of ActivationRequired,ActivationSent,Active,Closed,Disabled:",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.status"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.listUsers"
+      }
+    },
+    {
+      "label": "Login status",
+      "description": "When true, the response includes the login status of each user.",
+      "type": "Dropdown",
+      "group": "inputs",
+      "value": "false",
+      "choices": [
+        {
+          "value": "true",
+          "name": "True"
+        },
+        {
+          "value": "false",
+          "name": "False"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.loginStatus"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.listUsers"
+      }
+    },
+    {
+      "label": "User Name Substring",
+      "description": "Filters the user records returned by the user name or a sub-string of user name.",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.userNameSubstring"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.listUsers"
+      }
+    },
+    {
+      "label": "Count",
+      "description": "The maximum number of results to return.",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.count"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.listUsers"
+      }
+    },
+    {
+      "label": "Additional Info",
+      "description": "When true, the custom settings information is returned for each user in the account. If this parameter is omitted, the default behavior is false.",
+      "type": "Dropdown",
+      "group": "inputs",
+      "value": "false",
+      "choices": [
+        {
+          "name": "True",
+          "value": "true"
+        },
+        {
+          "name": "False",
+          "value": "false"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.additionalInfo"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.listUsers"
+      }
+    },
+    {
+      "label": "User Id",
+      "description": "User Id of the user",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.userId"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.updateUser"
+      },
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "id": "updateUserPayloadType",
+      "label": "Payload type",
+      "description": "Set \"Basic Fields\" if you want to update the basic fields else set \"Entire Payload\" and add data in Json format. Refer documentation",
+      "type": "Dropdown",
+      "group": "inputs",
+      "value": "basicFields",
+      "choices": [
+        {
+          "name": "Basic Fields",
+          "value": "basicFields"
+        },
+        {
+          "name": "Entire Payload",
+          "value": "payload"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.payloadType"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.updateUser"
+      }
+    },
+    {
+      "label": "First Name",
+      "description": "Update the first Name",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.firstName"
+      },
+      "condition": {
+        "property": "updateUserPayloadType",
+        "equals": "basicFields"
+      }
+    },
+    {
+      "label": "Middle Name",
+      "description": "Update the Middle Name",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.middleName"
+      },
+      "condition": {
+        "property": "updateUserPayloadType",
+        "equals": "basicFields"
+      }
+    },
+    {
+      "label": "Last Name",
+      "description": "Update the Last Name",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.lastName"
+      },
+      "condition": {
+        "property": "updateUserPayloadType",
+        "equals": "basicFields"
+      }
+    },
+    {
+      "label": "Job Title",
+      "description": "Update the Job title",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.jobTitle"
+      },
+      "condition": {
+        "property": "updateUserPayloadType",
+        "equals": "basicFields"
+      }
+    },
+    {
+      "label": "Company",
+      "description": "Update the company",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.company"
+      },
+      "condition": {
+        "property": "updateUserPayloadType",
+        "equals": "basicFields"
+      }
+    },
+    {
+      "label": "Language",
+      "description": "Update the Language",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.language"
+      },
+      "condition": {
+        "property": "updateUserPayloadType",
+        "equals": "basicFields"
+      }
+    },
+    {
+      "label": "Groups",
+      "description": "Update the groups.Enter the group Id in the format [\"groupId1\",\"groupId2\"]",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.groups"
+      },
+      "condition": {
+        "property": "updateUserPayloadType",
+        "equals": "basicFields"
+      }
+    },
+    {
+      "label": "Address 1",
+      "description": "Update the Address 1",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.address1"
+      },
+      "condition": {
+        "property": "updateUserPayloadType",
+        "equals": "basicFields"
+      }
+    },
+    {
+      "label": "Address 2",
+      "description": "Update the Address 2",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.address2"
+      },
+      "condition": {
+        "property": "updateUserPayloadType",
+        "equals": "basicFields"
+      }
+    },
+    {
+      "label": "City",
+      "description": "Update the City",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.city"
+      },
+      "condition": {
+        "property": "updateUserPayloadType",
+        "equals": "basicFields"
+      }
+    },
+    {
+      "label": "Country/Region",
+      "description": "Update the Country/Region",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.countryRegion"
+      },
+      "condition": {
+        "property": "updateUserPayloadType",
+        "equals": "basicFields"
+      }
+    },
+    {
+      "label": "Postal Code",
+      "description": "Update the Postal Code",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.postalCode"
+      },
+      "condition": {
+        "property": "updateUserPayloadType",
+        "equals": "basicFields"
+      }
+    },
+    {
+      "label": "Phone",
+      "description": "Update the Phone",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.phone"
+      },
+      "condition": {
+        "property": "updateUserPayloadType",
+        "equals": "basicFields"
+      }
+    },
+    {
+      "label": "Payload",
+      "description": "Enter the payload in Json Format",
+      "type": "String",
+      "feel": "required",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.payload"
+      },
+      "condition": {
+        "property": "updateUserPayloadType",
+        "equals": "payload"
+      }
+    },
+    {
+      "label": "Count",
+      "description": "The maximum number of results to return.",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.count"
+      },
+      "condition": {
+        "property": "operation",
+        "oneOf": [
+          "docusign.listGroups",
+          "docusign.listGroupUsers"
+        ]
+      }
+    },
+    {
+      "label": "Group Type",
+      "description": "The type of group to return. Valid values:AdminGroup, CustomGroup,EveryoneGroup",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.groupType"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.listGroups"
+      }
+    },
+    {
+      "label": "Include Usercount",
+      "description": "When true, every group returned in the response includes a userCount property that contains the total number of users in the group. The default is true.",
+      "type": "Dropdown",
+      "group": "inputs",
+      "value": "true",
+      "choices": [
+        {
+          "name": "True",
+          "value": "true"
+        },
+        {
+          "name": "False",
+          "value": "false"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.includeUsercount"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.listGroups"
+      }
+    },
+    {
+      "label": "Search Text",
+      "description": "The type of group to return. Valid values:AdminGroup, CustomGroup,EveryoneGroup",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.searchText"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.listGroups"
+      }
+    },
+    {
+      "id": "deleteBy",
+      "label": "Delete According to",
+      "description": "Set userId if you want to delete according to userId's of the users or select other for different combination",
+      "type": "Dropdown",
+      "group": "inputs",
+      "value": "byUserIds",
+      "choices": [
+        {
+          "name": "UserIds",
+          "value": "byUserIds"
+        },
+        {
+          "name": "Other Fields",
+          "value": "otherFields"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.deleteBy"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.deleteUsersFromGroup"
+      }
+    },
+    {
+      "label": "UserIds",
+      "description": "Enter the userIds in the format [\"userId1\",\"userId1\"]",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.userIds"
+      },
+      "condition": {
+        "property": "deleteBy",
+        "equals": "byUserIds"
+      }
+    },
+    {
+      "label": "Payload",
+      "description": "Enter the fields in the format [{\"userStatus\":\"Active\",\"email\":\"abc@gmail.com\"}]",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.payload"
+      },
+      "condition": {
+        "property": "deleteBy",
+        "equals": "otherFields"
+      }
+    },
+    {
+      "label": "URL",
+      "description": "Enter the Api Endpoint",
+      "type": "String",
+      "feel": "optional",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.url"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.customApiRequest"
+      }
+    },
+    {
+      "label": "Method",
+      "description": "",
+      "type": "Dropdown",
+      "group": "inputs",
+      "optional": true,
+      "value": "get",
+      "choices": [
+        {
+          "name": "POST",
+          "value": "post"
+        },
+        {
+          "name": "GET",
+          "value": "get"
+        },
+        {
+          "name": "PUT",
+          "value": "put"
+        },
+        {
+          "name": "DELETE",
+          "value": "delete"
+        }
+      ],
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.method"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.customApiRequest"
+      }
+    },
+    {
+      "label": "Query Parameter",
+      "description": "Map of query parameters to add to the request URL",
+      "type": "String",
+      "feel":"required",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.queryParameter"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.customApiRequest"
+      }
+    },
+    {
+      "label": "Payload",
+      "description": "Payload to send with the request",
+      "type": "String",
+      "feel":"required",
+      "group": "inputs",
+      "optional": true,
+      "value": "",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "data.payload"
+      },
+      "condition": {
+        "property": "operation",
+        "equals": "docusign.customApiRequest"
+      }
+    },
+    {
+      "label": "Result Variable",
+      "description": "Name of variable to store the response in. Response should not be more than 32KB",
+      "group": "output",
+      "type": "String",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "resultVariable"
+      }
+    },
+    {
+      "label": "Result Expression",
+      "description": "Expression to map the response into process variables",
+      "group": "output",
+      "type": "Text",
+      "feel": "required",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "resultExpression"
+      }
+    },
+    {
+      "label": "Error Expression",
+      "description": "Expression to handle errors. Details in the <a href=\"https://docs.camunda.io/docs/components/connectors/use-connectors/\" target=\"_blank\">documentation</a>.",
+      "group": "errors",
+      "type": "Text",
+      "feel": "required",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "errorExpression"
+      }
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+[
+    {
+        "description": "inValid get Envelope with blank envelopeId",
+        "authentication": {
+          "accountId": "accountId",
+          "accessToken": "accessToken",
+          "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.getEnvelope",
+        "data": {
+            "envelopeId": "",
+            "advanced_update": "true",
+            "include": [
+                "item1",
+                "item2"
+            ]
+        }
+    },
+    {
+        "description": "inValid get Envelope with null envelopeId",
+        "authentication": {
+          "accountId": "accountId",
+          "accessToken": "accessToken",
+          "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.getEnvelope",
+        "data": {
+            "envelopeId": null,
+            "advanced_update": "true",
+            "include": [
+                "item1",
+                "item2"
+            ]
+        }
+    }
+
+]

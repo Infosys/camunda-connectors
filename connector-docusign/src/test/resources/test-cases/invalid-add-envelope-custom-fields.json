@@ -1,0 +1,44 @@
+[
+    {
+        "description": "inValid add envelope fields with null envelopeId",
+        "authentication": {
+            "accountId": "accountId",
+            "accessToken": "accessToken",
+            "baseUri": "https://localhost:8080"
+        },
+        "operation":"docusign.addEnvelopeCustomeFields",
+        "data": {
+            "envelopeId": "",
+            "textFields": [
+                {
+                    "fieldId": "fieldId",
+                    "value":"value"
+                }
+            ],
+            "listFields": [
+                {
+                    "fieldId": "fieldId",
+                    "listItems":["item1","item2"]
+                }
+            ]
+        }
+    },
+    {
+        "description": "Valid add envelope fields with listFields ",
+        "authentication": {
+            "accountId": "accountId",
+            "accessToken": "accessToken",
+            "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.addEnvelopeCustomeFields",
+        "data": {
+            "envelopeId": null,
+            "listFields": [
+                {
+                    "fieldId": "fieldId",
+                    "listItems":["item1","item2"]
+                }
+            ]
+        }
+    }
+]

@@ -1,0 +1,54 @@
+[
+    {
+        "description": "Valid custom api request(GET request)",
+        "authentication": {
+            "accessToken": "accessToken"
+        },
+        "operation": "docusign.customApiRequest",
+        "data": {
+            "url":"Endpoint",
+            "method":"get",
+            "queryParameter":{"parameter":"value"}
+           
+        }
+    },
+    {
+        "description": "Valid custom api request(POST request)",
+        "authentication": {
+            "accessToken": "accessToken"
+        },
+        "operation": "docusign.customApiRequest",
+        "data": {
+            "url":"Endpoint",
+            "method":"post",
+            "payload":{"parameter":"value"}      
+        }
+    },
+    {
+        "description": "Valid custom api request(DELETE request)",
+        "authentication": {
+            "accessToken": "accessToken"
+        },
+        "operation": "docusign.customApiRequest",
+        "data": {
+            "url":"Endpoint",
+            "method":"delete",
+            "payload":{"parameter":"value"},
+            "queryParameter":{"parameter":"value"}      
+        }
+    }
+    ,
+    {
+        "description": "Valid custom api request(put request)",
+        "authentication": {
+            "accessToken": "accessToken"
+        },
+        "operation": "docusign.customApiRequest",
+        "data": {
+            "url":"Endpoint",
+            "method":"put",
+            "payload":{"parameter":"value"},
+            "queryParameter":{"parameter":"value"}      
+        }
+    }
+]

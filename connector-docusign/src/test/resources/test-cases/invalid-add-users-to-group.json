@@ -1,0 +1,58 @@
+[
+    {
+        "description": "InValid add users to group with groupId as null",
+        "authentication": {
+            "accountId": "accountId",
+            "accessToken": "accessToken",
+            "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.addUsersToGroup",
+        "data": {
+            "groupId":null,
+            "payloadType": "userIds",
+            "userIds":["userId1","userId2"]          
+        }
+    },
+    {
+        "description": "InValid add users to group with groupId as blank",
+        "authentication": {
+            "accountId": "accountId",
+            "accessToken": "accessToken",
+            "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.addUsersToGroup",
+        "data": {
+            "groupId":"",
+            "payloadType": "userIds",
+            "userIds":["userId1","userId2"]          
+        }
+    },
+    {
+        "description": "InValid add users to group with payloadType as null",
+        "authentication": {
+            "accountId": "accountId",
+            "accessToken": "accessToken",
+            "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.addUsersToGroup",
+        "data": {
+            "groupId":"groupId",
+            "payloadType": null,
+            "userIds":["userId1","userId2"]          
+        }
+    },
+    {
+        "description": "InValid add users to group with payloadType as blank",
+        "authentication": {
+            "accountId": "accountId",
+            "accessToken": "accessToken",
+            "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.addUsersToGroup",
+        "data": {
+            "groupId":"groupId",
+            "payloadType": "",
+            "userIds":["userId1","userId2"]          
+        }
+    }
+]

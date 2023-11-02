@@ -1,0 +1,74 @@
+[
+    {
+        "description": "Valid add recipient to envelope",
+        "authentication": {
+            "accountId": "accountId",
+            "accessToken": "accessToken",
+            "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.addRecipientsToEnvelope",
+        "data": {
+            "envelopeId": "123",
+            "resend_envelope": "true",
+            "payloadType": "requiredRecipients",
+            "signers": [
+                {
+                    "email": "abc@gmail.com",
+                    "name":"abc",
+                    "recipientId":"12"
+                }
+            ],
+            "certifiedDelivery": [
+                {
+                    "email": "abc@gmail.com",
+                    "name":"abc",
+                    "recipientId":"12"
+                }
+            ],
+            "inPersonSigners": [
+                {
+                    "name": "abc",
+                    "hostName":"hostName",
+                    "hostEmail":"hostEmail@gmail.com"
+                }
+            ],
+            "carbonCopies": [
+                {
+                    "email": "abc@gmail.com",
+                    "name":"abc",
+                    "recipientId":"12"
+                }
+            ]
+        }
+    },
+    {
+        "description": "Valid add recipient to envelope with payload type as recipientsJson",
+        "authentication": {
+            "accountId": "accountId",
+            "accessToken": "accessToken",
+            "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.addRecipientsToEnvelope",
+        "data": {
+            "envelopeId": "123",
+            "resend_envelope": "true",
+            "payloadType": "recipientsJson",
+            "jsonPayload":{"fields":["field1","field2"]}
+        }
+    },
+    {
+        "description": "Valid add recipient to envelope with payload type as recipientsJson",
+        "authentication": {
+            "accountId": "accountId",
+            "accessToken": "accessToken",
+            "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.addRecipientsToEnvelope",
+        "data": {
+            "envelopeId": "123",
+            "resend_envelope": "false",
+            "payloadType": "recipientsJson",
+            "jsonPayload":{"fields":["field1","field2"]}
+        }
+    }
+]

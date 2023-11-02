@@ -1,0 +1,17 @@
+[
+    {
+        "description": "inValid delete users from account",
+        "authentication": {
+            "accountId": "accountId",
+            "accessToken": "accessToken",
+            "baseUri": "https://localhost:8080"
+        },
+        "operation": "docusign.deleteUsers",
+        "data": {
+            "userIds":[],
+            "groups":"true",
+            "signingGroupsEmail":"true",
+            "permissionSet":"true"           
+        }
+    }
+    ]
