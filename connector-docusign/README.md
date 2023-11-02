@@ -502,6 +502,145 @@ for more information about payload [visit](https://developers.docusign.com/docs/
   }
 }
 ```
+# **Documentation**
+
+**Docusign** – DocuSign enables you to electronically send and sign documents, conveniently and securely from any computer or mobile device.
+</br>
+The Docusign Connector can be used for performing various kind of operations using templates from your BPMN process like creating and sending the envelope for signing.
+
+
+### **Prerequisites**
+
+To start working with the Docusign Connector. user need details like - accountId, accessToken,baseUri.
+
+*The following parameters are necessary for establishing connection* -
+
+-	**accountId**- Account Id of docusign.
+-	**accessToken**: accessToken for making an request. [refer](https://developers.docusign.com/platform/auth/implicit/implicit-get-token/) this for getting an accessToken
+-	**baseUri**: baseUri 
+
+### **Creating Docusign connector task**
+
+Currently, the Docusign Connector supports 20 types of operations: Create and Send the envelope, get envelope, Add user to accounts etc.
+To use a Docusign Connector in your process, either change the type of existing task by clicking on it and using the wrench-shaped **Change type** context menu icon or create a new Connector task by using the **Append Connector** context menu. Follow our [guide on using Connectors](https://docs.camunda.io/docs/components/connectors/use-connectors/) to learn more.
+
+### **Making Docusign Connector executable**
+
+To make the Docusign Connector executable, fill out the mandatory fields highlighted in red in the properties panel.
+
+### **Authentication for Docusign Connector**
+
+SFTP Connector authentication object takes – **accountId**, **accessToken**, **baseUri** 
+
+## **Create Or Send Envelope**
+
+![Create or Send Envelope!](./assets/images/createEnvelope.png)
+
+> **To Create or Send envelope, take the following steps:**
+1.	In the ***Operation** section*, set the field value *Operation* as **Create or Send envelope**.
+2.	Set the required parameters and credentials in the **Authentication** section.
+3.	In the **Input Mapping** section, set the payloadType,recipients,emailSubject,status and documents .
+4.  **payloadType** can be requiredFields or json. If you select requiredFields then one needs to fill only minimum field for creating envelope or else you can add whole payload as json </br>
+5.  **recipients** one can add recipients like signers, carbonCopies,certifiedDeliveries and inPersonsSigners. Just add signersType as one of the value mentioned earlier</br>
+6.  **emailSubject** Enter the email subject</br>
+7.  **status** status can be sent or created. **sent** will send the envelope and **created** will save it as a draft</br>
+8.  **documents** Enter it as a list of map contains the field **documentPath** which is path of documents which is need to upload and **documentId** as id of the document.
+
+8. Set **recipients**, using FEEL expression as list of context.
+   e.g.
+    ```json
+   [
+    {
+      "name":"alex",
+      "email":"alex@gmail.com",
+      "recipientId": "12",
+      "recipientType": "signers"
+    },
+   {
+      "name":"bob",
+      "email":"bob@gmail.com",
+      "recipientId": "13",
+      "recipientType": "carbonCopies"
+    },
+   {
+      "name":"alex",
+      "email":"alex@gmail.com",
+      "recipientId": "12",
+      "recipientType": "certifiedDeliveries"
+    },
+    {
+      "name":"alex",
+      "email":"alex@gmail.com",
+      "recipientId": "12",
+      "recipientType": "inPersonSigners"
+    }
+   ]
+    ```
+   For recipientType key different values can be used like carbonCopies,certifiedDeliveries,inPersonSigners and signers </br>
+
+
+> **Send or Create Envelope operation response**
+
+You can use an output mapping to map the response:
+- Use **Result Variable** to store the response in a process variable. 
+
+## **Upload Documents To Existing Envelope**
+
+![Upload Documents To Existing Envelope!](./assets/images/UploadDocumentsToExistingEnvelope.png "Upload Documents To Existing Envelope")
+
+> **To Upload Documents To Existing Envelope, take the following steps:**
+1.	In the ***Operation** section*, set the field value *Operation* as **Upload Documents To Existing Envelope**.
+2.	Set the required parameters and credentials in the **Authentication** section.
+3.	In the **Input Mapping** section, set the field envelopeId,documents.
+4.  **envelopeId** enter envelopeId in which you need to upload the documents
+5. Set **documnets**, using FEEL expression as list of context.
+   e.g.
+    ```json
+    {
+      "documentId":"12",
+      "documentPath":"C:/Users/userDocument.pdf"
+    }
+    ```
+   
+> **Upload Documents To Existing Envelope operation response**
+
+You can use an output mapping to map the response:
+- Use **Result Variable** to store the response in a process variable name, size, parent, path, etc.
+
+## **Custom Api Request**
+
+![Custom Api Request!](./assets/images/CustomApiRequest.png "CustomApiRequest")
+
+> **To Move File, take the following steps:**
+1.	In the ***Operation** section*, set the field value *Operation* as **Custom Api Request**.
+2.	Set the required parameters and credentials in the **Authentication** section.
+3.	In the **Input Mapping** section, set the field **url**, **method**, **queryParameter** and **payload**".
+4.	Set **url**, which is basically full rest endpoint like 
+      e.g. ```https://demo.docusign.net/restapi/v2.1/accounts/123-345-67234/users```
+
+
+> **Custom Api Request operation response**
+
+You can use an output mapping to map the response:
+-	Use **Result Variable** to store the response in a process variable.
+
+## **Custom Api Request**
+
+![Custom Api Request!](./assets/images/MoveFolder.png "Move Folder")
+
+> **To Move Folder, take the following steps:**
+1.	In the ***Operation** section*, set the field value *Operation* as **Move Folder**.
+2.	Set the required parameters and credentials in the **Authentication** section.
+3.	In the **Input Mapping** section, set the field **sourceDirectory**, **targetDirectory**, **Action if Folder Exists**".
+4.	Set **sourceDirectory**, which is basically a path of folder which will be moved.
+      e.g. ```C:/Users/user/Documents/sourceFolder/demoFolder```
+5. Set **targetDirectory**, which is basically a path of folder where folder is going to moved. If it does not exists then connector will create a targetDirectory.
+6. Set "Action If Folder Exists" as "rename", "replace" or "skip". This operations are performed when the folder is already exists in a target folder.
+   </br> If **rename** is selected  then it will rename a folder.
+   </br>  If **replace** is selected then it will replace a folder.
+   </br> if **skip** is selected then it will skip this operation/folder.
+
+
 
 ## Test locally
 
@@ -531,7 +670,7 @@ the [docusign-connector.json](./element-templates/docusign-connector.json) file.
 
 ### **How can I authenticate Docusign Connector?**
 
-The Docusign Connector needs the credentials for connection -
+The Docusign Connector needs the credentials for connection except Custom Api Requests -
 -	**accountId**- Account Id of your account
 -	**accessToken**: [refer](https://developers.docusign.com/platform/auth/implicit/implicit-get-token/) this to generate accessToken
 -	**baseUri** : A base path for the authentication service. This path differs depending on whether your app is in the developer environment or in production.
@@ -539,3 +678,7 @@ The Docusign Connector needs the credentials for connection -
      https://account-d.docusign.com/oauth/auth
      For the production environment, the base URI is
      https://account.docusign.com/oauth/auth
+
+### **What is url in Custom Api Requests?**
+    It is full rest endpoint to which you want to send request to. Enter all the required details like accountId,envelopeId as neccessary.
+

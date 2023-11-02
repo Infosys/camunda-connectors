@@ -12,7 +12,8 @@
     "value": "bpmn:ServiceTask"
   },
   "icon": {
-    "contents": "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='18' height='18' viewBox='0 0 18 18'%3E%3Cimage xlink:href='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAMAAAD04JH5AAAAeFBMVEXV/wAAAADU/wDd/0TZ/yPh/2XY/wC11wC72gAOEgDD6ADb/wCqxwAABQDH6QAtNgAkLAAdIwB/mACDnQDC5ACw0ADg/1Pm/34fJgBecQBLWwDN8gBnfABjdgB4kAAMDwAYHgClvgBFUgBUZQA1QAA9SgBZawASGABsuCTDAAACvklEQVR4nO3bfVviMAwA8E69AJZD8eVuOJGJd/r9v6EboHZt1ibpcDw+yZ/Drb81abtOMH/OR42/5uJs1PhlLsyYoQAFKEABClBAFgCcGAEA8/LqM8pLISELUDihAAUoQAEKUIACFKAABShAAQr48QArASAnCQFQ3YYXSwEAbgi7dhIAqm1xGzYQB4B5LFZVUkABQPXQtBD0QQrw2BxdJ7NAALT338aTd7E4wL7sDr+mBGkAmH+HNm66F4sBAFaH4w82noUkYN//++jWQQTQ5v8j1vFKTAHc9r0+iAHWzidxQQIAsHVb6Qj6AXbVOSlaBwlA9b/ohlOJfQCAV++kl0gXxAEwKfz4qoMegJt/ND+sHrDPvwPBRx/0AYL2l1NxDzSCuX+5zyzgAOv3f1FPM2qgueB9nwAFhO0vL6NzUXoiQgT7OkAASP7f7jInojYLM/+qu9GIAYL2y2j/0wBYHbSCEGDX/t+9pdqnLcd4JQaAw/rjxPJuiNXQ9NSB9QHh/SfyTwc0fYDMBx4AGf+EZzLyM+Fz2AedabIS5J8DwLLgrpPF1v80Mf7ZAEwQi3pBe05n7AvsfENvv0zXPxuAjcbe+yflnwugCwjjXwSg1kFNqz8BAJsPsPtn7BO5m1NkPgjun5x/CSCdhZqefxEgJaiZ+3TB+4FoHTDqXwyICUjrTzagfz5g5l8M6KsDzvjPA+CCmjP+MwHYjoWf/xxAWAeC/GcB/Cwshe/pMt4T2nsnC6z5fyCAu2MhP38MCviqA2H+swHGTnZZKBfi9nO/SbWrA+76MySgXRdKaf0NAmj6QJ7/QQBG/jWygQCZoYDTBMARgwKoJkcMAgB4+3BebPxZCwNMCNsvaVwvCD2gAAUoQAHhf6q+GzDbzI4UmysCwFTTI4bf2Ekux98aClCAAhSgAAWcBGDsH7+P/fP/d117QR+QGK4yAAAAAElFTkSuQmCC' x='0' y='0' height='100%25' width='100%25'/%3E%3C/svg%3E" },
+    "contents": "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='18' height='18' viewBox='0 0 18 18'%3E%3Cimage xlink:href='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAMAAAD04JH5AAAAeFBMVEXV/wAAAADU/wDd/0TZ/yPh/2XY/wC11wC72gAOEgDD6ADb/wCqxwAABQDH6QAtNgAkLAAdIwB/mACDnQDC5ACw0ADg/1Pm/34fJgBecQBLWwDN8gBnfABjdgB4kAAMDwAYHgClvgBFUgBUZQA1QAA9SgBZawASGABsuCTDAAACvklEQVR4nO3bfVviMAwA8E69AJZD8eVuOJGJd/r9v6EboHZt1ibpcDw+yZ/Drb81abtOMH/OR42/5uJs1PhlLsyYoQAFKEABClBAFgCcGAEA8/LqM8pLISELUDihAAUoQAEKUIACFKAABShAAQr48QArASAnCQFQ3YYXSwEAbgi7dhIAqm1xGzYQB4B5LFZVUkABQPXQtBD0QQrw2BxdJ7NAALT338aTd7E4wL7sDr+mBGkAmH+HNm66F4sBAFaH4w82noUkYN//++jWQQTQ5v8j1vFKTAHc9r0+iAHWzidxQQIAsHVb6Qj6AXbVOSlaBwlA9b/ohlOJfQCAV++kl0gXxAEwKfz4qoMegJt/ND+sHrDPvwPBRx/0AYL2l1NxDzSCuX+5zyzgAOv3f1FPM2qgueB9nwAFhO0vL6NzUXoiQgT7OkAASP7f7jInojYLM/+qu9GIAYL2y2j/0wBYHbSCEGDX/t+9pdqnLcd4JQaAw/rjxPJuiNXQ9NSB9QHh/SfyTwc0fYDMBx4AGf+EZzLyM+Fz2AedabIS5J8DwLLgrpPF1v80Mf7ZAEwQi3pBe05n7AvsfENvv0zXPxuAjcbe+yflnwugCwjjXwSg1kFNqz8BAJsPsPtn7BO5m1NkPgjun5x/CSCdhZqefxEgJaiZ+3TB+4FoHTDqXwyICUjrTzagfz5g5l8M6KsDzvjPA+CCmjP+MwHYjoWf/xxAWAeC/GcB/Cwshe/pMt4T2nsnC6z5fyCAu2MhP38MCviqA2H+swHGTnZZKBfi9nO/SbWrA+76MySgXRdKaf0NAmj6QJ7/QQBG/jWygQCZoYDTBMARgwKoJkcMAgB4+3BebPxZCwNMCNsvaVwvCD2gAAUoQAHhf6q+GzDbzI4UmysCwFTTI4bf2Ekux98aClCAAhSgAAWcBGDsH7+P/fP/d117QR+QGK4yAAAAAElFTkSuQmCC' x='0' y='0' height='100%25' width='100%25'/%3E%3C/svg%3E"
+  },
   "category": {
     "id": "connectors",
     "name": "Connectors"
@@ -445,7 +446,7 @@
     },
     {
       "label": "Documents Paths",
-      "description": "Enter path of documents in the format [path1,path2]",
+      "description": "Enter path of documents in the format [{\"documentId\":\"12\",\"documentPath\":\"C:/Users/user.png\"}]",
       "type": "String",
       "feel": "optional",
       "group": "inputs",
@@ -904,11 +905,11 @@
     },
     {
       "label": "Text Custom Field's",
-      "description": "An array of text custom fields. For e.g. []",
+      "description": "An array of text custom fields. For e.g. [{\"fieldId\": \"12\",\"name\": \"textCustomField\",\"required\": \"true\",\"show\": \"true\",\"value\": \"customFieldValue\"}]",
       "type": "String",
       "feel": "optional",
       "group": "inputs",
-      "value": "true",
+      "value": "",
       "optional": true,
       "binding": {
         "type": "zeebe:input",
@@ -921,11 +922,11 @@
     },
     {
       "label": "List Custom Field's",
-      "description": "An array of list custom fields. For e.g. []",
+      "description": "An array of list custom fields.",
       "type": "String",
       "feel": "optional",
       "group": "inputs",
-      "value": "true",
+      "value": "",
       "optional": true,
       "binding": {
         "type": "zeebe:input",
@@ -1917,6 +1918,7 @@
       }
     },
     {
+      "id": "method",
       "label": "Method",
       "description": "",
       "type": "Dropdown",
@@ -1954,7 +1956,7 @@
       "label": "Query Parameter",
       "description": "Map of query parameters to add to the request URL",
       "type": "String",
-      "feel":"required",
+      "feel": "required",
       "group": "inputs",
       "optional": true,
       "value": "",
@@ -1963,15 +1965,19 @@
         "name": "data.queryParameter"
       },
       "condition": {
-        "property": "operation",
-        "equals": "docusign.customApiRequest"
+        "allMatch": [
+          {
+            "property": "operation",
+            "equals": "docusign.customApiRequest"
+          }
+        ]
       }
     },
     {
       "label": "Payload",
       "description": "Payload to send with the request",
       "type": "String",
-      "feel":"required",
+      "feel": "required",
       "group": "inputs",
       "optional": true,
       "value": "",
@@ -1980,8 +1986,19 @@
         "name": "data.payload"
       },
       "condition": {
-        "property": "operation",
-        "equals": "docusign.customApiRequest"
+        "allMatch": [
+          {
+            "property": "operation",
+            "equals": "docusign.customApiRequest"
+          },
+          {
+            "property": "method",
+            "oneOf": [
+              "post",
+              "put"
+            ]
+          }
+        ]
       }
     },
     {
