@@ -13,15 +13,14 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
-import javax.validation.constraints.NotBlank;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AlterTableService implements PostgreSQLRequestData {
   private static final Logger LOGGER = LoggerFactory.getLogger(AlterTableService.class);
-  @NotBlank private String databaseName;
-  @NotBlank private String tableName;
-  @NotBlank private String method;
+  private String databaseName;
+  private String tableName;
+  private String method;
   private List<Map<String, String>> constraintDetails;
   private String newTableName;
   private Map<String, String> newColumnDetail;

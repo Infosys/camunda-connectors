@@ -12,14 +12,13 @@ import com.infosys.camundaconnectors.db.postgresql.model.response.QueryResponse;
 import com.infosys.camundaconnectors.db.postgresql.utility.ConstructWhereClause;
 import java.sql.*;
 import java.util.*;
-import javax.validation.constraints.NotBlank;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ReadDataService implements PostgreSQLRequestData {
   private static final Logger LOGGER = LoggerFactory.getLogger(ReadDataService.class);
-  @NotBlank private String databaseName;
-  @NotBlank private String tableName;
+  private String databaseName;
+  private String tableName;
   private List<String> columnNames;
   private Map<String, Object> filters;
   private List<Map<String, String>> orderBy;

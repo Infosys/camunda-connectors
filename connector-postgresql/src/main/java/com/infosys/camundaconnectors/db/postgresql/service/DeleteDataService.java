@@ -14,16 +14,14 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DeleteDataService implements PostgreSQLRequestData {
   private static final Logger LOGGER = LoggerFactory.getLogger(DeleteDataService.class);
-  @NotBlank private String databaseName;
-  @NotBlank private String tableName;
-  @NotEmpty(message = "filters can't be null or empty")
+  private String databaseName;
+  private String tableName;
+
   private Map<String, Object> filters;
 
   @Override

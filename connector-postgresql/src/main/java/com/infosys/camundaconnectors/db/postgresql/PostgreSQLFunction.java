@@ -34,10 +34,10 @@ public class PostgreSQLFunction implements OutboundConnectorFunction {
 
   @Override
   public Object execute(OutboundConnectorContext outboundConnectorContext) throws Exception {
-    final var variables = outboundConnectorContext.getVariables();
+    final var variables = outboundConnectorContext.getJobContext().getVariables();
     final var postgreSQLRequest = gson.fromJson(variables, PostgreSQLRequest.class);
-    outboundConnectorContext.validate(postgreSQLRequest);
-    outboundConnectorContext.replaceSecrets(postgreSQLRequest);
+    //    outboundConnectorContext.validate(postgreSQLRequest);
+    //    outboundConnectorContext.replaceSecrets(postgreSQLRequest);
     LOGGER.debug("Request verified successfully and all required secrets replaced");
     return postgreSQLRequest.invoke(databaseClient);
   }

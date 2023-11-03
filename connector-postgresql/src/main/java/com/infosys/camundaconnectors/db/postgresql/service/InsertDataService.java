@@ -17,16 +17,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class InsertDataService implements PostgreSQLRequestData {
   private static final Logger LOGGER = LoggerFactory.getLogger(InsertDataService.class);
-  @NotBlank private String databaseName;
-  @NotBlank private String tableName;
-  @NotEmpty private List<Map<String, Object>> dataToInsert;
+  private String databaseName;
+  private String tableName;
+  private List<Map<String, Object>> dataToInsert;
 
   @Override
   public PostgreSQLResponse invoke(Connection connection) throws SQLException {

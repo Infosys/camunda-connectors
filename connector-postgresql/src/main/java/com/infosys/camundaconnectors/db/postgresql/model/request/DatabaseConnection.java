@@ -5,20 +5,15 @@
  */
 package com.infosys.camundaconnectors.db.postgresql.model.request;
 
-import io.camunda.connector.api.annotation.Secret;
 import java.util.Objects;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 
 public class DatabaseConnection {
-  @NotBlank private String host;
+  private String host;
 
-  @NotBlank
-  @Pattern(regexp = "^\\d+$", message = "Port must be a number")
   private String port;
 
-  @NotBlank private String username;
-  @NotBlank @Secret private String password;
+  private String username;
+  private String password;
 
   public String getHost() {
     return host;

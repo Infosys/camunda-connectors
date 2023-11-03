@@ -11,13 +11,12 @@ import com.infosys.camundaconnectors.db.postgresql.model.response.PostgreSQLResp
 import com.infosys.camundaconnectors.db.postgresql.model.response.QueryResponse;
 import java.sql.*;
 import java.util.Objects;
-import javax.validation.constraints.NotBlank;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CreateDatabaseService implements PostgreSQLRequestData {
   private static final Logger LOGGER = LoggerFactory.getLogger(CreateDatabaseService.class);
-  @NotBlank private String databaseName;
+  private String databaseName;
 
   @Override
   public PostgreSQLResponse invoke(Connection connection) throws SQLException {
