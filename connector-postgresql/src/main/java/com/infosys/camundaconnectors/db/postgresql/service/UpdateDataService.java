@@ -17,18 +17,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class UpdateDataService implements PostgreSQLRequestData {
   private static final Logger LOGGER = LoggerFactory.getLogger(UpdateDataService.class);
-  @NotBlank private String databaseName;
-  @NotBlank private String tableName;
+  private String databaseName;
+  private String tableName;
   private Map<String, Object> filters;
 
-  @NotEmpty(message = "updateMap can't be null or empty")
   private Map<String, Object> updateMap;
 
   @Override

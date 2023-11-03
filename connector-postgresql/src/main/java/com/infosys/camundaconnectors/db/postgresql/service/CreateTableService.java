@@ -14,17 +14,15 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CreateTableService implements PostgreSQLRequestData {
   private static final Logger LOGGER = LoggerFactory.getLogger(CreateTableService.class);
   private static final String CONSTRAINTS = "constraints";
-  @NotBlank private String databaseName;
-  @NotBlank private String tableName;
-  @NotEmpty(message = "columnsList can't be null or empty")
+  private String databaseName;
+  private String tableName;
+
   private List<Map<String, Object>> columnsList;
 
   @Override
@@ -58,8 +56,7 @@ public class CreateTableService implements PostgreSQLRequestData {
     return queryResponse;
   }
 
-  private void createTable(Connection conn, String createTableQuery)
-      throws SQLException {
+  private void createTable(Connection conn, String createTableQuery) throws SQLException {
     try (Statement st = conn.createStatement()) {
       st.execute(createTableQuery);
     }

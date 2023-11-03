@@ -7,18 +7,14 @@ package com.infosys.camundaconnectors.db.postgresql.model.request;
 
 import com.infosys.camundaconnectors.db.postgresql.model.response.PostgreSQLResponse;
 import com.infosys.camundaconnectors.db.postgresql.utility.DatabaseClient;
-import io.camunda.connector.api.annotation.Secret;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Objects;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 public class PostgreSQLRequest<T extends PostgreSQLRequestData> {
-  @NotNull @Valid @Secret private DatabaseConnection databaseConnection;
-  @NotBlank private String operation;
-  @Valid @NotNull private T data;
+  private DatabaseConnection databaseConnection;
+  private String operation;
+  private T data;
 
   public PostgreSQLResponse invoke(DatabaseClient databaseClient) throws SQLException {
     Connection connection;

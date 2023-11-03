@@ -302,20 +302,20 @@ the [postgresql-database-connector.json](element-templates/postgresql-database-c
 
 # **Documentation**
 
-The **PostgreSQL Connector** allows you to perform CRUD operation on PostgreSQL database.  
+The **PostgreSQL Connector** allows you to perform CRUD operation on PostgreSQL database.
 You can choose the required operation from the dropdown using templates from your BPMN process.
 
-### **Prerequisites**  
+### **Prerequisites**
 
-To start working with the PostgreSQL Connector, a relevant database user password must be configured and stored as a secret in your cluster. The user must have permission to perform database operation on given database instance. 
+To start working with the PostgreSQL Connector, a relevant database user password must be configured and stored as a secret in your cluster. The user must have permission to perform database operation on given database instance.
 
-### **Create a PostgreSQL Connector task**  
+### **Create a PostgreSQL Connector task**
 
-Currently, the PostgreSQL Connector supports seven types of operations: *create database, create table, insert data into the table, delete data from the table, update table data, read table data* and *alter table*.  
+Currently, the PostgreSQL Connector supports seven types of operations: *create database, create table, insert data into the table, delete data from the table, update table data, read table data* and *alter table*.
 
-To use a PostgreSQL Connector in your process, either change the type of existing task by clicking on it and using the wrench-shaped **Change type** context menu icon or create a new Connector task by using the **Append Connector** context menu. Follow our [guide on using Connectors](https://docs.camunda.io/docs/components/connectors/use-connectors/) to learn more.  
+To use a PostgreSQL Connector in your process, either change the type of existing task by clicking on it and using the wrench-shaped **Change type** context menu icon or create a new Connector task by using the **Append Connector** context menu. Follow our [guide on using Connectors](https://docs.camunda.io/docs/components/connectors/use-connectors/) to learn more.
 
-### **Make your PostgreSQL Connector executable**  
+### **Make your PostgreSQL Connector executable**
 
 To make the PostgreSQL Connector executable, fill out the mandatory fields highlighted in red in the properties panel.
 
@@ -324,15 +324,15 @@ To make the PostgreSQL Connector executable, fill out the mandatory fields highl
 PostgreSQL Connector database connection object takes – host, port, username and password.
 e.g. localhost, 5432, username, password as (secrets Token e.g. secrets.POSTGRES_TOKEN )
 
-## Create a new database  
+## Create a new database
 
 ![Create Database!](./assets/images/CreateDatabase.png "Create Database")
 
- 
+
 > **To create a database, take the following steps:**
 1.	In the *Operation* section, set the field value *Operation* as **Create Database**.
 2.	Set the required parameters and credentials in the **Database Connection** section. See the relevant appendix entry to find out more.
-3.	In the **Input Mapping** section, set the field **databaseName** as the desired name of a database you wish to create. For example, *NewDatabaseName*. 
+3.	In the **Input Mapping** section, set the field **databaseName** as the desired name of a database you wish to create. For example, *NewDatabaseName*.
 Alternatively, you could use a FEEL expression.
 
 <br>
@@ -356,7 +356,7 @@ You can use an output mapping to map the response:
 > **Create Table operation response**
 
 You can use an output mapping to map the response:
--	Use **Result Variable** to store the response in a process variable. For example, *createTableStatus*.  
+-	Use **Result Variable** to store the response in a process variable. For example, *createTableStatus*.
 ## Insert data into the table
 
 ![Insert Data!](./assets/images/InsertData.png "Insert Data")
@@ -367,7 +367,7 @@ You can use an output mapping to map the response:
 3.	In the **Input Mapping** section, set the field **databaseName**, **tableName**.
 4.	Set **dataToInsert**, using FEEL expression as List of columns details, which is a `List of context having keys as name, datatype and constraint`.
 5.	We are following Insert syntax - INSERT INTO tableName ( columnNames ) VALUES (*)
-where *columnNames* is list of comma-separated column names extracted from keyset of first item in the dataToInsert List. 
+where *columnNames* is list of comma-separated column names extracted from keyset of first item in the dataToInsert List.
 
 <br>
 
@@ -386,7 +386,7 @@ You can use an output mapping to map the response:
 3.	In the **Input Mapping** section, set the field **databaseName**, **tableName**.
 4.	Set **updateMap**, using FEEL expression as context with key-value pairs for columnName & value.
     > e.g. `{"empAddress": "Krypton", "empName": "Kal-El"}`
-    
+
     These fields will update for all the rows which match the filter condition.
 5.	Set **filters**, using FEEL expression as context with keys as - filter, logicalOperator & filterList.
     e.g.
@@ -410,7 +410,7 @@ You can use an output mapping to map the response:
 
 
 ## Delete table Data
- 
+
 ![Delete Data!](./assets/images/DeleteData.png "Delete Data")
 
 > **To delete table data, take the following steps:**
@@ -439,7 +439,7 @@ You can use an output mapping to map the response:
 
 
 ## Read table Data
- 
+
 ![Read Data!](./assets/images/ReadData.png "Read Data")
 
 > To read table data, take the following steps:
@@ -447,7 +447,7 @@ You can use an output mapping to map the response:
 2.	Set the required parameters and credentials in the **Database Connection** section. See the relevant appendix entry to find out more.
 3.	In the **Input Mapping** section, set the field **databaseName**, **tableName**.
 4.	Set **columnNames**, using FEEL expression as List of columns to get in the output variable. e.g. `[“col1”, “col2”]`
-5.	Set **filters**, using FEEL expression as context with keys as - filter, logicalOperator & filterList. 
+5.	Set **filters**, using FEEL expression as context with keys as - filter, logicalOperator & filterList.
     e.g.
     ```json
     {
@@ -461,7 +461,7 @@ You can use an output mapping to map the response:
     These will used to construct the where clause for the SQL query. All the matched rows will be returned in the output.
 
 6.	Set **orderBy**, using FEEL expression as list of context with keys – sortOn and order.
-    e.g. 
+    e.g.
     ```json
     [
         {
@@ -482,7 +482,7 @@ You can use an output mapping to map the response:
 - Use **Result Variable** to store the response in a process variable. For example, readDataOutput. It’s a List of Maps with keys as column name and value as respective row data.
 
 ## Alter table
- 
+
 ![Alter Table!](./assets/images/AlterTable.png "Alter Table")
 
 > **To alter table, take the following steps:**
@@ -493,7 +493,7 @@ You can use an output mapping to map the response:
     1.	**Rename Table**
 
       ![Rename Table!](./assets/images/RenameTable.png "Rename table to newTableName")
-    
+
     2.	**Rename Column**
 
       ![Rename Column!](./assets/images/RenameColumn.png "Rename column ( oldColName ) to new name ( newColName )")
@@ -506,7 +506,7 @@ You can use an output mapping to map the response:
     >1. **Name** – Type of constraint e.g. *UNIQUE*, *PRIMARY KEY*, *FOREIGNKEY* or *CHECK*
     >2. **Symbol** – The constraint name e.g. pk_id, fk_cin
     >3. **Definition** – Column name on which constraint needs to be applied
-    
+
     4.	**Drop**
 
       ![Drop Constriants!](./assets/images/DropConstraints.png "Drop Constraints")
@@ -545,19 +545,19 @@ You can use an output mapping to map the response:
 
 Database connection group have 4 params – host, port, username, and password. These values will be used to connect to the database server.
 
-**How can I authenticate my Connector?**  
+**How can I authenticate my Connector?**
 
 The PostgreSQL Connector needs the database credentials for connection. Hostname (host) – of the server where database is hosted, Port (port) – on which database server is running, Username (username) – User with proper privilege for operation and Password (password) – User password, which need to be saved as a Token in Secret vault and input can be provided as: secrets.TOKEN_NAME
 
 **What is filters input parameter?**
 
-Filters input is Map with keys – filter, logicalOperator and filterList. 
+Filters input is Map with keys – filter, logicalOperator and filterList.
 
-  1. filter key’s value is a Map with keys – *colName*, *operator* and *value*. 
+  1. filter key’s value is a Map with keys – *colName*, *operator* and *value*.
 
       **colName** – is column name to apply condition on.
 
-      >Supported **operator** are :   
+      >Supported **operator** are :
       `[ =, ==, equals, <>, not equals, <, less than, >, greater than, <=, less than or equals, >=, greater than or equals, like, in, is, not in, starts with, ends with ]`
 
       **value** - is an Object and can be anything.
