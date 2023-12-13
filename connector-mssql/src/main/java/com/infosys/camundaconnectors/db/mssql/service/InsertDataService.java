@@ -5,9 +5,11 @@
  */
 package com.infosys.camundaconnectors.db.mssql.service;
 
+import com.infosys.camundaconnectors.db.mssql.model.request.DatabaseConnection;
 import com.infosys.camundaconnectors.db.mssql.model.request.MSSQLRequestData;
 import com.infosys.camundaconnectors.db.mssql.model.response.MSSQLResponse;
 import com.infosys.camundaconnectors.db.mssql.model.response.QueryResponse;
+import com.infosys.camundaconnectors.db.mssql.utility.DatabaseClient;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,24 +19,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-
+import jakarta.validation.constraints.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class InsertDataService implements MSSQLRequestData {
   private static final Logger LOGGER = LoggerFactory.getLogger(InsertDataService.class);
-  @NotBlank
-  private String databaseName;
-  @NotBlank
-  private String tableName;
-  @NotEmpty
-  private List<Map<String, Object>> dataToInsert;
+  @NotBlank private String databaseName;
+  @NotBlank private String tableName;
+  @NotEmpty private List<Map<String, Object>> dataToInsert;
 
   @Override
-  public MSSQLResponse invoke(Connection connection) throws SQLException {
-    QueryResponse<String> queryResponse;
+  public MSSQLResponse invoke(DatabaseClient databaseClient,DatabaseConnection databaseConnection,String DatabaseName) throws SQLException {
+	  final Connection connection = databaseClient.getConnectionObject(databaseConnection, databaseName);
+	  QueryResponse<String> queryResponse;
     try {
       if (dataToInsert.get(0) == null || dataToInsert.get(0).isEmpty()) {
         String errMsg = "Invalid dataToInsert, can not be empty or null";
@@ -43,10 +41,10 @@ public class InsertDataService implements MSSQLRequestData {
       }
       List<String> columnNamesList = new ArrayList<>(dataToInsert.get(0).keySet());
       String insertParameterizedQuery =
-              insertDataParameterizedQuery(tableName, dataToInsert, columnNamesList);
+          insertDataParameterizedQuery(tableName, dataToInsert, columnNamesList);
       LOGGER.info("Insert Parameterized Query: {}", insertParameterizedQuery);
       int rowsInserted =
-              executeQuery(connection, insertParameterizedQuery, dataToInsert, columnNamesList);
+          executeQuery(connection, insertParameterizedQuery, dataToInsert, columnNamesList);
       queryResponse = new QueryResponse<>(rowsInserted + " row(s) inserted successfully");
       LOGGER.info("InsertDataQueryStatus: {}", queryResponse.getResponse());
     } catch (SQLException e) {
@@ -66,14 +64,14 @@ public class InsertDataService implements MSSQLRequestData {
   }
 
   private String insertDataParameterizedQuery(
-          String tableName, List<Map<String, Object>> dataToInsert, List<String> columnNamesList) {
+      String tableName, List<Map<String, Object>> dataToInsert, List<String> columnNamesList) {
     try {
       // Get Columns Name from First Element
       String columnNames =
-              columnNamesList.stream().map(String::valueOf).collect(Collectors.joining(", "));
+          columnNamesList.stream().map(String::valueOf).collect(Collectors.joining(", "));
       // Construct Parameterized Query
       StringBuilder insertQuery =
-              new StringBuilder("INSERT INTO " + tableName + " (" + columnNames + ") VALUES ");
+          new StringBuilder("INSERT INTO " + tableName + " (" + columnNames + ") VALUES ");
       for (int j = 0; j < dataToInsert.size(); ++j) {
         insertQuery.append("(");
         for (int i = 0; i < columnNamesList.size(); ++i) {
@@ -91,11 +89,11 @@ public class InsertDataService implements MSSQLRequestData {
   }
 
   private int executeQuery(
-          Connection connection,
-          String insertQuery,
-          List<Map<String, Object>> dataToInsert,
-          List<String> columnNamesList)
-          throws SQLException {
+      Connection connection,
+      String insertQuery,
+      List<Map<String, Object>> dataToInsert,
+      List<String> columnNamesList)
+      throws SQLException {
     // Create Prepared Statement and Populate the row data
     int rowsInserted = 0;
     try (PreparedStatement prepareStatement = connection.prepareStatement(insertQuery)) {
@@ -143,8 +141,8 @@ public class InsertDataService implements MSSQLRequestData {
     if (o == null || getClass() != o.getClass()) return false;
     InsertDataService that = (InsertDataService) o;
     return Objects.equals(databaseName, that.databaseName)
-            && Objects.equals(tableName, that.tableName)
-            && Objects.equals(dataToInsert, that.dataToInsert);
+        && Objects.equals(tableName, that.tableName)
+        && Objects.equals(dataToInsert, that.dataToInsert);
   }
 
   @Override
@@ -155,14 +153,14 @@ public class InsertDataService implements MSSQLRequestData {
   @Override
   public String toString() {
     return "InsertDataService{"
-            + "databaseName='"
-            + databaseName
-            + '\''
-            + ", tableName='"
-            + tableName
-            + '\''
-            + ", dataToInsert="
-            + dataToInsert
-            + '}';
+        + "databaseName='"
+        + databaseName
+        + '\''
+        + ", tableName='"
+        + tableName
+        + '\''
+        + ", dataToInsert="
+        + dataToInsert
+        + '}';
   }
 }

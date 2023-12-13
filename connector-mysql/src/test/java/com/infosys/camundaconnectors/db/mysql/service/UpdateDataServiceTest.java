@@ -10,8 +10,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
+import com.infosys.camundaconnectors.db.mysql.model.request.DatabaseConnection;
 import com.infosys.camundaconnectors.db.mysql.model.response.MySQLResponse;
 import com.infosys.camundaconnectors.db.mysql.model.response.QueryResponse;
+import com.infosys.camundaconnectors.db.mysql.utility.DatabaseClient;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -32,8 +35,9 @@ import org.mockito.quality.Strictness;
 class UpdateDataServiceTest {
   private UpdateDataService service;
   @Mock private Connection connectionMock;
+  @Mock private DatabaseClient databaseClient;
+  @Mock private DatabaseConnection connection; 
   @Mock private Statement statementMock;
-
   @BeforeEach
   void init() throws SQLException {
     service = new UpdateDataService();
@@ -44,6 +48,7 @@ class UpdateDataServiceTest {
         Map.of("filter", Map.of("colName", "personId", "operator", ">=", "value", 5)));
     service.setOrderBy(List.of());
     service.setLimit(2);
+    when(databaseClient.getConnectionObject(any(DatabaseConnection.class),any(String.class))).thenReturn(connectionMock);
     when(connectionMock.createStatement()).thenReturn(statementMock);
   }
 
@@ -58,7 +63,7 @@ class UpdateDataServiceTest {
     service.setLimit(10);
     when(statementMock.executeUpdate(anyString())).thenReturn(0);
     // When
-    MySQLResponse result = service.invoke(connectionMock);
+    MySQLResponse result = service.invoke(databaseClient,connection,"databaseName");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(any(String.class));
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -72,7 +77,7 @@ class UpdateDataServiceTest {
     service.setOrderBy(List.of(Map.of("sortOn", "personId", "order", "desc")));
     when(statementMock.executeUpdate(anyString())).thenReturn(1);
     // When
-    MySQLResponse result = service.invoke(connectionMock);
+    MySQLResponse result = service.invoke(databaseClient,connection,"databaseName");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(any(String.class));
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -86,7 +91,7 @@ class UpdateDataServiceTest {
     when(statementMock.executeUpdate(anyString()))
         .thenThrow(new SQLException("Table 'test7database.xia' doesn't exist"));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("Table 'test7database.xia' doesn't exist");

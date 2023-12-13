@@ -42,7 +42,7 @@ class ListFilesTest {
   @BeforeEach
   public void init() {
     service = new ListFilesService();
-    service.setFolderPath("C:/User/curation.bot/Documents");
+    service.setFilePath("C:/User/curation.bot/Documents");
     service.setModifiedAfter("31-3-2023 12:50:00");
     service.setModifiedBefore("31-3-2023 15:50:00");
     service.setOutputType("filePaths");

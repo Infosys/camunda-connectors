@@ -12,10 +12,8 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 import com.infosys.camundaconnectors.db.mssql.model.request.DatabaseConnection;
-
 import java.sql.Connection;
 import java.sql.SQLException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -56,64 +54,64 @@ class DatabaseClientTest {
   @Test
   void shouldThrowErrorConnectionAsPortIsInvalid() {
     when(databaseClient.getConnectionObject(any(DatabaseConnection.class), any(String.class)))
-            .thenThrow(new RuntimeException("Invalid number format for port number"));
+        .thenThrow(new RuntimeException("Invalid number format for port number"));
     // given
     connection.setPort("iota");
     // when
     assertThatThrownBy(() -> databaseClient.getConnectionObject(connection, databaseName))
-            // then
-            .hasMessageContaining("Invalid number format for port number");
+        // then
+        .hasMessageContaining("Invalid number format for port number");
   }
 
   @DisplayName("Should throw error as hostname is invalid")
   @Test
   void shouldThrowErrorConnection() {
     when(databaseClient.getConnectionObject(any(DatabaseConnection.class), any(String.class)))
-            .thenThrow(new RuntimeException("Connection could not establish the connection"));
+        .thenThrow(new RuntimeException("Connection could not establish the connection"));
     // given
     connection.setHost("localhost");
     // when
     assertThatThrownBy(() -> databaseClient.getConnectionObject(connection, databaseName))
-            // then
-            .hasMessageContaining("could not establish the connection");
+        // then
+        .hasMessageContaining("could not establish the connection");
   }
 
   @DisplayName("Should throw error as password is invalid")
   @Test
   void shouldThrowErrorInvalidCredential() {
     when(databaseClient.getConnectionObject(any(DatabaseConnection.class), any(String.class)))
-            .thenThrow(new RuntimeException("invalid username/password"));
+        .thenThrow(new RuntimeException("invalid username/password"));
     // given
     connection.setUsername("bot");
     // when
     assertThatThrownBy(() -> databaseClient.getConnectionObject(connection, databaseName))
-            // then
-            .hasMessageContaining("invalid username/password");
+        // then
+        .hasMessageContaining("invalid username/password");
   }
 
   @DisplayName("Should throw error as password is invalid")
   @Test
   void shouldThrowErrorInvalidCredential2() {
     when(databaseClient.getConnectionObject(any(DatabaseConnection.class), any(String.class)))
-            .thenThrow(new RuntimeException("invalid username/password"));
+        .thenThrow(new RuntimeException("invalid username/password"));
     // given
     connection.setPassword("bot");
     // when
     assertThatThrownBy(() -> databaseClient.getConnectionObject(connection, databaseName))
-            // then
-            .hasMessageContaining("invalid username/password");
+        // then
+        .hasMessageContaining("invalid username/password");
   }
 
   @DisplayName("Should throw error as database name is invalid")
   @Test
   void shouldThrowErrorInvalidDB() {
     when(databaseClient.getConnectionObject(any(DatabaseConnection.class), any(String.class)))
-            .thenThrow(new RuntimeException("InvalidDatabase: Database doesn't exist"));
+        .thenThrow(new RuntimeException("InvalidDatabase: Database doesn't exist"));
     // given
     databaseName = "Alpha74087";
     // when
     assertThatThrownBy(() -> databaseClient.getConnectionObject(connection, databaseName))
-            // then
-            .hasMessageContaining("InvalidDatabase: Database doesn't exist");
+        // then
+        .hasMessageContaining("InvalidDatabase: Database doesn't exist");
   }
 }

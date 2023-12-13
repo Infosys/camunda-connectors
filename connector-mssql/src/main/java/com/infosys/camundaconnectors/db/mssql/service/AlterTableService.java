@@ -5,27 +5,25 @@
  */
 package com.infosys.camundaconnectors.db.mssql.service;
 
+import com.infosys.camundaconnectors.db.mssql.model.request.DatabaseConnection;
 import com.infosys.camundaconnectors.db.mssql.model.request.MSSQLRequestData;
 import com.infosys.camundaconnectors.db.mssql.model.response.MSSQLResponse;
 import com.infosys.camundaconnectors.db.mssql.model.response.QueryResponse;
+import com.infosys.camundaconnectors.db.mssql.utility.DatabaseClient;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
-import javax.validation.constraints.NotBlank;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jakarta.validation.constraints.*;
 
 public class AlterTableService implements MSSQLRequestData {
   private static final Logger LOGGER = LoggerFactory.getLogger(AlterTableService.class);
-  @NotBlank
-  private String databaseName;
-  @NotBlank
-  private String tableName;
-  @NotBlank
-  private String method;
+  @NotBlank private String databaseName;
+  @NotBlank private String tableName;
+  @NotBlank private String method;
   private String newTableName;
   private Map<String, String> newColumnDetail;
   private List<Map<String, String>> columnsDetails;
@@ -36,8 +34,9 @@ public class AlterTableService implements MSSQLRequestData {
   private String constraintName;
 
   @Override
-  public MSSQLResponse invoke(Connection connection) throws SQLException {
-    QueryResponse<String> queryResponse;
+  public MSSQLResponse invoke(DatabaseClient databaseClient,DatabaseConnection databaseConnection,String DatabaseName) throws SQLException {
+	  final Connection connection = databaseClient.getConnectionObject(databaseConnection, databaseName);
+	  QueryResponse<String> queryResponse;
     try {
       String operation = method;
       method = method.replaceAll("[_\\s]", "");
@@ -62,9 +61,9 @@ public class AlterTableService implements MSSQLRequestData {
         alterTableQuery = dropConstraintsQuery(tableName, dropConstraintsList);
       } else {
         throw new RuntimeException(
-                "Method can only be - disableConstraint, enableConstraint, "
-                        + "modifyColumn, renameTable, renameColumn, dropColumn, "
-                        + "dropConstraint, addConstraint, addColumn");
+            "Method can only be - disableConstraint, enableConstraint, "
+                + "modifyColumn, renameTable, renameColumn, dropColumn, "
+                + "dropConstraint, addConstraint, addColumn");
       }
       if (alterTableQuery.isBlank()) {
         throw new RuntimeException("Failed to create alter query");
@@ -75,7 +74,7 @@ public class AlterTableService implements MSSQLRequestData {
           st.executeUpdate(alterTableQuery);
           connection.commit();
           queryResponse =
-                  new QueryResponse<>("Alter operation - " + operation + " executed successfully");
+              new QueryResponse<>("Alter operation - " + operation + " executed successfully");
           LOGGER.info("AlterTableQueryStatus: {}", queryResponse.getResponse());
         }
       }
@@ -119,19 +118,19 @@ public class AlterTableService implements MSSQLRequestData {
     String oldColumnName = map.get("oldColName");
     String newColumnName = map.get("newColName");
     if (oldColumnName == null
-            || oldColumnName.isBlank()
-            || newColumnName == null
-            || newColumnName.isBlank()) {
+        || oldColumnName.isBlank()
+        || newColumnName == null
+        || newColumnName.isBlank()) {
       throw new RuntimeException(
-              "'newColumnDetail' is invalid. Keys 'oldColName' and 'newColName' is required");
+          "'newColumnDetail' is invalid. Keys 'oldColName' and 'newColName' is required");
     }
     return "sp_rename '"
-            + tableName
-            + "."
-            + oldColumnName
-            + "', '"
-            + newColumnName
-            + "', 'COLUMN';";
+        + tableName
+        + "."
+        + oldColumnName
+        + "', '"
+        + newColumnName
+        + "', 'COLUMN';";
   }
 
   private String addColumnsQuery(String tableName, List<Map<String, String>> columnsDetails) {
@@ -148,8 +147,8 @@ public class AlterTableService implements MSSQLRequestData {
       String constraint = map.get("constraint");
       if (colName == null || colName.isBlank() || dataType == null || dataType.isBlank())
         throw new RuntimeException(
-                "Failed to add column, colName and dataType required - "
-                        + columnsDetails.get(i).toString());
+            "Failed to add column, colName and dataType required - "
+                + columnsDetails.get(i).toString());
       if (i != 0) addColStatement.append(",");
       addColStatement.append(colName).append(" ").append(dataType);
       if (constraint != null && !constraint.isBlank())
@@ -157,8 +156,8 @@ public class AlterTableService implements MSSQLRequestData {
     }
     if (addColStatement.toString().isBlank())
       throw new RuntimeException(
-              "Unable to create alter table - add column query, "
-                      + "Please check the input - 'columnDetails'");
+          "Unable to create alter table - add column query, "
+              + "Please check the input - 'columnDetails'");
     query += addColStatement.toString() + ";";
     return query;
   }
@@ -181,57 +180,57 @@ public class AlterTableService implements MSSQLRequestData {
         String symbol = map.getOrDefault("symbol", "");
         if (symbol.isBlank())
           throw new RuntimeException(
-                  "'symbol' can not be null or blank. "
-                          + "Please provide constraint name. e.g. symbol: 'pk_id'");
+              "'symbol' can not be null or blank. "
+                  + "Please provide constraint name. e.g. symbol: 'pk_id'");
         String definition = map.get("definition");
         if (name.equalsIgnoreCase("UNIQUE")) {
           if (definition == null || definition.isBlank())
             throw new RuntimeException(
-                    "'definition' is required. e.g. col_name to apply unique " + "constraint");
+                "'definition' is required. e.g. col_name to apply unique " + "constraint");
           String uQuery = " CONSTRAINT " + symbol + " UNIQUE (" + definition + ")";
           if (i != 0) addConstraintStatement.append(",");
           addConstraintStatement.append(uQuery);
         } else if (name.equalsIgnoreCase("PRIMARYKEY")) {
           if (definition == null || definition.isBlank())
             throw new RuntimeException(
-                    "'definition' is required. e.g. col_name to apply primary key constraint");
+                "'definition' is required. e.g. col_name to apply primary key constraint");
           String pkQuery = " CONSTRAINT " + symbol + " PRIMARY KEY (" + definition + ")";
           if (i != 0) addConstraintStatement.append(",");
           addConstraintStatement.append(pkQuery);
         } else if (name.equalsIgnoreCase("FOREIGNKEY")) {
           if (definition == null || definition.isBlank())
             throw new RuntimeException(
-                    "'definition' is required. e.g. "
-                            + "(child_column_names,...) REFERENCE ref_table_name"
-                            + "(Referencing column_names,... in ref_table_name)");
+                "'definition' is required. e.g. "
+                    + "(child_column_names,...) REFERENCE ref_table_name"
+                    + "(Referencing column_names,... in ref_table_name)");
           String fkQuery = " CONSTRAINT " + symbol + " FOREIGN KEY " + definition;
           if (i != 0) addConstraintStatement.append(",");
           addConstraintStatement.append(fkQuery);
         } else if (name.equalsIgnoreCase("CHECK")) {
           if (definition == null || definition.isBlank())
             throw new RuntimeException(
-                    "'definition' - Check " + "Expression is required. e.g. id > 5");
+                "'definition' - Check " + "Expression is required. e.g. id > 5");
           String checkQuery = " CONSTRAINT " + symbol + " CHECK ( " + definition + " )";
           if (i != 0) addConstraintStatement.append(",");
           addConstraintStatement.append(checkQuery);
         } else if (name.equalsIgnoreCase("DEFAULT")) {
           if (definition == null || definition.isBlank())
             throw new RuntimeException(
-                    "'definition' for default constraint can not be null or blank. "
-                            + "e.g. GETDATE() FOR Sys_date, i.e. defaultValue FOR columnName");
+                "'definition' for default constraint can not be null or blank. "
+                    + "e.g. GETDATE() FOR Sys_date, i.e. defaultValue FOR columnName");
           String checkQuery = " CONSTRAINT " + symbol + " DEFAULT " + definition;
           if (i != 0) addConstraintStatement.append(",");
           addConstraintStatement.append(checkQuery);
         } else {
           throw new RuntimeException(
-                  "name should be - default, unique, " + "primary key, foreign key or check");
+              "name should be - default, unique, " + "primary key, foreign key or check");
         }
       }
     }
     if (addConstraintStatement.toString().isBlank())
       throw new RuntimeException(
-              "Unable to create alter table - add constraint query, Please check"
-                      + " the input 'constraintDetails'");
+          "Unable to create alter table - add constraint query, Please check"
+              + " the input 'constraintDetails'");
     query += addConstraintStatement.toString() + ";";
     return query;
   }
@@ -248,20 +247,20 @@ public class AlterTableService implements MSSQLRequestData {
     String constraint = map.get("constraint");
     if (columnName != null && !columnName.isBlank() && dataType != null && !dataType.isBlank()) {
       modQuery
-              .append("ALTER TABLE ")
-              .append(tableName)
-              .append(" ALTER COLUMN ")
-              .append(columnName)
-              .append(" ")
-              .append(dataType);
+          .append("ALTER TABLE ")
+          .append(tableName)
+          .append(" ALTER COLUMN ")
+          .append(columnName)
+          .append(" ")
+          .append(dataType);
       if (constraint != null && !constraint.isBlank()) modQuery.append(" ").append(constraint);
       modQuery.append(";");
     }
     if (modQuery.toString().isBlank())
       throw new RuntimeException(
-              "Unable to create alter table - modify query, Please "
-                      + "check the input - 'modifyColumnsDetails' map should have "
-                      + "keys - colName, dataType, constraint");
+          "Unable to create alter table - modify query, Please "
+              + "check the input - 'modifyColumnsDetails' map should have "
+              + "keys - colName, dataType, constraint");
     query += modQuery.toString();
     return query;
   }
@@ -270,11 +269,11 @@ public class AlterTableService implements MSSQLRequestData {
     if (dropConstraintsList == null || dropConstraintsList.isEmpty())
       throw new RuntimeException("'dropConstraintsList' can not be null or empty");
     String queryToDrop =
-            "ALTER TABLE "
-                    + tableName
-                    + " DROP CONSTRAINT "
-                    + String.join(", ", dropConstraintsList)
-                    + ";";
+        "ALTER TABLE "
+            + tableName
+            + " DROP CONSTRAINT "
+            + String.join(", ", dropConstraintsList)
+            + ";";
     if (queryToDrop.isBlank())
       throw new RuntimeException("Unable to create alter table - drop  constraints query");
     return queryToDrop;
@@ -380,64 +379,64 @@ public class AlterTableService implements MSSQLRequestData {
     if (o == null || getClass() != o.getClass()) return false;
     AlterTableService that = (AlterTableService) o;
     return Objects.equals(databaseName, that.databaseName)
-            && Objects.equals(tableName, that.tableName)
-            && Objects.equals(method, that.method)
-            && Objects.equals(newTableName, that.newTableName)
-            && Objects.equals(newColumnDetail, that.newColumnDetail)
-            && Objects.equals(columnsDetails, that.columnsDetails)
-            && Objects.equals(constraintDetails, that.constraintDetails)
-            && Objects.equals(modifyColumnsDetails, that.modifyColumnsDetails)
-            && Objects.equals(dropConstraintsList, that.dropConstraintsList)
-            && Objects.equals(dropColumnsList, that.dropColumnsList)
-            && Objects.equals(constraintName, that.constraintName);
+        && Objects.equals(tableName, that.tableName)
+        && Objects.equals(method, that.method)
+        && Objects.equals(newTableName, that.newTableName)
+        && Objects.equals(newColumnDetail, that.newColumnDetail)
+        && Objects.equals(columnsDetails, that.columnsDetails)
+        && Objects.equals(constraintDetails, that.constraintDetails)
+        && Objects.equals(modifyColumnsDetails, that.modifyColumnsDetails)
+        && Objects.equals(dropConstraintsList, that.dropConstraintsList)
+        && Objects.equals(dropColumnsList, that.dropColumnsList)
+        && Objects.equals(constraintName, that.constraintName);
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(
-            databaseName,
-            tableName,
-            method,
-            newTableName,
-            newColumnDetail,
-            columnsDetails,
-            constraintDetails,
-            modifyColumnsDetails,
-            dropConstraintsList,
-            dropColumnsList,
-            constraintName);
+        databaseName,
+        tableName,
+        method,
+        newTableName,
+        newColumnDetail,
+        columnsDetails,
+        constraintDetails,
+        modifyColumnsDetails,
+        dropConstraintsList,
+        dropColumnsList,
+        constraintName);
   }
 
   @Override
   public String toString() {
     return "AlterTableService{"
-            + "databaseName='"
-            + databaseName
-            + '\''
-            + ", tableName='"
-            + tableName
-            + '\''
-            + ", method='"
-            + method
-            + '\''
-            + ", newTableName='"
-            + newTableName
-            + '\''
-            + ", newColumnDetail="
-            + newColumnDetail
-            + ", columnsDetails="
-            + columnsDetails
-            + ", constraintDetails="
-            + constraintDetails
-            + ", modifyColumnsDetails="
-            + modifyColumnsDetails
-            + ", dropConstraintsList="
-            + dropConstraintsList
-            + ", dropColumnsList="
-            + dropColumnsList
-            + ", constraintName='"
-            + constraintName
-            + '\''
-            + '}';
+        + "databaseName='"
+        + databaseName
+        + '\''
+        + ", tableName='"
+        + tableName
+        + '\''
+        + ", method='"
+        + method
+        + '\''
+        + ", newTableName='"
+        + newTableName
+        + '\''
+        + ", newColumnDetail="
+        + newColumnDetail
+        + ", columnsDetails="
+        + columnsDetails
+        + ", constraintDetails="
+        + constraintDetails
+        + ", modifyColumnsDetails="
+        + modifyColumnsDetails
+        + ", dropConstraintsList="
+        + dropConstraintsList
+        + ", dropColumnsList="
+        + dropColumnsList
+        + ", constraintName='"
+        + constraintName
+        + '\''
+        + '}';
   }
 }

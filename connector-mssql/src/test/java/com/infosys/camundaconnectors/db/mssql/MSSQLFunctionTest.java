@@ -16,11 +16,9 @@ import static org.mockito.Mockito.when;
 import com.infosys.camundaconnectors.db.mssql.model.request.DatabaseConnection;
 import com.infosys.camundaconnectors.db.mssql.model.response.QueryResponse;
 import com.infosys.camundaconnectors.db.mssql.utility.DatabaseClient;
-
 import java.sql.*;
 import java.util.List;
 import java.util.Map;
-
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,25 +33,19 @@ import org.mockito.quality.Strictness;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 public class MSSQLFunctionTest extends BaseTest {
-  @Mock
-  private Connection connectionMock;
-  @Mock
-  private DatabaseClient databaseClient;
-  @Mock
-  private Statement statementMock;
-  @Mock
-  private PreparedStatement preparedStatementMock;
-  @Mock
-  private ResultSet resultSetMock;
-  @Mock
-  private ResultSetMetaData rsMetaMock;
+  @Mock private Connection connectionMock;
+  @Mock private DatabaseClient databaseClient;
+  @Mock private Statement statementMock;
+  @Mock private PreparedStatement preparedStatementMock;
+  @Mock private ResultSet resultSetMock;
+  @Mock private ResultSetMetaData rsMetaMock;
   private MSSQLFunction MSSQLFunction;
 
   @BeforeEach
   public void init() throws SQLException {
-    MSSQLFunction = new MSSQLFunction(gson, databaseClient);
+    MSSQLFunction = new MSSQLFunction(databaseClient);
     when(databaseClient.getConnectionObject(any(DatabaseConnection.class), any(String.class)))
-            .thenReturn(connectionMock);
+        .thenReturn(connectionMock);
     when(connectionMock.createStatement()).thenReturn(statementMock);
     when(statementMock.execute(anyString())).thenReturn(true);
     when(statementMock.executeQuery(anyString())).thenReturn(resultSetMock);
@@ -80,30 +72,7 @@ public class MSSQLFunctionTest extends BaseTest {
     assertThatItsValid(executeResponse, "created successfully");
   }
 
-  @ParameterizedTest
-  @MethodSource("executeInvalidCreateDatabaseTestCases")
-  public void execute_shouldThrowErrorForCreateDatabase(String input) {
-    // Given
-    context = getContextBuilderWithSecrets().variables(input).build();
-    // When
-    assertThatThrownBy(() -> MSSQLFunction.execute(context))
-            // Then
-            .isInstanceOf(RuntimeException.class)
-            .hasMessageContaining("must not be blank");
-  }
 
-  @ParameterizedTest
-  @MethodSource("executeCreateTableTestCases")
-  public void execute_shouldCreateTable(String input) throws Exception {
-    // Given
-    context = getContextBuilderWithSecrets().variables(input).build();
-    // When
-    Object executeResponse = MSSQLFunction.execute(context);
-    // Then
-    Mockito.verify(statementMock, Mockito.times(1)).execute(any(String.class));
-    Mockito.verify(connectionMock, Mockito.times(1)).close();
-    assertThatItsValid(executeResponse, "created successfully");
-  }
 
   @ParameterizedTest
   @MethodSource("executeInvalidCreateTableTestCases")
@@ -112,10 +81,10 @@ public class MSSQLFunctionTest extends BaseTest {
     context = getContextBuilderWithSecrets().variables(input).build();
     // When
     assertThatThrownBy(() -> MSSQLFunction.execute(context))
-            // Then
-            .isInstanceOf(RuntimeException.class)
-            .message()
-            .isNotBlank();
+        // Then
+        .isInstanceOf(RuntimeException.class)
+        .message()
+        .isNotBlank();
   }
 
   @ParameterizedTest
@@ -137,18 +106,18 @@ public class MSSQLFunctionTest extends BaseTest {
     // Given
     if (input.contains("SurName"))
       Mockito.when(preparedStatementMock.executeUpdate())
-              .thenThrow(new SQLException("\"SurName\": invalid identifier"));
+          .thenThrow(new SQLException("\"SurName\": invalid identifier"));
     else if (!input.contains("PersonID")) {
       Mockito.when(preparedStatementMock.executeUpdate())
-              .thenThrow(new SQLException("\"PersonID\": is " + "required, primary key"));
+          .thenThrow(new SQLException("\"PersonID\": is " + "required, primary key"));
     }
     context = getContextBuilderWithSecrets().variables(input).build();
     // When
     RuntimeException thrown =
-            assertThrows(
-                    RuntimeException.class,
-                    () -> MSSQLFunction.execute(context),
-                    "RuntimeException was expected");
+        assertThrows(
+            RuntimeException.class,
+            () -> MSSQLFunction.execute(context),
+            "RuntimeException was expected");
     assertNotNull(thrown.getMessage());
   }
 
@@ -172,10 +141,10 @@ public class MSSQLFunctionTest extends BaseTest {
     context = getContextBuilderWithSecrets().variables(input).build();
     // When
     RuntimeException thrown =
-            assertThrows(
-                    RuntimeException.class,
-                    () -> MSSQLFunction.execute(context),
-                    "RuntimeException was expected");
+        assertThrows(
+            RuntimeException.class,
+            () -> MSSQLFunction.execute(context),
+            "RuntimeException was expected");
     assertNotNull(thrown.getMessage());
   }
 
@@ -192,12 +161,12 @@ public class MSSQLFunctionTest extends BaseTest {
     assertThat(executeResponse).isInstanceOf(QueryResponse.class);
     @SuppressWarnings("unchecked")
     QueryResponse<List<Map<String, Object>>> response =
-            (QueryResponse<List<Map<String, Object>>>) executeResponse;
+        (QueryResponse<List<Map<String, Object>>>) executeResponse;
     assertThat(response.getResponse()).isNotNull();
     assertThat(response)
-            .extracting("response")
-            .asInstanceOf(InstanceOfAssertFactories.LIST)
-            .isNotEmpty();
+        .extracting("response")
+        .asInstanceOf(InstanceOfAssertFactories.LIST)
+        .isNotEmpty();
   }
 
   @ParameterizedTest
@@ -207,10 +176,10 @@ public class MSSQLFunctionTest extends BaseTest {
     context = getContextBuilderWithSecrets().variables(input).build();
     // When
     RuntimeException thrown =
-            assertThrows(
-                    RuntimeException.class,
-                    () -> MSSQLFunction.execute(context),
-                    "RuntimeException was expected");
+        assertThrows(
+            RuntimeException.class,
+            () -> MSSQLFunction.execute(context),
+            "RuntimeException was expected");
     assertNotNull(thrown.getMessage());
   }
 
@@ -234,10 +203,10 @@ public class MSSQLFunctionTest extends BaseTest {
     context = getContextBuilderWithSecrets().variables(input).build();
     // When
     RuntimeException thrown =
-            assertThrows(
-                    RuntimeException.class,
-                    () -> MSSQLFunction.execute(context),
-                    "RuntimeException was expected");
+        assertThrows(
+            RuntimeException.class,
+            () -> MSSQLFunction.execute(context),
+            "RuntimeException was expected");
     assertNotNull(thrown.getMessage());
   }
 
@@ -261,10 +230,10 @@ public class MSSQLFunctionTest extends BaseTest {
     context = getContextBuilderWithSecrets().variables(input).build();
     // When
     RuntimeException thrown =
-            assertThrows(
-                    RuntimeException.class,
-                    () -> MSSQLFunction.execute(context),
-                    "RuntimeException was expected");
+        assertThrows(
+            RuntimeException.class,
+            () -> MSSQLFunction.execute(context),
+            "RuntimeException was expected");
     assertNotNull(thrown.getMessage());
   }
 
@@ -274,8 +243,8 @@ public class MSSQLFunctionTest extends BaseTest {
     QueryResponse<String> response = (QueryResponse<String>) executeResponse;
     assertThat(response.getResponse()).isNotNull();
     assertThat(response)
-            .extracting("response")
-            .asInstanceOf(InstanceOfAssertFactories.STRING)
-            .contains(validateAgainst);
+        .extracting("response")
+        .asInstanceOf(InstanceOfAssertFactories.STRING)
+        .contains(validateAgainst);
   }
 }

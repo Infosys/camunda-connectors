@@ -11,8 +11,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
+import com.infosys.camundaconnectors.db.postgresql.model.request.DatabaseConnection;
 import com.infosys.camundaconnectors.db.postgresql.model.response.PostgreSQLResponse;
 import com.infosys.camundaconnectors.db.postgresql.model.response.QueryResponse;
+import com.infosys.camundaconnectors.db.postgresql.utility.DatabaseClient;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -32,6 +35,8 @@ import org.mockito.quality.Strictness;
 class UpdateDataServiceTest {
   private UpdateDataService service;
   @Mock private Connection connectionMock;
+  @Mock private DatabaseClient databaseClient;
+  @Mock private DatabaseConnection connection; 
   @Mock private Statement statementMock;
 
   @BeforeEach
@@ -43,6 +48,7 @@ class UpdateDataServiceTest {
         Map.of("personid", 12, "firstname", "pluto", "time", "2024-09-01T16:34:02"));
     service.setFilters(
         Map.of("filter", Map.of("colName", "personid", "operator", "=", "value", 5)));
+    when(databaseClient.getConnectionObject(any(DatabaseConnection.class),any(String.class))).thenReturn(connectionMock);
     when(connectionMock.createStatement()).thenReturn(statementMock);
   }
 
@@ -53,7 +59,7 @@ class UpdateDataServiceTest {
     when(statementMock.executeUpdate(anyString()))
         .thenThrow(new SQLException("relation \"xia\" does not exist"));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("relation \"xia\" does not exist");
@@ -70,7 +76,7 @@ class UpdateDataServiceTest {
         Map.of("filter", Map.of("colName", "personId", "operator", ">", "value", 50)));
     when(statementMock.executeUpdate(anyString())).thenReturn(0);
     // When
-    PostgreSQLResponse result = service.invoke(connectionMock);
+    PostgreSQLResponse result = service.invoke(databaseClient,connection,"databaseName");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(any(String.class));
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -83,7 +89,7 @@ class UpdateDataServiceTest {
     // given
     when(statementMock.executeUpdate(anyString())).thenReturn(1);
     // When
-    PostgreSQLResponse result = service.invoke(connectionMock);
+    PostgreSQLResponse result = service.invoke(databaseClient,connection,"databaseName");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(any(String.class));
     Mockito.verify(connectionMock, Mockito.times(1)).close();

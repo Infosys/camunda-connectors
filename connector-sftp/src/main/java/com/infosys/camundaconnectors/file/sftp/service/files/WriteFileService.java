@@ -8,10 +8,12 @@ package com.infosys.camundaconnectors.file.sftp.service.files;
 import com.infosys.camundaconnectors.file.sftp.model.request.SFTPRequestData;
 import com.infosys.camundaconnectors.file.sftp.model.response.Response;
 import com.infosys.camundaconnectors.file.sftp.model.response.SFTPResponse;
+
+import jakarta.validation.constraints.NotBlank;
+
 import java.io.IOException;
 import java.util.EnumSet;
 import java.util.Objects;
-import javax.validation.constraints.NotBlank;
 import net.schmizz.sshj.sftp.FileAttributes;
 import net.schmizz.sshj.sftp.OpenMode;
 import net.schmizz.sshj.sftp.RemoteFile;

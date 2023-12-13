@@ -20,25 +20,20 @@ import org.slf4j.LoggerFactory;
     type = "com.infosys.camundaconnectors.db:mysql:1")
 public class MySQLFunction implements OutboundConnectorFunction {
   private static final Logger LOGGER = LoggerFactory.getLogger(MySQLFunction.class);
-  private final Gson gson;
   private final DatabaseClient databaseClient;
 
   public MySQLFunction() {
-    this(GsonSupplier.getGson(), new DatabaseClient());
+    this(new DatabaseClient());
   }
 
-  public MySQLFunction(Gson gson, DatabaseClient databaseClient) {
-    this.gson = gson;
+  public MySQLFunction(DatabaseClient databaseClient) {
     this.databaseClient = databaseClient;
   }
 
   @Override
   public Object execute(OutboundConnectorContext outboundConnectorContext) throws Exception {
-    final var variables = outboundConnectorContext.getVariables();
-    final var mySQLRequest = gson.fromJson(variables, MySQLRequest.class);
-    outboundConnectorContext.validate(mySQLRequest);
-    outboundConnectorContext.replaceSecrets(mySQLRequest);
+    final var variables = outboundConnectorContext.bindVariables(MySQLRequest.class);
     LOGGER.debug("Request verified successfully and all required secrets replaced");
-    return mySQLRequest.invoke(databaseClient);
+    return variables.invoke(databaseClient);
   }
 }

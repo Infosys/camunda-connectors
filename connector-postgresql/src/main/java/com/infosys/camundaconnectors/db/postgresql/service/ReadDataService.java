@@ -6,13 +6,16 @@
 
 package com.infosys.camundaconnectors.db.postgresql.service;
 
+import com.infosys.camundaconnectors.db.postgresql.model.request.DatabaseConnection;
 import com.infosys.camundaconnectors.db.postgresql.model.request.PostgreSQLRequestData;
 import com.infosys.camundaconnectors.db.postgresql.model.response.PostgreSQLResponse;
 import com.infosys.camundaconnectors.db.postgresql.model.response.QueryResponse;
 import com.infosys.camundaconnectors.db.postgresql.utility.ConstructWhereClause;
+import com.infosys.camundaconnectors.db.postgresql.utility.DatabaseClient;
+
 import java.sql.*;
 import java.util.*;
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,8 +29,9 @@ public class ReadDataService implements PostgreSQLRequestData {
   private Integer limit;
 
   @Override
-  public PostgreSQLResponse invoke(Connection connection) throws SQLException {
-    QueryResponse<List<Map<String, Object>>> queryResponse;
+  public PostgreSQLResponse invoke(DatabaseClient databaseClient,DatabaseConnection databaseConnection,String databaseName) throws SQLException {
+	  final Connection connection = databaseClient.getConnectionObject(databaseConnection, databaseName);
+	  QueryResponse<List<Map<String, Object>>> queryResponse;
     try {
       String readDataQuery = selectRowsQuery(tableName, columnNames, filters, orderBy, limit);
       LOGGER.info("Read query: {}", readDataQuery);

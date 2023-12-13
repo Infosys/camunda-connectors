@@ -20,25 +20,20 @@ import org.slf4j.LoggerFactory;
     type = "com.infosys.camundaconnectors.db:oracle:1")
 public class OracleDBFunction implements OutboundConnectorFunction {
   private static final Logger LOGGER = LoggerFactory.getLogger(OracleDBFunction.class);
-  private final Gson gson;
   private final DatabaseClient databaseClient;
 
   public OracleDBFunction() {
-    this(GsonSupplier.getGson(), new DatabaseClient());
+    this(new DatabaseClient());
   }
 
-  public OracleDBFunction(Gson gson, DatabaseClient databaseClient) {
-    this.gson = gson;
+  public OracleDBFunction(DatabaseClient databaseClient) {
     this.databaseClient = databaseClient;
   }
 
   @Override
   public Object execute(OutboundConnectorContext outboundConnectorContext) throws Exception {
-    final var variables = outboundConnectorContext.getVariables();
-    final var oracleDBRequest = gson.fromJson(variables, OracleDBRequest.class);
-    outboundConnectorContext.validate(oracleDBRequest);
-    outboundConnectorContext.replaceSecrets(oracleDBRequest);
+    final var variables = outboundConnectorContext.bindVariables(OracleDBRequest.class);
     LOGGER.debug("Request verified successfully and all required secrets replaced");
-    return oracleDBRequest.invoke(databaseClient);
+    return variables.invoke(databaseClient);
   }
 }

@@ -11,8 +11,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
+import com.infosys.camundaconnectors.db.postgresql.model.request.DatabaseConnection;
 import com.infosys.camundaconnectors.db.postgresql.model.response.PostgreSQLResponse;
 import com.infosys.camundaconnectors.db.postgresql.model.response.QueryResponse;
+import com.infosys.camundaconnectors.db.postgresql.utility.DatabaseClient;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -30,6 +33,8 @@ import org.mockito.quality.Strictness;
 @MockitoSettings(strictness = Strictness.LENIENT)
 class CreateDatabaseServiceTest {
   @Mock private Connection connectionMock;
+  @Mock private DatabaseClient databaseClient;
+  @Mock private DatabaseConnection connection; 
   @Mock private Statement statementMock;
   private CreateDatabaseService service;
 
@@ -37,6 +42,7 @@ class CreateDatabaseServiceTest {
   public void init() throws SQLException {
     service = new CreateDatabaseService();
     service.setDatabaseName("test7database");
+    when(databaseClient.getConnectionObject(any(DatabaseConnection.class),any(String.class))).thenReturn(connectionMock);
     when(connectionMock.createStatement()).thenReturn(statementMock);
   }
 
@@ -46,7 +52,7 @@ class CreateDatabaseServiceTest {
     // given
     when(statementMock.executeUpdate(anyString())).thenReturn(1);
     // When
-    PostgreSQLResponse result = service.invoke(connectionMock);
+    PostgreSQLResponse result = service.invoke(databaseClient,connection,"databaseName");
     // Then
     @SuppressWarnings("unchecked")
     QueryResponse<String> queryResponse = (QueryResponse<String>) result;
@@ -65,7 +71,7 @@ class CreateDatabaseServiceTest {
     when(statementMock.executeUpdate(anyString()))
         .thenThrow(new RuntimeException("database \"alpha74081\" " + "already exists"));
     // When
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // Then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("database \"alpha74081\" already exists");

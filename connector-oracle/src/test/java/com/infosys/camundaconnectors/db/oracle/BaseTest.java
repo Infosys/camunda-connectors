@@ -19,7 +19,6 @@ import java.util.stream.Stream;
 import org.junit.jupiter.params.provider.Arguments;
 
 public abstract class BaseTest {
-  protected static final Gson gson = GsonSupplier.getGson();
   protected static OutboundConnectorContext context;
 
   protected interface ActualValue {

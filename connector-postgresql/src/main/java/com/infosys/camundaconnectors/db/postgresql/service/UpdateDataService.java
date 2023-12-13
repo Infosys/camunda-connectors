@@ -6,10 +6,13 @@
 
 package com.infosys.camundaconnectors.db.postgresql.service;
 
+import com.infosys.camundaconnectors.db.postgresql.model.request.DatabaseConnection;
 import com.infosys.camundaconnectors.db.postgresql.model.request.PostgreSQLRequestData;
 import com.infosys.camundaconnectors.db.postgresql.model.response.PostgreSQLResponse;
 import com.infosys.camundaconnectors.db.postgresql.model.response.QueryResponse;
 import com.infosys.camundaconnectors.db.postgresql.utility.ConstructWhereClause;
+import com.infosys.camundaconnectors.db.postgresql.utility.DatabaseClient;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -17,8 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,8 +34,9 @@ public class UpdateDataService implements PostgreSQLRequestData {
   private Map<String, Object> updateMap;
 
   @Override
-  public PostgreSQLResponse invoke(Connection connection) throws SQLException {
-    QueryResponse<String> queryResponse;
+  public PostgreSQLResponse invoke(DatabaseClient databaseClient,DatabaseConnection databaseConnection, String databaseName) throws SQLException {
+	  final Connection connection = databaseClient.getConnectionObject(databaseConnection, databaseName);
+	  QueryResponse<String> queryResponse;
     try {
       String updateQuery = updateRowsQuery(tableName, updateMap, filters);
       LOGGER.info("Update query: {}", updateQuery);

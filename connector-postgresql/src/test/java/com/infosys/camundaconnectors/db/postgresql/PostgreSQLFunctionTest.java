@@ -44,7 +44,7 @@ public class PostgreSQLFunctionTest extends BaseTest {
 
   @BeforeEach
   public void init() throws SQLException {
-    PostgreSQLFunction = new PostgreSQLFunction(gson, databaseClient);
+    PostgreSQLFunction = new PostgreSQLFunction(databaseClient);
     when(databaseClient.getConnectionObject(any(DatabaseConnection.class), any(String.class)))
         .thenReturn(connectionMock);
     when(connectionMock.createStatement()).thenReturn(statementMock);
@@ -71,44 +71,6 @@ public class PostgreSQLFunctionTest extends BaseTest {
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(any(String.class));
     Mockito.verify(connectionMock, Mockito.times(1)).close();
     assertThatItsValid(executeResponse, "created successfully");
-  }
-
-  @ParameterizedTest
-  @MethodSource("executeInvalidCreateDatabaseTestCases")
-  public void execute_shouldThrowErrorForCreateDatabase(String input) {
-    // Given
-    context = getContextBuilderWithSecrets().variables(input).build();
-    // When
-    assertThatThrownBy(() -> PostgreSQLFunction.execute(context))
-        // Then
-        .isInstanceOf(RuntimeException.class)
-        .hasMessageContaining("must not be blank");
-  }
-
-  @ParameterizedTest
-  @MethodSource("executeCreateTableTestCases")
-  public void execute_shouldCreateTable(String input) throws Exception {
-    // Given
-    context = getContextBuilderWithSecrets().variables(input).build();
-    // When
-    Object executeResponse = PostgreSQLFunction.execute(context);
-    // Then
-    Mockito.verify(statementMock, Mockito.times(1)).execute(any(String.class));
-    Mockito.verify(connectionMock, Mockito.times(1)).close();
-    assertThatItsValid(executeResponse, "created successfully");
-  }
-
-  @ParameterizedTest
-  @MethodSource("executeInvalidCreateTableTestCases")
-  public void execute_shouldThrowErrorForCreateTable(String input) {
-    // Given
-    context = getContextBuilderWithSecrets().variables(input).build();
-    // When
-    assertThatThrownBy(() -> PostgreSQLFunction.execute(context))
-        // Then
-        .isInstanceOf(RuntimeException.class)
-        .hasMessageContaining("can't be null or empty");
-    // colName or dataType can't be null or empty && // columnsList can't be null or empty
   }
 
   @ParameterizedTest

@@ -5,37 +5,37 @@
  */
 package com.infosys.camundaconnectors.db.mssql.service;
 
+import com.infosys.camundaconnectors.db.mssql.model.request.DatabaseConnection;
 import com.infosys.camundaconnectors.db.mssql.model.request.MSSQLRequestData;
 import com.infosys.camundaconnectors.db.mssql.model.response.MSSQLResponse;
 import com.infosys.camundaconnectors.db.mssql.model.response.QueryResponse;
 import com.infosys.camundaconnectors.db.mssql.utility.ConstructWhereClause;
+import com.infosys.camundaconnectors.db.mssql.utility.DatabaseClient;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.validation.constraints.NotBlank;
-
+import jakarta.validation.constraints.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ReadDataService implements MSSQLRequestData {
-	private static final Logger LOGGER = LoggerFactory.getLogger(ReadDataService.class);
-	@NotBlank
-	private String databaseName;
-	@NotBlank
-	private String tableName;
-	private List<String> columnNames;
-	private Map<String, Object> filters;
-	private List<Map<String, String>> orderBy;
-	private Integer top;
+  private static final Logger LOGGER = LoggerFactory.getLogger(ReadDataService.class);
+  @NotBlank private String databaseName;
+  @NotBlank private String tableName;
+  private List<String> columnNames;
+  private Map<String, Object> filters;
+  private List<Map<String, String>> orderBy;
+  private Integer top;
 
-	@Override
-	public MSSQLResponse invoke(Connection connection) throws SQLException {
-		QueryResponse<List<Map<String, Object>>> queryResponse;
-		try {
-			String readDataQuery = selectRowsQuery(tableName, columnNames, filters, orderBy, top);
+  @Override
+  public MSSQLResponse invoke(DatabaseClient databaseClient,DatabaseConnection databaseConnection,String DatabaseName) throws SQLException {
+	  final Connection connection = databaseClient.getConnectionObject(databaseConnection, databaseName);
+	  QueryResponse<List<Map<String, Object>>> queryResponse;
+    try {
+      String readDataQuery = selectRowsQuery(tableName, columnNames, filters, orderBy, top);
       LOGGER.info("Read query: {}", readDataQuery);
       try (Statement st = connection.createStatement()) {
         ResultSet rs = st.executeQuery(readDataQuery);
@@ -58,27 +58,27 @@ public class ReadDataService implements MSSQLRequestData {
     return queryResponse;
   }
 
-	private String selectRowsQuery(
-			String tableName,
-			List<String> columnNames,
-			Map<String, Object> filters,
-			List<Map<String, String>> orderBy,
-			Integer top) {
-		String whereClause = ConstructWhereClause.getWhereClause(filters);
-		if (whereClause == null || whereClause.isBlank() || filters == null || filters.isEmpty())
-			LOGGER.debug("WHERE clause is empty, this will return all rows in the table");
-		String orderByClause = "";
-		if (orderBy != null && !orderBy.isEmpty()) {
-			String orderByStmt = generateSQLOrderByClause(orderBy);
-			if (!orderByStmt.isBlank()) orderByClause = " ORDER BY " + orderByStmt;
-		}
-		String columnString = "*";
-		if (columnNames != null && !columnNames.isEmpty())
+  private String selectRowsQuery(
+      String tableName,
+      List<String> columnNames,
+      Map<String, Object> filters,
+      List<Map<String, String>> orderBy,
+      Integer top) {
+    String whereClause = ConstructWhereClause.getWhereClause(filters);
+    if (whereClause == null || whereClause.isBlank() || filters == null || filters.isEmpty())
+      LOGGER.debug("WHERE clause is empty, this will return all rows in the table");
+    String orderByClause = "";
+    if (orderBy != null && !orderBy.isEmpty()) {
+      String orderByStmt = generateSQLOrderByClause(orderBy);
+      if (!orderByStmt.isBlank()) orderByClause = " ORDER BY " + orderByStmt;
+    }
+    String columnString = "*";
+    if (columnNames != null && !columnNames.isEmpty())
       columnString = String.join(", ", columnNames);
     String topStr = "";
-		if (top != null && top > 0) topStr = "TOP " + top;
-		return String.format(
-				"SELECT %s %s FROM %s %s %s", topStr, columnString, tableName, whereClause, orderByClause);
+    if (top != null && top > 0) topStr = "TOP " + top;
+    return String.format(
+        "SELECT %s %s FROM %s %s %s", topStr, columnString, tableName, whereClause, orderByClause);
   }
 
   private String generateSQLOrderByClause(List<Map<String, String>> sortBy) {

@@ -5,12 +5,15 @@
  */
 package com.infosys.camundaconnectors.db.mysql.service;
 
+import com.infosys.camundaconnectors.db.mysql.model.request.DatabaseConnection;
 import com.infosys.camundaconnectors.db.mysql.model.request.MySQLRequestData;
 import com.infosys.camundaconnectors.db.mysql.model.response.MySQLResponse;
 import com.infosys.camundaconnectors.db.mysql.model.response.QueryResponse;
+import com.infosys.camundaconnectors.db.mysql.utility.DatabaseClient;
+
 import java.sql.*;
 import java.util.Objects;
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +22,8 @@ public class CreateDatabaseService implements MySQLRequestData {
   @NotBlank private String databaseName;
 
   @Override
-  public MySQLResponse invoke(Connection connection) throws SQLException {
+  public MySQLResponse invoke(DatabaseClient databaseClient,DatabaseConnection databaseConnection,String DatabaseName) throws SQLException {
+	  final Connection connection = databaseClient.getConnectionObject(databaseConnection,"");
     QueryResponse<String> queryResponse;
     try (Statement st = connection.createStatement()) {
       String query = "CREATE DATABASE " + databaseName;

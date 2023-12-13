@@ -38,6 +38,7 @@ public class ListFoldersService implements SFTPRequestData {
   List<String> files = new ArrayList<>();
   List<Map<String, Object>> fileDetails = new ArrayList<>();
   List<RemoteResourceInfo> filesArr = new ArrayList<>();
+
   //  @SuppressWarnings("unchecked")
   @Override
   public Response invoke(SFTPClient sftpClient) {

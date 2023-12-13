@@ -20,26 +20,22 @@ import org.slf4j.LoggerFactory;
     type = "com.infosys.camundaconnectors.files:sftp:1")
 public class SFTPFunction implements OutboundConnectorFunction {
   private static final Logger LOGGER = LoggerFactory.getLogger(SFTPFunction.class);
-  private final Gson gson;
+  
   private final SftpServerClient sftpServerClient;
 
   public SFTPFunction() {
-    this(GsonSupplier.getGson(), new SftpServerClient());
+    this(new SftpServerClient());
   }
 
-  public SFTPFunction(Gson gson, SftpServerClient sftpServerClient) {
-    this.gson = gson;
+  public SFTPFunction(SftpServerClient sftpServerClient) {
     this.sftpServerClient = sftpServerClient;
   }
 
   @Override
   public Object execute(OutboundConnectorContext outboundConnectorContext) throws Exception {
-    final var variables = outboundConnectorContext.getVariables();
-    final var sftpRequest = gson.fromJson(variables, SFTPRequest.class);
-    outboundConnectorContext.validate(sftpRequest);
-    outboundConnectorContext.replaceSecrets(sftpRequest);
+    final var context = outboundConnectorContext.bindVariables(SFTPRequest.class);
     LOGGER.debug("Request verified successfully and all required secrets replaced");
-    Object res = sftpRequest.invoke(sftpServerClient);
+    Object res = context.invoke(sftpServerClient);
     sftpServerClient.logoutSftp();
     return res;
   }

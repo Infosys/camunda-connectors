@@ -5,10 +5,8 @@
  */
 package com.infosys.camundaconnectors.db.oracle.model.request;
 
-import io.camunda.connector.api.annotation.Secret;
 import java.util.Objects;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 
 public class DatabaseConnection {
   @NotEmpty private String host;
@@ -18,7 +16,7 @@ public class DatabaseConnection {
   private String port;
 
   @NotEmpty private String username;
-  @NotEmpty @Secret private String password;
+  @NotEmpty private String password;
 
   public String getHost() {
     return host;

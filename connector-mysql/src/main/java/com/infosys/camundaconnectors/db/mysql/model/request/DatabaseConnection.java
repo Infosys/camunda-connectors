@@ -5,10 +5,8 @@
  */
 package com.infosys.camundaconnectors.db.mysql.model.request;
 
-import io.camunda.connector.api.annotation.Secret;
 import java.util.Objects;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 
 public class DatabaseConnection {
   @NotBlank private String host;
@@ -18,7 +16,7 @@ public class DatabaseConnection {
   private String port;
 
   @NotBlank private String username;
-  @NotBlank @Secret private String password;
+   private String password;
 
   public String getHost() {
     return host;

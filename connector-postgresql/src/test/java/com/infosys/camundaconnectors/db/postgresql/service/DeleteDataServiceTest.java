@@ -11,8 +11,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
+import com.infosys.camundaconnectors.db.postgresql.model.request.DatabaseConnection;
 import com.infosys.camundaconnectors.db.postgresql.model.response.PostgreSQLResponse;
 import com.infosys.camundaconnectors.db.postgresql.model.response.QueryResponse;
+import com.infosys.camundaconnectors.db.postgresql.utility.DatabaseClient;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -31,8 +34,10 @@ import org.mockito.quality.Strictness;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 class DeleteDataServiceTest {
-  @Mock private Connection connectionMock;
-  @Mock private Statement statementMock;
+	@Mock private Connection connectionMock;
+	@Mock private DatabaseClient databaseClient;
+	@Mock private DatabaseConnection connection; 
+	@Mock private Statement statementMock;
   private DeleteDataService service;
 
   @BeforeEach
@@ -42,7 +47,9 @@ class DeleteDataServiceTest {
     service.setTableName("trialtable7");
     service.setFilters(
         Map.of("filter", Map.of("colName", "firstname", "operator", "=", "value", "Xon")));
+    when(databaseClient.getConnectionObject(any(DatabaseConnection.class),any(String.class))).thenReturn(connectionMock);
     when(connectionMock.createStatement()).thenReturn(statementMock);
+
   }
 
   @DisplayName("Should throw error as filter string is invalid")
@@ -51,7 +58,7 @@ class DeleteDataServiceTest {
     // given
     service.setFilters(Map.of("filter", Map.of("colName", "uio")));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("Invalid filter");
@@ -63,7 +70,7 @@ class DeleteDataServiceTest {
     // given
     service.setFilters(Map.of("kia", "op"));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("Map can have keys - filter, logicalOperator and filterList");
@@ -76,7 +83,7 @@ class DeleteDataServiceTest {
     when(statementMock.executeUpdate(anyString()))
         .thenThrow(new SQLException("relation \"tableName\" does not exist"));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("relation \"tableName\" does not exist");
@@ -90,7 +97,7 @@ class DeleteDataServiceTest {
     // given
     service.setFilters(Map.of("filter", Map.of("colName", "", "operator", "=", "value", "Bob")));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("Column Name can not be null or blank");
@@ -109,7 +116,7 @@ class DeleteDataServiceTest {
             "filterList",
             List.of(Map.of("filter", "firstname = 'Bob'"), Map.of("filter", "personId = 'io'"))));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining(
@@ -131,7 +138,7 @@ class DeleteDataServiceTest {
     when(statementMock.executeUpdate(anyString()))
         .thenThrow(new SQLException("'io' invalid number"));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("invalid number");
@@ -145,7 +152,7 @@ class DeleteDataServiceTest {
     // given input
     when(statementMock.executeUpdate(anyString())).thenReturn(1);
     // When
-    PostgreSQLResponse result = service.invoke(connectionMock);
+    PostgreSQLResponse result = service.invoke(databaseClient,connection,"databaseName");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(any(String.class));
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -160,7 +167,7 @@ class DeleteDataServiceTest {
         Map.of("filter", Map.of("colName", "firstname", "operator", "like", "value", "%kio%")));
     when(statementMock.executeUpdate(anyString())).thenReturn(1);
     // When
-    PostgreSQLResponse result = service.invoke(connectionMock);
+    PostgreSQLResponse result = service.invoke(databaseClient,connection,"databaseName");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(any(String.class));
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -181,7 +188,7 @@ class DeleteDataServiceTest {
                 Map.of("filter", Map.of("colName", "personid", "operator", ">", "value", 1)))));
     when(statementMock.executeUpdate(anyString())).thenReturn(1);
     // When
-    PostgreSQLResponse result = service.invoke(connectionMock);
+    PostgreSQLResponse result = service.invoke(databaseClient,connection,"databaseName");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(any(String.class));
     Mockito.verify(connectionMock, Mockito.times(1)).close();

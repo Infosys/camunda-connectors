@@ -12,7 +12,7 @@ import com.infosys.camundaconnectors.db.oracle.model.response.QueryResponse;
 import com.infosys.camundaconnectors.db.oracle.utility.ConstructWhereClause;
 import java.sql.*;
 import java.util.*;
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

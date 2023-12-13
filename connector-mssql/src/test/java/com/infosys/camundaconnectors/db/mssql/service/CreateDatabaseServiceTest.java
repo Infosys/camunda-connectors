@@ -12,13 +12,14 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
+import com.infosys.camundaconnectors.db.mssql.model.request.DatabaseConnection;
 import com.infosys.camundaconnectors.db.mssql.model.response.MSSQLResponse;
 import com.infosys.camundaconnectors.db.mssql.model.response.QueryResponse;
+import com.infosys.camundaconnectors.db.mssql.utility.DatabaseClient;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,14 +33,17 @@ import org.mockito.quality.Strictness;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 class CreateDatabaseServiceTest {
-  @Mock private Connection connectionMock;
-  @Mock private Statement statementMock;
+	 @Mock private Connection connectionMock;
+	  @Mock private DatabaseClient databaseClient;
+	  @Mock private DatabaseConnection connection; 
+	  @Mock private Statement statementMock;
   private CreateDatabaseService service;
 
   @BeforeEach
   public void init() throws SQLException {
     service = new CreateDatabaseService();
     service.setDatabaseName("test5database");
+    when(databaseClient.getConnectionObject(any(DatabaseConnection.class),any(String.class))).thenReturn(connectionMock);
     when(connectionMock.createStatement()).thenReturn(statementMock);
   }
 
@@ -49,7 +53,7 @@ class CreateDatabaseServiceTest {
     // given
     when(statementMock.executeUpdate(anyString())).thenReturn(1);
     // When
-    MSSQLResponse result = service.invoke(connectionMock);
+    MSSQLResponse result = service.invoke(databaseClient,connection,"databaseName");
     // Then
     @SuppressWarnings("unchecked")
     QueryResponse<String> queryResponse = (QueryResponse<String>) result;
@@ -68,7 +72,7 @@ class CreateDatabaseServiceTest {
     when(statementMock.executeUpdate(anyString()))
         .thenThrow(new RuntimeException("database \"alpha74081\" " + "already exists"));
     // When
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // Then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("database \"alpha74081\" already exists");

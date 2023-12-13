@@ -6,11 +6,11 @@
 package com.infosys.camundaconnectors.db.postgresql.model.request;
 
 import com.infosys.camundaconnectors.db.postgresql.model.response.PostgreSQLResponse;
-import java.sql.Connection;
+import com.infosys.camundaconnectors.db.postgresql.utility.DatabaseClient;
+
 import java.sql.SQLException;
 
 public interface PostgreSQLRequestData {
-  PostgreSQLResponse invoke(final Connection connection) throws SQLException;
-
+  PostgreSQLResponse invoke(final DatabaseClient databaseClient,DatabaseConnection databaseConnection,String databaseName) throws SQLException;
   String getDatabaseName();
 }

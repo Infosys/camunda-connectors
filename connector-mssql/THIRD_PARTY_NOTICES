@@ -7,8 +7,8 @@ This project incorporates components with the licenses under which Infosys recei
 
  * com.fasterxml:classmate (Version: 1.5.1 License: Apache License, Version 2.0 (URL: https://www.apache.org/licenses/LICENSE-2.0.txt))
  * com.google.code.gson:gson (Version: 2.10 License: Apache-2.0 (URL: https://www.apache.org/licenses/LICENSE-2.0.txt))
- * io.camunda.connector:connector-core (Version: 0.4.0 License: The Apache Software License, Version 2.0 (URL:http://www.apache.org/licenses/LICENSE-2.0.txt))
- * io.camunda.connector:connector-validation (Version: 0.4.0 License: The Apache Software License, Version 2.0 (URL:http://www.apache.org/licenses/LICENSE-2.0.txt))
+ * io.camunda.connector:connector-core (Version: 8.3.1 License: The Apache Software License, Version 2.0 (URL:http://www.apache.org/licenses/LICENSE-2.0.txt))
+ * io.camunda.connector:connector-validation (Version: 8.3.1 License: The Apache Software License, Version 2.0 (URL:http://www.apache.org/licenses/LICENSE-2.0.txt))
  * jakarta.validation:jakarta.validation-api (Version: 2.0.2 License: Apache License 2.0 (URL: http://www.apache.org/licenses/LICENSE-2.0.txt))
  * com.microsoft.sqlserver:mssql-jdbc (Version:9.4.1.jre11 License: The MIT License (URL: https://github.com/microsoft/mssql-jdbc/blob/main/LICENSE))
  * net.bytebuddy:byte-buddy-agent (Version: 1.12.16 License: Apache License, Version 2.0 (URL: https://www.apache

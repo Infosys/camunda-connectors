@@ -5,16 +5,18 @@
  */
 package com.infosys.camundaconnectors.db.mysql.service;
 
+import com.infosys.camundaconnectors.db.mysql.model.request.DatabaseConnection;
 import com.infosys.camundaconnectors.db.mysql.model.request.MySQLRequestData;
 import com.infosys.camundaconnectors.db.mysql.model.response.MySQLResponse;
 import com.infosys.camundaconnectors.db.mysql.model.response.QueryResponse;
 import com.infosys.camundaconnectors.db.mysql.utility.ConstructWhereClause;
+import com.infosys.camundaconnectors.db.mysql.utility.DatabaseClient;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +29,8 @@ public class DeleteDataService implements MySQLRequestData {
   private Integer limit;
 
   @Override
-  public MySQLResponse invoke(Connection connection) throws SQLException {
+  public MySQLResponse invoke(DatabaseClient databaseClient,DatabaseConnection databaseConnection,String DatabaseName) throws SQLException {
+	  final Connection connection = databaseClient.getConnectionObject(databaseConnection, databaseName);
     QueryResponse<String> queryResponse;
     try {
       String deleteQuery = deleteRowsQuery(tableName, filters, orderBy, limit);

@@ -45,9 +45,9 @@ public class MSSQLRequestDeserializer
       JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext)
       throws JsonParseException {
     return getTypeElementValue(jsonElement)
-		    .map(typeRegistry::get)
-		    .map(MSSQLRequestDeserializer::getTypeToken)
-		    .map(typeToken -> getMSSQLRequest(jsonElement, typeToken))
+        .map(typeRegistry::get)
+        .map(MSSQLRequestDeserializer::getTypeToken)
+        .map(typeToken -> getMSSQLRequest(jsonElement, typeToken))
         .orElse(null);
   }
 
@@ -57,8 +57,8 @@ public class MSSQLRequestDeserializer
     return Optional.ofNullable(element).map(JsonElement::getAsString);
   }
 
-	private MSSQLRequest<? extends MSSQLRequestData> getMSSQLRequest(
-			JsonElement jsonElement, TypeToken<MSSQLRequest<? extends MSSQLRequestData>> typeToken) {
-		return gson.fromJson(jsonElement, typeToken.getType());
-	}
+  private MSSQLRequest<? extends MSSQLRequestData> getMSSQLRequest(
+      JsonElement jsonElement, TypeToken<MSSQLRequest<? extends MSSQLRequestData>> typeToken) {
+    return gson.fromJson(jsonElement, typeToken.getType());
+  }
 }

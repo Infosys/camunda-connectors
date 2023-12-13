@@ -8,10 +8,8 @@ package com.infosys.camundaconnectors.db.mssql.model;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.infosys.camundaconnectors.db.mssql.model.response.QueryResponse;
-
 import java.util.List;
 import java.util.Map;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

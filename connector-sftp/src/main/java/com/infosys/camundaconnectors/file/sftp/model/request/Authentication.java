@@ -5,10 +5,8 @@
  */
 package com.infosys.camundaconnectors.file.sftp.model.request;
 
-import io.camunda.connector.api.annotation.Secret;
 import java.util.Objects;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 
 public class Authentication {
   @NotBlank(message = "Please provide a valid hostName for sftp server")
@@ -22,7 +20,6 @@ public class Authentication {
   private String username;
 
   @NotBlank(message = "Please provide a valid password for sftp server")
-  @Secret
   private String password;
 
   @NotBlank(message = "Please provide a valid known hosts path")

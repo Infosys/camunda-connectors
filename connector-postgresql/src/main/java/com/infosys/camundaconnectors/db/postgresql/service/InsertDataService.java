@@ -6,9 +6,12 @@
 
 package com.infosys.camundaconnectors.db.postgresql.service;
 
+import com.infosys.camundaconnectors.db.postgresql.model.request.DatabaseConnection;
 import com.infosys.camundaconnectors.db.postgresql.model.request.PostgreSQLRequestData;
 import com.infosys.camundaconnectors.db.postgresql.model.response.PostgreSQLResponse;
 import com.infosys.camundaconnectors.db.postgresql.model.response.QueryResponse;
+import com.infosys.camundaconnectors.db.postgresql.utility.DatabaseClient;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -17,8 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,8 +31,9 @@ public class InsertDataService implements PostgreSQLRequestData {
   @NotEmpty private List<Map<String, Object>> dataToInsert;
 
   @Override
-  public PostgreSQLResponse invoke(Connection connection) throws SQLException {
-    QueryResponse<String> queryResponse;
+  public PostgreSQLResponse invoke(DatabaseClient databaseClient,DatabaseConnection databaseConnection,String databaseName) throws SQLException {
+	  final Connection connection = databaseClient.getConnectionObject(databaseConnection, databaseName);
+	  QueryResponse<String> queryResponse;
     try {
       if (dataToInsert == null || dataToInsert.isEmpty()) {
         String errMsg = "dataToInsert can not be null or empty";

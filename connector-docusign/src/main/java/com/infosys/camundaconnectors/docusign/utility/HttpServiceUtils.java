@@ -28,7 +28,7 @@ public class HttpServiceUtils {
 
   public Map<String, Object> postRequest(
       String basePath, String jsonPayLoad, Authentication authentication) {
-
+	System.out.println(authentication.getBaseUri());
     Map<String, Object> res = null;
     try {
       HttpPost httpPost = new HttpPost(basePath);

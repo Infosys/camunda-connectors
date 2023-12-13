@@ -10,6 +10,9 @@ import com.infosys.camundaconnectors.file.sftp.model.request.SFTPRequestData;
 import com.infosys.camundaconnectors.file.sftp.model.response.Response;
 import com.infosys.camundaconnectors.file.sftp.model.response.SFTPResponse;
 import com.infosys.camundaconnectors.file.sftp.utility.FileSortCondition;
+
+import jakarta.validation.constraints.NotBlank;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.text.DateFormat;
@@ -17,7 +20,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
-import javax.validation.constraints.NotBlank;
 import net.schmizz.sshj.sftp.RemoteResourceInfo;
 import net.schmizz.sshj.sftp.SFTPClient;
 import org.slf4j.Logger;
@@ -29,7 +31,7 @@ public class ListFilesService implements SFTPRequestData {
   private String fileNamePattern;
   private String modifiedBefore;
   private String modifiedAfter;
-  @NotBlank private String searchSubFoldersAlso;
+ private String searchSubFoldersAlso;
   private String maxNumberOfFiles;
   private String maxDepth;
   private String outputType;
@@ -39,6 +41,7 @@ public class ListFilesService implements SFTPRequestData {
   List<String> files = new ArrayList<>();
   List<Map<String, Object>> fileDetails = new ArrayList<>();
   List<RemoteResourceInfo> filesArr = new ArrayList<>();
+
   //  @SuppressWarnings("unchecked")
   @Override
   public Response invoke(SFTPClient sftpClient) {
@@ -394,12 +397,12 @@ public class ListFilesService implements SFTPRequestData {
     this.outputType = outputType;
   }
 
-  public String getFolderPath() {
+  public String getFilePath() {
     return filePath;
   }
 
-  public void setFolderPath(String folderPath) {
-    this.filePath = folderPath;
+  public void setFilePath(String filePath) {
+    this.filePath = filePath;
   }
 
   @Override

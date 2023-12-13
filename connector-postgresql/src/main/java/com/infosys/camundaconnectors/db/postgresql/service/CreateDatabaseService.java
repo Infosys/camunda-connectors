@@ -6,12 +6,15 @@
 
 package com.infosys.camundaconnectors.db.postgresql.service;
 
+import com.infosys.camundaconnectors.db.postgresql.model.request.DatabaseConnection;
 import com.infosys.camundaconnectors.db.postgresql.model.request.PostgreSQLRequestData;
 import com.infosys.camundaconnectors.db.postgresql.model.response.PostgreSQLResponse;
 import com.infosys.camundaconnectors.db.postgresql.model.response.QueryResponse;
+import com.infosys.camundaconnectors.db.postgresql.utility.DatabaseClient;
+
 import java.sql.*;
 import java.util.Objects;
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +23,8 @@ public class CreateDatabaseService implements PostgreSQLRequestData {
   @NotBlank private String databaseName;
 
   @Override
-  public PostgreSQLResponse invoke(Connection connection) throws SQLException {
+  public PostgreSQLResponse invoke(DatabaseClient databaseClient,DatabaseConnection databaseConnection,String databaseName) throws SQLException {
+	final Connection connection = databaseClient.getConnectionObject(databaseConnection, "template1");
     QueryResponse<String> queryResponse;
     try (Statement st = connection.createStatement()) {
       String query = "CREATE DATABASE " + databaseName;

@@ -43,7 +43,7 @@ public class OracleDBFunctionTest extends BaseTest {
 
   @BeforeEach
   public void init() throws SQLException {
-    oracleDBFunction = new OracleDBFunction(gson, databaseClient);
+    oracleDBFunction = new OracleDBFunction(databaseClient);
     when(databaseClient.getConnectionObject(any(DatabaseConnection.class), any(String.class)))
         .thenReturn(connectionMock);
     when(connectionMock.createStatement()).thenReturn(statementMock);

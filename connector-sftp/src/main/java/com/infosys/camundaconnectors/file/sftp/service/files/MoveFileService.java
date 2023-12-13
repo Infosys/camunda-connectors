@@ -9,12 +9,15 @@ import com.infosys.camundaconnectors.file.sftp.model.request.SFTPRequestData;
 import com.infosys.camundaconnectors.file.sftp.model.response.Response;
 import com.infosys.camundaconnectors.file.sftp.model.response.SFTPResponse;
 import com.infosys.camundaconnectors.file.sftp.utility.RenameFileUtil;
+
+import jakarta.validation.constraints.NotBlank;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Objects;
-import javax.validation.constraints.NotBlank;
 import net.schmizz.sshj.sftp.SFTPClient;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

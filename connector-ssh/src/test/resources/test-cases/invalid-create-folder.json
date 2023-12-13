@@ -1,0 +1,51 @@
+[
+    {
+      "description": "invalid create folder - invalid folderPath  ",
+      "authentication": {
+        "hostname": "hostName",
+        "portNumber": "22",
+        "username": "Usrname",
+        "password": "secrets.TOKEN"       ,
+        "knownHostsPath":"pathOf/known_hosts"
+      },
+      "operation": "sftp.create-folder",
+      "data": {
+          "folderPath":"",
+          "newfolderName":"demo.example",
+          "actionIfFileExists":"rename"
+      }
+    },
+    {
+        "description": "invalid create folder - invalid newFolderName ",
+        "authentication": {
+          "hostname": "Hostname",
+          "portNumber": "22",
+          "username": "Username",
+          "password": "Password"       ,
+          "knownHostsPath":"pathOf/known_hosts"
+        },
+        "operation": "sftp.create-folder",
+        "data": {
+            "folderPath":"C:/Users/curation.bot/Documents",
+            "newfolderName":"",
+            "actionIfFileExists":"replace"
+        }
+      },
+      
+    {
+        "description": "invalid create folder - invalid actionIfFileExists  ",
+        "authentication": {
+          "hostname": "Hostname",
+          "portNumber": "22",
+          "username": "Username",
+          "password": "Password"       ,
+          "knownHostsPath":"pathOf/known_hosts"
+        },
+        "operation": "sftp.create-folder",
+        "data": {
+            "folderPath":"C:/Users/curation.bot/Documents",
+            "newfolderName":"demo.example",
+            "actionIfFileExists":""
+        }
+      }
+  ]

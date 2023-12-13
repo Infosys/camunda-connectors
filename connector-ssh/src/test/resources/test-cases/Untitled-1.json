@@ -1,0 +1,1 @@
+{"data":{"timeout":"10","outputType":"statusCode","commandLine":"single","commands":["ipconfig"]},"operation":"ssh.executeCommand","authentication":{"knownHostsPath":"C:\\\\user\\\\.ssh\\\\known_hosts","hostname":"vimptblt1-97","username":"rohitashokashok.s","operatingSystem":"windows","portNumber":"22","password":"secrets.PASSWORD"}}

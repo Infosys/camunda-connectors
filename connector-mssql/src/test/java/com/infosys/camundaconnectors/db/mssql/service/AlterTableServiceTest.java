@@ -10,8 +10,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
+import com.infosys.camundaconnectors.db.mssql.model.request.DatabaseConnection;
 import com.infosys.camundaconnectors.db.mssql.model.response.MSSQLResponse;
 import com.infosys.camundaconnectors.db.mssql.model.response.QueryResponse;
+import com.infosys.camundaconnectors.db.mssql.utility.DatabaseClient;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -30,10 +33,10 @@ import org.mockito.quality.Strictness;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 class AlterTableServiceTest {
-  @Mock
-  private Connection connectionMock;
-  @Mock
-  private Statement statementMock;
+	@Mock private Connection connectionMock;
+	  @Mock private DatabaseClient databaseClient;
+	  @Mock private DatabaseConnection connection; 
+	  @Mock private Statement statementMock;
   private AlterTableService service;
 
   @BeforeEach
@@ -49,6 +52,7 @@ class AlterTableServiceTest {
     service.setColumnsDetails(List.of());
     service.setConstraintDetails(List.of(Map.of()));
     service.setNewTableName("");
+    when(databaseClient.getConnectionObject(any(DatabaseConnection.class),any(String.class))).thenReturn(connectionMock);
     when(connectionMock.createStatement()).thenReturn(statementMock);
   }
 
@@ -60,7 +64,7 @@ class AlterTableServiceTest {
     service.setNewTableName("member");
     when(statementMock.executeUpdate(any(String.class))).thenReturn(0);
     // When
-    MSSQLResponse result = service.invoke(connectionMock);
+    MSSQLResponse result = service.invoke(databaseClient,connection,"database");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(anyString());
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -76,7 +80,7 @@ class AlterTableServiceTest {
 
     when(statementMock.executeUpdate(any(String.class))).thenReturn(0);
     // When
-    MSSQLResponse result = service.invoke(connectionMock);
+    MSSQLResponse result = service.invoke(databaseClient,connection,"database");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(anyString());
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -90,12 +94,12 @@ class AlterTableServiceTest {
     // given
     service.setMethod("ADD_COLUMN");
     service.setColumnsDetails(
-            List.of(
-                    Map.of("colName", "member_address", "dataType", "char(60)", "constraint", "NOT NULL"),
-                    Map.of("colName", "member_contact_number", "dataType", "int")));
+        List.of(
+            Map.of("colName", "member_address", "dataType", "char(60)", "constraint", "NOT NULL"),
+            Map.of("colName", "member_contact_number", "dataType", "int")));
     when(statementMock.executeUpdate(any(String.class))).thenReturn(0);
     // When
-    MSSQLResponse result = service.invoke(connectionMock);
+    MSSQLResponse result = service.invoke(databaseClient,connection,"database");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(anyString());
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -108,21 +112,21 @@ class AlterTableServiceTest {
     // given
     service.setMethod("ADD_CONSTRAINT");
     service.setConstraintDetails(
-            List.of(
-                    Map.of("name", "unique", "sYmbol", "uq_member_id", "Definition", "member_id"),
-                    Map.of("Name", "Primary Key", "Symbol", "pk_member_id", "Definition", "member_id"),
-                    Map.of(
-                            "Name",
-                            "Foreign Key",
-                            "Symbol",
-                            "fk_member_id",
-                            "Definition",
-                            "(member_id) REFERENCES trialtable(PersonID)"),
-                    Map.of("Name", "DEFAULT", "Symbol", "Sys_date", "Definition", "GETDATE() FOR Sys_date"),
-                    Map.of("name", "CHECK", "symbol", "check_member_id", "Definition", "member_id>0")));
+        List.of(
+            Map.of("name", "unique", "sYmbol", "uq_member_id", "Definition", "member_id"),
+            Map.of("Name", "Primary Key", "Symbol", "pk_member_id", "Definition", "member_id"),
+            Map.of(
+                "Name",
+                "Foreign Key",
+                "Symbol",
+                "fk_member_id",
+                "Definition",
+                "(member_id) REFERENCES trialtable(PersonID)"),
+            Map.of("Name", "DEFAULT", "Symbol", "Sys_date", "Definition", "GETDATE() FOR Sys_date"),
+            Map.of("name", "CHECK", "symbol", "check_member_id", "Definition", "member_id>0")));
     when(statementMock.executeUpdate(any(String.class))).thenReturn(0);
     // When
-    MSSQLResponse result = service.invoke(connectionMock);
+    MSSQLResponse result = service.invoke(databaseClient,connection,"database");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(anyString());
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -135,10 +139,10 @@ class AlterTableServiceTest {
     // given
     service.setMethod("DROP_CONSTRAINT");
     service.setDropConstraintsList(
-            List.of("pk_member_id", "fk_member_id", "uq_member_id", "check_member_id", "sys_date"));
+        List.of("pk_member_id", "fk_member_id", "uq_member_id", "check_member_id", "sys_date"));
     when(statementMock.executeUpdate(any(String.class))).thenReturn(0);
     // When
-    MSSQLResponse result = service.invoke(connectionMock);
+    MSSQLResponse result = service.invoke(databaseClient,connection,"database");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(anyString());
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -153,7 +157,7 @@ class AlterTableServiceTest {
     service.setDropColumnsList(List.of("member_contact_number", "member_address"));
     when(statementMock.executeUpdate(any(String.class))).thenReturn(0);
     // When
-    MSSQLResponse result = service.invoke(connectionMock);
+    MSSQLResponse result = service.invoke(databaseClient,connection,"database");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(anyString());
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -168,7 +172,7 @@ class AlterTableServiceTest {
     service.setConstraintName("fk_member_id");
     when(statementMock.executeUpdate(any(String.class))).thenReturn(0);
     // When
-    MSSQLResponse result = service.invoke(connectionMock);
+    MSSQLResponse result = service.invoke(databaseClient,connection,"database");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(anyString());
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -183,7 +187,7 @@ class AlterTableServiceTest {
     service.setConstraintName("fk_member_id");
     when(statementMock.executeUpdate(any(String.class))).thenReturn(0);
     // When
-    MSSQLResponse result = service.invoke(connectionMock);
+    MSSQLResponse result = service.invoke(databaseClient,connection,"database");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(anyString());
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -197,11 +201,11 @@ class AlterTableServiceTest {
     // given
     service.setMethod("Modify Column");
     service.setModifyColumnsDetails(
-            Map.of(
-                    "colName", "member_contact_number", "dataType", "varchar(13)", "constraint", "NULL"));
+        Map.of(
+            "colName", "member_contact_number", "dataType", "varchar(13)", "constraint", "NULL"));
     when(statementMock.executeUpdate(any(String.class))).thenReturn(0);
     // When
-    MSSQLResponse result = service.invoke(connectionMock);
+    MSSQLResponse result = service.invoke(databaseClient,connection,"database");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(anyString());
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -215,12 +219,12 @@ class AlterTableServiceTest {
     service.setNewTableName("testEmployee");
     // given
     when(statementMock.executeUpdate(anyString()))
-            .thenThrow(new SQLException("table or view does not exist"));
+        .thenThrow(new SQLException("table or view does not exist"));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
-            // then
-            .isInstanceOf(SQLException.class)
-            .hasMessageContaining("table or view does not exist");
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"database"))
+        // then
+        .isInstanceOf(SQLException.class)
+        .hasMessageContaining("table or view does not exist");
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(any(String.class));
     Mockito.verify(connectionMock, Mockito.times(1)).close();
   }
@@ -229,15 +233,15 @@ class AlterTableServiceTest {
   @Test
   void shouldThrowErrorInvalidMethod() throws SQLException {
     String errMsg =
-            "Method can only be - disableConstraint, enableConstraint, "
-                    + "modifyColumn, renameTable, renameColumn, "
-                    + "dropColumn, dropConstraint, addConstraint, addColumn";
+        "Method can only be - disableConstraint, enableConstraint, "
+            + "modifyColumn, renameTable, renameColumn, "
+            + "dropColumn, dropConstraint, addConstraint, addColumn";
     service.setMethod("Alter");
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
-            // then
-            .isInstanceOf(RuntimeException.class)
-            .hasMessageContaining(errMsg);
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"database"))
+        // then
+        .isInstanceOf(RuntimeException.class)
+        .hasMessageContaining(errMsg);
     Mockito.verify(connectionMock, Mockito.times(1)).close();
   }
 
@@ -246,10 +250,10 @@ class AlterTableServiceTest {
   void shouldThrowErrorMissingNewTableName() throws SQLException {
     service.setMethod("renameTable");
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
-            // then
-            .isInstanceOf(RuntimeException.class)
-            .hasMessageContaining("'newTableName' can not be null or blank");
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"database"))
+        // then
+        .isInstanceOf(RuntimeException.class)
+        .hasMessageContaining("'newTableName' can not be null or blank");
     Mockito.verify(connectionMock, Mockito.times(1)).close();
   }
 
@@ -258,10 +262,10 @@ class AlterTableServiceTest {
   void shouldThrowErrorMissingNewColumnDetail() throws SQLException {
     service.setMethod("renameColumn");
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
-            // then
-            .isInstanceOf(RuntimeException.class)
-            .hasMessageContaining("'newColumnDetail' is invalid");
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"database"))
+        // then
+        .isInstanceOf(RuntimeException.class)
+        .hasMessageContaining("'newColumnDetail' is invalid");
     Mockito.verify(connectionMock, Mockito.times(1)).close();
   }
 
@@ -271,11 +275,11 @@ class AlterTableServiceTest {
     service.setMethod("renameColumn");
     service.setNewColumnDetail(Map.of("oldColName", "troy"));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
-            // then
-            .isInstanceOf(RuntimeException.class)
-            .hasMessageContaining(
-                    "'newColumnDetail' is invalid. Keys 'oldColName' and 'newColName' is required");
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"database"))
+        // then
+        .isInstanceOf(RuntimeException.class)
+        .hasMessageContaining(
+            "'newColumnDetail' is invalid. Keys 'oldColName' and 'newColName' is required");
     Mockito.verify(connectionMock, Mockito.times(1)).close();
   }
 
@@ -285,12 +289,12 @@ class AlterTableServiceTest {
     service.setMethod("addConstraint");
     service.setConstraintDetails(List.of(Map.of()));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
-            // then
-            .isInstanceOf(RuntimeException.class)
-            .hasMessageContaining(
-                    "Unable to create alter table - "
-                            + "add constraint query, Please check the input 'constraintDetails'");
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"database"))
+        // then
+        .isInstanceOf(RuntimeException.class)
+        .hasMessageContaining(
+            "Unable to create alter table - "
+                + "add constraint query, Please check the input 'constraintDetails'");
     Mockito.verify(connectionMock, Mockito.times(1)).close();
   }
 
@@ -299,13 +303,13 @@ class AlterTableServiceTest {
   void shouldThrowErrorInvalidConstraintType() throws SQLException {
     service.setMethod("addConstraint");
     service.setConstraintDetails(
-            List.of(Map.of("name", "col1", "symbol", "cons", "definition", "col1")));
+        List.of(Map.of("name", "col1", "symbol", "cons", "definition", "col1")));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
-            // then
-            .isInstanceOf(RuntimeException.class)
-            .hasMessageContaining(
-                    "name should be - default, unique, primary key, foreign key or check");
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"database"))
+        // then
+        .isInstanceOf(RuntimeException.class)
+        .hasMessageContaining(
+            "name should be - default, unique, primary key, foreign key or check");
     Mockito.verify(connectionMock, Mockito.times(1)).close();
   }
 
@@ -315,12 +319,12 @@ class AlterTableServiceTest {
     service.setMethod("addConstraint");
     service.setConstraintDetails(List.of(Map.of("name", "primaryKey", "definition", "col1")));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
-            // then
-            .isInstanceOf(RuntimeException.class)
-            .hasMessageContaining(
-                    "'symbol' can not be null or blank. "
-                            + "Please provide constraint name. e.g. symbol: 'pk_id'");
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"database"))
+        // then
+        .isInstanceOf(RuntimeException.class)
+        .hasMessageContaining(
+            "'symbol' can not be null or blank. "
+                + "Please provide constraint name. e.g. symbol: 'pk_id'");
     Mockito.verify(connectionMock, Mockito.times(1)).close();
   }
 
@@ -329,13 +333,13 @@ class AlterTableServiceTest {
   void shouldThrowErrorInvalidConstraintDetailsInvalidConstraintName() throws SQLException {
     service.setMethod("addConstraint");
     service.setConstraintDetails(
-            List.of(Map.of("name", "col1", "definition", "col1", "symbol", "ol")));
+        List.of(Map.of("name", "col1", "definition", "col1", "symbol", "ol")));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
-            // then
-            .isInstanceOf(RuntimeException.class)
-            .hasMessageContaining(
-                    "name should be - default, unique, " + "primary key, foreign key or check");
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"database"))
+        // then
+        .isInstanceOf(RuntimeException.class)
+        .hasMessageContaining(
+            "name should be - default, unique, " + "primary key, foreign key or check");
     Mockito.verify(connectionMock, Mockito.times(1)).close();
   }
 
@@ -344,8 +348,8 @@ class AlterTableServiceTest {
     @SuppressWarnings("unchecked")
     QueryResponse<String> queryResponse = (QueryResponse<String>) result;
     assertThat(queryResponse)
-            .extracting("response")
-            .asInstanceOf(STRING)
-            .contains("executed successfully");
+        .extracting("response")
+        .asInstanceOf(STRING)
+        .contains("executed successfully");
   }
 }

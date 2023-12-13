@@ -10,8 +10,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
+import com.infosys.camundaconnectors.db.mysql.model.request.DatabaseConnection;
 import com.infosys.camundaconnectors.db.mysql.model.response.MySQLResponse;
 import com.infosys.camundaconnectors.db.mysql.model.response.QueryResponse;
+import com.infosys.camundaconnectors.db.mysql.utility.DatabaseClient;
+
 import java.sql.*;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +32,9 @@ import org.mockito.quality.Strictness;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 class ReadDataServiceTest {
+	  @Mock private DatabaseClient databaseClient;
+	  @Mock private DatabaseConnection connection; 
+
   @Mock private Connection connectionMock;
   @Mock private Statement statementMock;
   @Mock private ResultSet resultSetMock;
@@ -45,6 +51,7 @@ class ReadDataServiceTest {
     service.setColumnNames(List.of("FirstName"));
     service.setOrderBy(List.of(Map.of("sortOn", "personid", "order", "descending")));
     service.setLimit(1000);
+    when(databaseClient.getConnectionObject(any(DatabaseConnection.class),any(String.class))).thenReturn(connectionMock);
     when(connectionMock.createStatement()).thenReturn(statementMock);
     when(resultSetMock.getMetaData()).thenReturn(resultSetMetaData);
   }
@@ -55,7 +62,7 @@ class ReadDataServiceTest {
     // given
     service.setFilters(Map.of("filter", Map.of("colName", "uio")));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("Invalid filter");
@@ -67,7 +74,7 @@ class ReadDataServiceTest {
     // given
     service.setFilters(Map.of("kia", "op"));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining(
@@ -81,7 +88,7 @@ class ReadDataServiceTest {
     when(statementMock.executeQuery(anyString()))
         .thenThrow(new SQLException("Table 'test7database.xia' doesn't exist"));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("Table 'test7database.xia' doesn't exist");
@@ -98,7 +105,7 @@ class ReadDataServiceTest {
     when(statementMock.executeQuery(anyString()))
         .thenThrow(new SQLException("Unknown column \"ORDERNUMBER\""));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("Unknown column \"ORDERNUMBER\"");
@@ -114,7 +121,7 @@ class ReadDataServiceTest {
     when(statementMock.executeQuery(anyString()))
         .thenThrow(new SQLException("Unknown column \"ORDERID\""));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("Unknown column \"ORDERID\"");
@@ -131,7 +138,7 @@ class ReadDataServiceTest {
     when(resultSetMetaData.getColumnName(1)).thenReturn("something");
     when(resultSetMock.getObject(1)).thenReturn(576);
     // When
-    MySQLResponse result = service.invoke(connectionMock);
+    MySQLResponse result = service.invoke(databaseClient,connection,"databaseName");
     // Then
     assertThatItsValid(result);
   }
@@ -151,7 +158,7 @@ class ReadDataServiceTest {
     when(resultSetMetaData.getColumnName(2)).thenReturn("somewhere");
     when(resultSetMock.getObject(2)).thenReturn(true);
     // When
-    MySQLResponse result = service.invoke(connectionMock);
+    MySQLResponse result = service.invoke(databaseClient,connection,"databaseName");
     // Then
     assertThatItsValid(result);
   }
@@ -186,7 +193,7 @@ class ReadDataServiceTest {
     when(resultSetMetaData.getColumnName(3)).thenReturn("alive");
     when(resultSetMock.getObject(3)).thenReturn(true);
     // When
-    MySQLResponse result = service.invoke(connectionMock);
+    MySQLResponse result = service.invoke(databaseClient,connection,"databaseName");
     // Then
     assertThatItsValid(result);
   }

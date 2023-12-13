@@ -9,16 +9,19 @@ import static org.assertj.core.api.Assertions.STRING;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
+import com.infosys.camundaconnectors.db.mssql.model.request.DatabaseConnection;
 import com.infosys.camundaconnectors.db.mssql.model.response.MSSQLResponse;
 import com.infosys.camundaconnectors.db.mssql.model.response.QueryResponse;
+import com.infosys.camundaconnectors.db.mssql.utility.DatabaseClient;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,10 +35,11 @@ import org.mockito.quality.Strictness;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 public class InsertDataServiceTest {
-  @Mock
-  private Connection connectionMock;
-  @Mock
-  private PreparedStatement psMock;
+	@Mock private Connection connectionMock;
+	  @Mock private DatabaseClient databaseClient;
+	  @Mock private DatabaseConnection connection; 
+	  @Mock private Statement statementMock;
+	  @Mock private PreparedStatement psMock;
   private InsertDataService service;
 
   @BeforeEach
@@ -44,29 +48,31 @@ public class InsertDataServiceTest {
     service.setDatabaseName("test55database");
     service.setTableName("trialtable");
     service.setDataToInsert(
-            List.of(
-                    Map.of(
-                            "PersonID",
-                            1,
-                            "LastName",
-                            "Acre",
-                            "FirstName",
-                            "Alpha",
-                            "Address",
-                            "St. Peter Avenue",
-                            "City",
-                            "New York"),
-                    Map.of(
-                            "PersonID",
-                            2,
-                            "LastName",
-                            "Ben",
-                            "FirstName",
-                            "Bob",
-                            "Address",
-                            "St. Louis Avenue",
-                            "City",
-                            "New Jersey")));
+        List.of(
+            Map.of(
+                "PersonID",
+                1,
+                "LastName",
+                "Acre",
+                "FirstName",
+                "Alpha",
+                "Address",
+                "St. Peter Avenue",
+                "City",
+                "New York"),
+            Map.of(
+                "PersonID",
+                2,
+                "LastName",
+                "Ben",
+                "FirstName",
+                "Bob",
+                "Address",
+                "St. Louis Avenue",
+                "City",
+                "New Jersey")));
+    when(databaseClient.getConnectionObject(any(DatabaseConnection.class),any(String.class))).thenReturn(connectionMock);
+    when(connectionMock.createStatement()).thenReturn(statementMock);
     Mockito.when(connectionMock.prepareStatement(any(String.class))).thenReturn(psMock);
   }
 
@@ -76,10 +82,10 @@ public class InsertDataServiceTest {
     // given
     service.setDataToInsert(List.of(Map.of()));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
-            // then
-            .isInstanceOf(RuntimeException.class)
-            .hasMessageContaining("Invalid dataToInsert, can not be empty or null");
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
+        // then
+        .isInstanceOf(RuntimeException.class)
+        .hasMessageContaining("Invalid dataToInsert, can not be empty or null");
   }
 
   @DisplayName("Should throw error as table data is invalid")
@@ -89,12 +95,12 @@ public class InsertDataServiceTest {
     service.setDataToInsert(List.of(Map.of("PersonID", "op")));
     Mockito.when(connectionMock.prepareStatement(any(String.class))).thenReturn(psMock);
     Mockito.when(psMock.executeUpdate())
-            .thenThrow(new SQLException("Incorrect integer value: 'op' for column 'personid'"));
+        .thenThrow(new SQLException("Incorrect integer value: 'op' for column 'personid'"));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
-            // then
-            .isInstanceOf(RuntimeException.class)
-            .hasMessageContaining("Incorrect integer value: 'op' for column 'personid'");
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
+        // then
+        .isInstanceOf(RuntimeException.class)
+        .hasMessageContaining("Incorrect integer value: 'op' for column 'personid'");
     Mockito.verify(psMock, Mockito.times(1)).executeUpdate();
     Mockito.verify(connectionMock, Mockito.times(1)).close();
   }
@@ -105,12 +111,12 @@ public class InsertDataServiceTest {
     // given
     Mockito.when(connectionMock.prepareStatement(any(String.class))).thenReturn(psMock);
     Mockito.when(psMock.executeUpdate())
-            .thenThrow(new SQLException("Table 'test7database.xia' doesn't exist"));
+        .thenThrow(new SQLException("Table 'test7database.xia' doesn't exist"));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
-            // then
-            .isInstanceOf(RuntimeException.class)
-            .hasMessageContaining("Table 'test7database.xia' doesn't exist");
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
+        // then
+        .isInstanceOf(RuntimeException.class)
+        .hasMessageContaining("Table 'test7database.xia' doesn't exist");
     Mockito.verify(psMock, Mockito.times(1)).executeUpdate();
     Mockito.verify(connectionMock, Mockito.times(1)).close();
   }
@@ -120,25 +126,25 @@ public class InsertDataServiceTest {
   void shouldThrowErrorInvalidColumnName() throws SQLException {
     // given
     service.setDataToInsert(
-            List.of(
-                    Map.of(
-                            "PersonID",
-                            4,
-                            "LastName",
-                            "Acro",
-                            "FirstName",
-                            "Alpha",
-                            "Address",
-                            "St. Peter Avenue",
-                            "Tower",
-                            "New York")));
+        List.of(
+            Map.of(
+                "PersonID",
+                4,
+                "LastName",
+                "Acro",
+                "FirstName",
+                "Alpha",
+                "Address",
+                "St. Peter Avenue",
+                "Tower",
+                "New York")));
     Mockito.when(connectionMock.prepareStatement(any(String.class))).thenReturn(psMock);
     Mockito.when(psMock.executeUpdate()).thenThrow(new SQLException("Unknown column"));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
-            // then
-            .isInstanceOf(RuntimeException.class)
-            .hasMessageContaining("Unknown column");
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
+        // then
+        .isInstanceOf(RuntimeException.class)
+        .hasMessageContaining("Unknown column");
     Mockito.verify(psMock, Mockito.times(1)).executeUpdate();
     Mockito.verify(connectionMock, Mockito.times(1)).close();
   }
@@ -150,7 +156,7 @@ public class InsertDataServiceTest {
     Mockito.when(connectionMock.prepareStatement(any(String.class))).thenReturn(psMock);
     Mockito.when(psMock.executeUpdate()).thenReturn(2);
     // When
-    MSSQLResponse result = service.invoke(connectionMock);
+    MSSQLResponse result = service.invoke(databaseClient,connection,"databaseName");
     // Then
     Mockito.verify(psMock, Mockito.times(1)).executeUpdate();
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -162,21 +168,21 @@ public class InsertDataServiceTest {
   void shouldInsertDataWhenExecute2() throws SQLException {
     // given
     service.setDataToInsert(
-            List.of(
-                    Map.of(
-                            "PersonID",
-                            3,
-                            "LastName",
-                            "Acro",
-                            "FirstName",
-                            "Alpha",
-                            "Address",
-                            "St. Peter Avenue")));
+        List.of(
+            Map.of(
+                "PersonID",
+                3,
+                "LastName",
+                "Acro",
+                "FirstName",
+                "Alpha",
+                "Address",
+                "St. Peter Avenue")));
 
     Mockito.when(connectionMock.prepareStatement(any(String.class))).thenReturn(psMock);
     Mockito.when(psMock.executeUpdate()).thenReturn(1);
     // When
-    MSSQLResponse result = service.invoke(connectionMock);
+    MSSQLResponse result = service.invoke(databaseClient,connection,"databaseName");
     // Then
     Mockito.verify(psMock, Mockito.times(1)).executeUpdate();
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -188,13 +194,13 @@ public class InsertDataServiceTest {
   void shouldInsertDataWhenExecute3() throws SQLException {
     // given
     service.setDataToInsert(
-            List.of(
-                    Map.of("PersonID", 5, "firstname", "last"),
-                    Map.of("lastname", "Hobo", "PersonID", 7, "firstname", "oppo")));
+        List.of(
+            Map.of("PersonID", 5, "firstname", "last"),
+            Map.of("lastname", "Hobo", "PersonID", 7, "firstname", "oppo")));
     Mockito.when(connectionMock.prepareStatement(any(String.class))).thenReturn(psMock);
     Mockito.when(psMock.executeUpdate()).thenReturn(2);
     // When
-    MSSQLResponse result = service.invoke(connectionMock);
+    MSSQLResponse result = service.invoke(databaseClient,connection,"databaseName");
     // Then
     Mockito.verify(psMock, Mockito.times(1)).executeUpdate();
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -206,8 +212,8 @@ public class InsertDataServiceTest {
     @SuppressWarnings("unchecked")
     QueryResponse<String> queryResponse = (QueryResponse<String>) result;
     assertThat(queryResponse)
-            .extracting("response")
-            .asInstanceOf(STRING)
-            .contains("inserted successfully");
+        .extracting("response")
+        .asInstanceOf(STRING)
+        .contains("inserted successfully");
   }
 }

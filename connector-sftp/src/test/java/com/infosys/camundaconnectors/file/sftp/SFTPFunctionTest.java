@@ -55,7 +55,7 @@ class SFTPFunctionTest extends BaseTest {
 
   @BeforeEach
   void init() throws Exception {
-    sftpFunction = new SFTPFunction(gson, sftpServerClient);
+    sftpFunction = new SFTPFunction(sftpServerClient);
     Mockito.when(sftpServerClient.loginSftp(any(Authentication.class))).thenReturn(client);
     Mockito.when(client.newSFTPClient()).thenReturn(sftpClient);
     PathComponents path1 = new PathComponents("root", "c", "dummypath");

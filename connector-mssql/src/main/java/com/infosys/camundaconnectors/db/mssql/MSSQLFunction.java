@@ -20,25 +20,20 @@ import org.slf4j.LoggerFactory;
     type = "com.infosys.camundaconnectors.db:mssql:1")
 public class MSSQLFunction implements OutboundConnectorFunction {
   private static final Logger LOGGER = LoggerFactory.getLogger(MSSQLFunction.class);
-  private final Gson gson;
   private final DatabaseClient databaseClient;
 
   public MSSQLFunction() {
-    this(GsonSupplier.getGson(), new DatabaseClient());
+    this(new DatabaseClient());
   }
 
-  public MSSQLFunction(Gson gson, DatabaseClient databaseClient) {
-    this.gson = gson;
+  public MSSQLFunction(DatabaseClient databaseClient) {
     this.databaseClient = databaseClient;
   }
 
   @Override
   public Object execute(OutboundConnectorContext outboundConnectorContext) throws Exception {
-    final var variables = outboundConnectorContext.getVariables();
-    final var msSQLDBRequest = gson.fromJson(variables, MSSQLRequest.class);
-    outboundConnectorContext.validate(msSQLDBRequest);
-    outboundConnectorContext.replaceSecrets(msSQLDBRequest);
+    final var variables = outboundConnectorContext.bindVariables(MSSQLRequest.class);
     LOGGER.debug("Request verified successfully and all required secrets replaced");
-    return msSQLDBRequest.invoke(databaseClient);
+    return variables.invoke(databaseClient);
   }
 }

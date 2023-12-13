@@ -12,48 +12,45 @@ import java.sql.SQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Creates {@link java.sql.Connection} Object for database
- */
+/** Creates {@link java.sql.Connection} Object for database */
 public class DatabaseClient {
-	private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseClient.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseClient.class);
 
-	public DatabaseClient() {
-	}
+  public DatabaseClient() {}
 
-	public Connection getConnectionObject(
-			DatabaseConnection databaseConnection, String databaseName) {
-		String dbURL =
-				"jdbc:sqlserver://"
-						+ databaseConnection.getHost().strip()
-						+ ":"
-						+ databaseConnection.getPort().strip();
-		if (databaseName != null && !databaseName.isBlank()) dbURL += ";databaseName=" + databaseName;
-		return connectToDatabase(databaseConnection, dbURL);
-	}
+  public Connection getConnectionObject(
+      DatabaseConnection databaseConnection, String databaseName) {
+    String dbURL =
+        "jdbc:sqlserver://"
+            + databaseConnection.getHost().strip()
+            + ":"
+            + databaseConnection.getPort().strip();
+    if (databaseName != null && !databaseName.isBlank()) dbURL += ";databaseName=" + databaseName;
+    return connectToDatabase(databaseConnection, dbURL);
+  }
 
-	private Connection connectToDatabase(DatabaseConnection databaseConnection, String dbURL) {
-		Connection conn;
-		try {
-			conn =
-					DriverManager.getConnection(
-							dbURL, databaseConnection.getUsername(), databaseConnection.getPassword());
-		} catch (SQLException sqlException) {
-			LOGGER.error("SQLException: {}", sqlException.getMessage());
-			if (sqlException.getMessage().contains("Login failed for user"))
-				throw new RuntimeException(
-						"AuthenticationError: Invalid username or password " + sqlException.getMessage(),
-						sqlException);
-			else if (sqlException.getMessage().contains("Cannot open database"))
-				throw new RuntimeException(
-						"InvalidDatabase: Database doesn't exist " + sqlException.getMessage(), sqlException);
-			throw new RuntimeException(
-					"ConnectionError: Unable to connect to DB " + sqlException.getMessage(), sqlException);
-		}
-		if (conn == null) {
-			LOGGER.error("ConnectionError: Unable to connect to Database");
-			throw new RuntimeException("ConnectionError: Unable to connect to Database");
-		} else LOGGER.debug("Connected successfully to the database");
-		return conn;
-	}
+  private Connection connectToDatabase(DatabaseConnection databaseConnection, String dbURL) {
+    Connection conn;
+    try {
+      conn =
+          DriverManager.getConnection(
+              dbURL, databaseConnection.getUsername(), databaseConnection.getPassword());
+    } catch (SQLException sqlException) {
+      LOGGER.error("SQLException: {}", sqlException.getMessage());
+      if (sqlException.getMessage().contains("Login failed for user"))
+        throw new RuntimeException(
+            "AuthenticationError: Invalid username or password " + sqlException.getMessage(),
+            sqlException);
+      else if (sqlException.getMessage().contains("Cannot open database"))
+        throw new RuntimeException(
+            "InvalidDatabase: Database doesn't exist " + sqlException.getMessage(), sqlException);
+      throw new RuntimeException(
+          "ConnectionError: Unable to connect to DB " + sqlException.getMessage(), sqlException);
+    }
+    if (conn == null) {
+      LOGGER.error("ConnectionError: Unable to connect to Database");
+      throw new RuntimeException("ConnectionError: Unable to connect to Database");
+    } else LOGGER.debug("Connected successfully to the database");
+    return conn;
+  }
 }

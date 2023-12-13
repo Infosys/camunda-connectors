@@ -11,8 +11,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
+import com.infosys.camundaconnectors.db.mysql.model.request.DatabaseConnection;
 import com.infosys.camundaconnectors.db.mysql.model.response.MySQLResponse;
 import com.infosys.camundaconnectors.db.mysql.model.response.QueryResponse;
+import com.infosys.camundaconnectors.db.mysql.utility.DatabaseClient;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -32,8 +35,10 @@ import org.mockito.quality.Strictness;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 class CreateTableServiceTest {
-  @Mock private Connection connectionMock;
-  @Mock private Statement statementMock;
+	@Mock private Connection connectionMock;
+	  @Mock private DatabaseClient databaseClient;
+	  @Mock private DatabaseConnection connection; 
+	  @Mock private Statement statementMock;
   private CreateTableService service;
 
   @BeforeEach
@@ -54,6 +59,7 @@ class CreateTableServiceTest {
             Map.of("colName", "firstname", "DataType", "char(50)", "Constraint", "NOT NULL"),
             Map.of("colName", "address", "DataType", "char(50)"),
             Map.of("colName", "city", "DataType", "char(50)")));
+    when(databaseClient.getConnectionObject(any(DatabaseConnection.class),any(String.class))).thenReturn(connectionMock);
     when(connectionMock.createStatement()).thenReturn(statementMock);
   }
 
@@ -63,7 +69,7 @@ class CreateTableServiceTest {
     // given
     when(statementMock.execute(anyString())).thenReturn(true);
     // When
-    MySQLResponse result = service.invoke(connectionMock);
+    MySQLResponse result = service.invoke(databaseClient,connection,"databaseName");
     // Then
     assertThat(result).isInstanceOf(QueryResponse.class);
     @SuppressWarnings("unchecked")
@@ -87,7 +93,7 @@ class CreateTableServiceTest {
                 "Invalid 'columnsList', It should be a list of maps for column, "
                     + "with keys: 'colName', 'dataType' and optional 'constraints'"));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining(
@@ -104,7 +110,7 @@ class CreateTableServiceTest {
     when(statementMock.execute(anyString()))
         .thenThrow(new SQLException("colName or dataType can't be null or empty"));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("colName or dataType can't be null or empty");
@@ -118,7 +124,7 @@ class CreateTableServiceTest {
     when(statementMock.execute(anyString()))
         .thenThrow(new SQLException("Table 'trialtable7' already exists"));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(SQLException.class)
         .hasMessageContaining("Table 'trialtable7' already exists");

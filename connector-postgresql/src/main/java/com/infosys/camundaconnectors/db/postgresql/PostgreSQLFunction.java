@@ -20,25 +20,21 @@ import org.slf4j.LoggerFactory;
     type = "com.infosys.camundaconnectors.db:postgresql:1")
 public class PostgreSQLFunction implements OutboundConnectorFunction {
   private static final Logger LOGGER = LoggerFactory.getLogger(PostgreSQLFunction.class);
-  private final Gson gson;
   private final DatabaseClient databaseClient;
 
   public PostgreSQLFunction() {
-    this(GsonSupplier.getGson(), new DatabaseClient());
+    this(new DatabaseClient());
   }
 
-  public PostgreSQLFunction(Gson gson, DatabaseClient databaseClient) {
-    this.gson = gson;
+  public PostgreSQLFunction(DatabaseClient databaseClient) {
     this.databaseClient = databaseClient;
   }
 
   @Override
   public Object execute(OutboundConnectorContext outboundConnectorContext) throws Exception {
-    final var variables = outboundConnectorContext.getVariables();
-    final var postgreSQLRequest = gson.fromJson(variables, PostgreSQLRequest.class);
-    outboundConnectorContext.validate(postgreSQLRequest);
-    outboundConnectorContext.replaceSecrets(postgreSQLRequest);
+    final var context = outboundConnectorContext.bindVariables(PostgreSQLRequest.class);
     LOGGER.debug("Request verified successfully and all required secrets replaced");
-    return postgreSQLRequest.invoke(databaseClient);
+    var obj=context.invoke(databaseClient);
+    return obj;
   }
 }

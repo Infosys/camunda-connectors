@@ -10,12 +10,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>io.camunda.connector</groupId>
-        <artifactId>connector-parent</artifactId>
-        <version>0.22.1</version>
-        <relativePath/>
-    </parent>
     <name>connector-docusign</name>
     <description>Docusign Connector</description>
     <groupId>com.infosys.camundaconnectors.docusign</groupId>
@@ -38,31 +32,30 @@
         <dependency>
             <groupId>io.camunda.connector</groupId>
             <artifactId>connector-core</artifactId>
-            <version>0.22.1</version>
+            <version>8.3.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.camunda.connector</groupId>
             <artifactId>connector-validation</artifactId>
-            <version>0.22.1</version>
+            <version>8.3.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.camunda.connector</groupId>
             <artifactId>connector-runtime-core</artifactId>
-            <version>0.22.1</version>
+            <version>8.3.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.camunda.connector</groupId>
             <artifactId>jackson-datatype-feel</artifactId>
-            <version>0.22.1</version>
-            <scope>provided</scope>
+            <version>8.3.1</version>
         </dependency>
-         <dependency>
+        <dependency>
             <groupId>io.camunda.connector</groupId>
             <artifactId>connector-test</artifactId>
-            <version>0.22.1</version>
+            <version>8.3.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

@@ -13,8 +13,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
+import com.infosys.camundaconnectors.db.postgresql.model.request.DatabaseConnection;
 import com.infosys.camundaconnectors.db.postgresql.model.response.PostgreSQLResponse;
 import com.infosys.camundaconnectors.db.postgresql.model.response.QueryResponse;
+import com.infosys.camundaconnectors.db.postgresql.utility.DatabaseClient;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -34,6 +37,8 @@ import org.mockito.quality.Strictness;
 @MockitoSettings(strictness = Strictness.LENIENT)
 class AlterTableServiceTest {
   @Mock private Connection connectionMock;
+  @Mock private DatabaseClient databaseClient;
+  @Mock private DatabaseConnection connection; 
   @Mock private Statement statementMock;
   private AlterTableService service;
 
@@ -48,7 +53,9 @@ class AlterTableServiceTest {
     service.setColumnsDetails(List.of());
     service.setConstraintDetails(List.of(Map.of()));
     service.setNewTableName("");
+    when(databaseClient.getConnectionObject(any(DatabaseConnection.class),any(String.class))).thenReturn(connectionMock);
     when(connectionMock.createStatement()).thenReturn(statementMock);
+    
   }
 
   @DisplayName("Should rename the table")
@@ -59,7 +66,7 @@ class AlterTableServiceTest {
     service.setNewTableName("testEmployee");
     when(statementMock.executeUpdate(any(String.class))).thenReturn(0);
     // When
-    PostgreSQLResponse result = service.invoke(connectionMock);
+    PostgreSQLResponse result = service.invoke(databaseClient,connection,"database");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(anyString());
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -75,7 +82,7 @@ class AlterTableServiceTest {
 
     when(statementMock.executeUpdate(any(String.class))).thenReturn(0);
     // When
-    PostgreSQLResponse result = service.invoke(connectionMock);
+    PostgreSQLResponse result = service.invoke(databaseClient,connection,"database");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(anyString());
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -95,7 +102,7 @@ class AlterTableServiceTest {
             Map.of("colName", "dropthis", "dataType", "number")));
     when(statementMock.executeUpdate(any(String.class))).thenReturn(0);
     // When
-    PostgreSQLResponse result = service.invoke(connectionMock);
+    PostgreSQLResponse result = service.invoke(databaseClient,connection,"database");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(anyString());
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -118,7 +125,7 @@ class AlterTableServiceTest {
             Map.of("name", "CHECK", "symbol", "ch_id", "Definition", "empid>0")));
     when(statementMock.executeUpdate(any(String.class))).thenReturn(0);
     // When
-    PostgreSQLResponse result = service.invoke(connectionMock);
+    PostgreSQLResponse result = service.invoke(databaseClient,connection,"dabasename");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(anyString());
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -140,7 +147,7 @@ class AlterTableServiceTest {
             Map.of("EntityToDrop", "Constraint", "Name", "UC_EmpNumber"),
             Map.of("EntityToDrop", "Constraint", "Name", "employee_pkey")));
     // When
-    PostgreSQLResponse result = service.invoke(connectionMock);
+    PostgreSQLResponse result = service.invoke(databaseClient,connection,"databaseName");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(anyString());
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -165,7 +172,7 @@ class AlterTableServiceTest {
                 "timestamp with time zone 'epoch'"),
             Map.of("colName", "city", "dataType", "varchar(30)")));
     // When
-    PostgreSQLResponse result = service.invoke(connectionMock);
+    PostgreSQLResponse result = service.invoke(databaseClient,connection,"databaseName");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(anyString());
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -180,7 +187,7 @@ class AlterTableServiceTest {
     when(statementMock.executeUpdate(anyString()))
         .thenThrow(new SQLException("relation \"tableName\" does not exist"));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(SQLException.class)
         .hasMessageContaining("relation \"tableName\" does not exist");
@@ -195,7 +202,7 @@ class AlterTableServiceTest {
             + "addConstraint, addColumn";
     service.setMethod("Alter");
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining(errMsg);
@@ -206,7 +213,7 @@ class AlterTableServiceTest {
   void shouldThrowErrorInvalidNewTableName() throws SQLException {
     service.setMethod("renameTable");
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("'newTableName' can not be null or blank");
@@ -217,7 +224,7 @@ class AlterTableServiceTest {
   void shouldThrowErrorMissingNewColumnDetail() throws SQLException {
     service.setMethod("renameColumn");
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("'newColumnDetail' is invalid");
@@ -229,7 +236,7 @@ class AlterTableServiceTest {
     service.setMethod("renameColumn");
     service.setNewColumnDetail(Map.of("oldColName", "troy"));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining(
@@ -242,7 +249,7 @@ class AlterTableServiceTest {
     service.setMethod("addConstraint");
     service.setConstraintDetails(List.of(Map.of()));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("Invalid 'constraintDetails', can not contain empty object");
@@ -254,7 +261,7 @@ class AlterTableServiceTest {
     service.setMethod("addConstraint");
     service.setConstraintDetails(List.of(Map.of("name", "check", "definition", "col1>5")));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"demo"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("'symbol' - constraint name is required");
@@ -267,7 +274,7 @@ class AlterTableServiceTest {
     service.setConstraintDetails(
         List.of(Map.of("name", "col1", "definition", "col1", "symbol", "ol")));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("name should be - unique, primary key, foreign key or check");

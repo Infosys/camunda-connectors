@@ -5,16 +5,19 @@
  */
 package com.infosys.camundaconnectors.db.mysql.service;
 
+import com.infosys.camundaconnectors.db.mysql.model.request.DatabaseConnection;
 import com.infosys.camundaconnectors.db.mysql.model.request.MySQLRequestData;
 import com.infosys.camundaconnectors.db.mysql.model.response.MySQLResponse;
 import com.infosys.camundaconnectors.db.mysql.model.response.QueryResponse;
 import com.infosys.camundaconnectors.db.mysql.utility.ConstructWhereClause;
+import com.infosys.camundaconnectors.db.mysql.utility.DatabaseClient;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,8 +31,9 @@ public class ReadDataService implements MySQLRequestData {
   private Integer limit;
 
   @Override
-  public MySQLResponse invoke(Connection connection) throws SQLException {
-    QueryResponse<List<Map<String, Object>>> queryResponse;
+  public MySQLResponse invoke(DatabaseClient databaseClient,DatabaseConnection databaseConnection,String DatabaseName) throws SQLException {
+	final Connection connection = databaseClient.getConnectionObject(databaseConnection, databaseName);
+	QueryResponse<List<Map<String, Object>>> queryResponse;
     try {
       String readDataQuery = selectRowsQuery(tableName, columnNames, filters, orderBy, limit);
       LOGGER.info("Read query: {}", readDataQuery);

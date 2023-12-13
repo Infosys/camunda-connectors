@@ -517,7 +517,7 @@ To start working with the Docusign Connector. user need details like - accountId
 
 -	**accountId**- Account Id of docusign.
 -	**accessToken**: accessToken for making an request. [refer](https://developers.docusign.com/platform/auth/implicit/implicit-get-token/) this for getting an accessToken
--	**baseUri**: baseUri 
+-	**baseUri**: baseUri
 
 ### **Creating Docusign connector task**
 
@@ -530,7 +530,7 @@ To make the Docusign Connector executable, fill out the mandatory fields highlig
 
 ### **Authentication for Docusign Connector**
 
-SFTP Connector authentication object takes – **accountId**, **accessToken**, **baseUri** 
+SFTP Connector authentication object takes – **accountId**, **accessToken**, **baseUri**
 
 ## **Create Or Send Envelope**
 
@@ -582,11 +582,11 @@ SFTP Connector authentication object takes – **accountId**, **accessToken**, *
 > **Send or Create Envelope operation response**
 
 You can use an output mapping to map the response:
-- Use **Result Variable** to store the response in a process variable. 
+- Use **Result Variable** to store the response in a process variable.
 
 ## **Upload Documents To Existing Envelope**
 
-![Upload Documents To Existing Envelope!](./assets/images/UploadDocumentsToExistingEnvelope.png "Upload Documents To Existing Envelope")
+![Upload Documents To Existing Envelope!](./assets/images/Upload Documents To Existing Envelope.png "Upload Documents To Existing Envelope")
 
 > **To Upload Documents To Existing Envelope, take the following steps:**
 1.	In the ***Operation** section*, set the field value *Operation* as **Upload Documents To Existing Envelope**.
@@ -601,7 +601,7 @@ You can use an output mapping to map the response:
       "documentPath":"C:/Users/userDocument.pdf"
     }
     ```
-   
+
 > **Upload Documents To Existing Envelope operation response**
 
 You can use an output mapping to map the response:
@@ -615,7 +615,7 @@ You can use an output mapping to map the response:
 1.	In the ***Operation** section*, set the field value *Operation* as **Custom Api Request**.
 2.	Set the required parameters and credentials in the **Authentication** section.
 3.	In the **Input Mapping** section, set the field **url**, **method**, **queryParameter** and **payload**".
-4.	Set **url**, which is basically full rest endpoint like 
+4.	Set **url**, which is basically full rest endpoint like
       e.g. ```https://demo.docusign.net/restapi/v2.1/accounts/123-345-67234/users```
 
 
@@ -681,4 +681,3 @@ The Docusign Connector needs the credentials for connection except Custom Api Re
 
 ### **What is url in Custom Api Requests?**
     It is full rest endpoint to which you want to send request to. Enter all the required details like accountId,envelopeId as neccessary.
-

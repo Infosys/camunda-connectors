@@ -10,8 +10,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
+import com.infosys.camundaconnectors.db.mysql.model.request.DatabaseConnection;
 import com.infosys.camundaconnectors.db.mysql.model.response.MySQLResponse;
 import com.infosys.camundaconnectors.db.mysql.model.response.QueryResponse;
+import com.infosys.camundaconnectors.db.mysql.utility.DatabaseClient;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -24,15 +27,20 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class DeleteDataServiceTest {
   DeleteDataService service;
   @Mock private Connection connectionMock;
-  @Mock private Statement statementMock;
+	@Mock private DatabaseClient databaseClient;
+	@Mock private DatabaseConnection connection; 
+	@Mock private Statement statementMock;
 
   @BeforeEach
-  void init() {
+  void init() throws SQLException {
     service = new DeleteDataService();
     service.setDatabaseName("XE");
     service.setTableName("testRio");
@@ -40,6 +48,8 @@ class DeleteDataServiceTest {
         Map.of("filter", Map.of("colName", "firstname", "operator", "=", "value", "Xon")));
     service.setOrderBy(List.of());
     service.setLimit(1);
+    when(databaseClient.getConnectionObject(any(DatabaseConnection.class),any(String.class))).thenReturn(connectionMock);
+    when(connectionMock.createStatement()).thenReturn(statementMock);
   }
 
   @DisplayName("Should throw error as filter string is invalid")
@@ -48,7 +58,7 @@ class DeleteDataServiceTest {
     // given
     service.setFilters(Map.of("filter", Map.of("colName", "uio")));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("Invalid filter");
@@ -60,7 +70,7 @@ class DeleteDataServiceTest {
     // given
     service.setFilters(Map.of("kia", "op"));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("Map can have keys - filter, logicalOperator and filterList");
@@ -74,7 +84,7 @@ class DeleteDataServiceTest {
     when(statementMock.executeUpdate(anyString()))
         .thenThrow(new SQLException("Table 'test7database.xia' doesn't exist"));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("Table 'test7database.xia' doesn't exist");
@@ -88,7 +98,7 @@ class DeleteDataServiceTest {
     // given
     service.setFilters(Map.of("filter", Map.of("colName", "", "operator", "=", "value", "Bob")));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("Column Name can not be null or blank");
@@ -107,7 +117,7 @@ class DeleteDataServiceTest {
             "filterList",
             List.of(Map.of("filter", "firstname = 'Bob'"), Map.of("filter", "personId = 'io'"))));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining(
@@ -130,7 +140,7 @@ class DeleteDataServiceTest {
     when(statementMock.executeUpdate(anyString()))
         .thenThrow(new SQLException("'io' invalid number"));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("invalid number");
@@ -145,7 +155,7 @@ class DeleteDataServiceTest {
     when(connectionMock.createStatement()).thenReturn(statementMock);
     when(statementMock.executeUpdate(anyString())).thenReturn(1);
     // When
-    MySQLResponse result = service.invoke(connectionMock);
+    MySQLResponse result = service.invoke(databaseClient,connection,"databaseName");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(any(String.class));
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -163,7 +173,7 @@ class DeleteDataServiceTest {
     when(connectionMock.createStatement()).thenReturn(statementMock);
     when(statementMock.executeUpdate(anyString())).thenReturn(1);
     // When
-    MySQLResponse result = service.invoke(connectionMock);
+    MySQLResponse result = service.invoke(databaseClient,connection,"databaseName");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(any(String.class));
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -188,7 +198,7 @@ class DeleteDataServiceTest {
     when(connectionMock.createStatement()).thenReturn(statementMock);
     when(statementMock.executeUpdate(anyString())).thenReturn(1);
     // When
-    MySQLResponse result = service.invoke(connectionMock);
+    MySQLResponse result = service.invoke(databaseClient,connection,"databaseName");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(any(String.class));
     Mockito.verify(connectionMock, Mockito.times(1)).close();

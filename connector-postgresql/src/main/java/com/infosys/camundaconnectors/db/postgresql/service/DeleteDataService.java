@@ -6,16 +6,18 @@
 
 package com.infosys.camundaconnectors.db.postgresql.service;
 
+import com.infosys.camundaconnectors.db.postgresql.model.request.DatabaseConnection;
 import com.infosys.camundaconnectors.db.postgresql.model.request.PostgreSQLRequestData;
 import com.infosys.camundaconnectors.db.postgresql.model.response.PostgreSQLResponse;
 import com.infosys.camundaconnectors.db.postgresql.model.response.QueryResponse;
 import com.infosys.camundaconnectors.db.postgresql.utility.ConstructWhereClause;
+import com.infosys.camundaconnectors.db.postgresql.utility.DatabaseClient;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,12 +25,14 @@ public class DeleteDataService implements PostgreSQLRequestData {
   private static final Logger LOGGER = LoggerFactory.getLogger(DeleteDataService.class);
   @NotBlank private String databaseName;
   @NotBlank private String tableName;
+
   @NotEmpty(message = "filters can't be null or empty")
   private Map<String, Object> filters;
 
   @Override
-  public PostgreSQLResponse invoke(Connection connection) throws SQLException {
-    QueryResponse<String> queryResponse;
+  public PostgreSQLResponse invoke(DatabaseClient databaseClient,DatabaseConnection databaseConnection,String databaseName) throws SQLException {
+	  final Connection connection = databaseClient.getConnectionObject(databaseConnection, databaseName);
+	  QueryResponse<String> queryResponse;
     try {
       String deleteQuery = deleteRowsQuery(tableName, filters);
       LOGGER.info("Delete query: {}", deleteQuery);

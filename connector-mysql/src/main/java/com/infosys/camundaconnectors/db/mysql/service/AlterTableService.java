@@ -5,14 +5,17 @@
  */
 package com.infosys.camundaconnectors.db.mysql.service;
 
+import com.infosys.camundaconnectors.db.mysql.model.request.DatabaseConnection;
 import com.infosys.camundaconnectors.db.mysql.model.request.MySQLRequestData;
 import com.infosys.camundaconnectors.db.mysql.model.response.MySQLResponse;
 import com.infosys.camundaconnectors.db.mysql.model.response.QueryResponse;
+import com.infosys.camundaconnectors.db.mysql.utility.DatabaseClient;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,8 +32,9 @@ public class AlterTableService implements MySQLRequestData {
   private List<Map<String, String>> dropEntityDetails;
 
   @Override
-  public MySQLResponse invoke(Connection connection) throws SQLException {
-    QueryResponse<String> queryResponse;
+  public MySQLResponse invoke(DatabaseClient databaseClient,DatabaseConnection databaseConnection,String DatabaseName) throws SQLException {
+	final Connection connection = databaseClient.getConnectionObject(databaseConnection, databaseName);
+	QueryResponse<String> queryResponse;
     try {
       method = method.replaceAll("[_\\s]", "");
       String alterTableQuery = "";

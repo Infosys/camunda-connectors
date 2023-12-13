@@ -10,8 +10,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
+import com.infosys.camundaconnectors.db.mysql.model.request.DatabaseConnection;
 import com.infosys.camundaconnectors.db.mysql.model.response.MySQLResponse;
 import com.infosys.camundaconnectors.db.mysql.model.response.QueryResponse;
+import com.infosys.camundaconnectors.db.mysql.utility.DatabaseClient;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -30,8 +33,10 @@ import org.mockito.quality.Strictness;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 class AlterTableServiceTest {
-  @Mock private Connection connectionMock;
-  @Mock private Statement statementMock;
+	@Mock private Connection connectionMock;
+	  @Mock private DatabaseClient databaseClient;
+	  @Mock private DatabaseConnection connection; 
+	  @Mock private Statement statementMock;
   private AlterTableService service;
 
   @BeforeEach
@@ -45,6 +50,7 @@ class AlterTableServiceTest {
     service.setColumnsDetails(List.of());
     service.setConstraintDetails(List.of(Map.of()));
     service.setNewTableName("");
+    when(databaseClient.getConnectionObject(any(DatabaseConnection.class),any(String.class))).thenReturn(connectionMock);
     when(connectionMock.createStatement()).thenReturn(statementMock);
   }
 
@@ -56,7 +62,7 @@ class AlterTableServiceTest {
     service.setNewTableName("testEmployee");
     when(statementMock.executeUpdate(any(String.class))).thenReturn(0);
     // When
-    MySQLResponse result = service.invoke(connectionMock);
+    MySQLResponse result = service.invoke(databaseClient,connection,"database");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(anyString());
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -72,7 +78,7 @@ class AlterTableServiceTest {
 
     when(statementMock.executeUpdate(any(String.class))).thenReturn(0);
     // When
-    MySQLResponse result = service.invoke(connectionMock);
+    MySQLResponse result = service.invoke(databaseClient,connection,"database");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(anyString());
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -92,7 +98,7 @@ class AlterTableServiceTest {
             Map.of("colName", "dropthis", "dataType", "number")));
     when(statementMock.executeUpdate(any(String.class))).thenReturn(0);
     // When
-    MySQLResponse result = service.invoke(connectionMock);
+    MySQLResponse result = service.invoke(databaseClient,connection,"database");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(anyString());
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -120,7 +126,7 @@ class AlterTableServiceTest {
             Map.of("name", "CHECK", "symbol", "ch_id", "Definition", "empid>0")));
     Mockito.when(statementMock.executeUpdate(any(String.class))).thenReturn(0);
     // When
-    MySQLResponse result = service.invoke(connectionMock);
+    MySQLResponse result = service.invoke(databaseClient,connection,"database");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(anyString());
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -144,7 +150,7 @@ class AlterTableServiceTest {
             Map.of("EntityToDrop", "Primary Key")));
     Mockito.when(statementMock.executeUpdate(any(String.class))).thenReturn(0);
     // When
-    MySQLResponse result = service.invoke(connectionMock);
+    MySQLResponse result = service.invoke(databaseClient,connection,"database");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(anyString());
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -164,7 +170,7 @@ class AlterTableServiceTest {
             Map.of("colName", "city", "dataType", "varchar(30)")));
     Mockito.when(statementMock.executeUpdate(any(String.class))).thenReturn(0);
     // When
-    MySQLResponse result = service.invoke(connectionMock);
+    MySQLResponse result = service.invoke(databaseClient,connection,"database");
     // Then
     Mockito.verify(statementMock, Mockito.times(1)).executeUpdate(anyString());
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -180,7 +186,7 @@ class AlterTableServiceTest {
     Mockito.when(statementMock.executeUpdate(any(String.class)))
         .thenThrow(new RuntimeException("'modifyColumnsDetails' " + "can not be null or empty"));
     // When
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"database"))
         // Then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("'modifyColumnsDetails' can not be null or empty");
@@ -201,7 +207,7 @@ class AlterTableServiceTest {
                     + "table - modify query, Please check the input - 'modifyColumnsDetails' list of map should have keys -"
                     + " colName, dataType, constraint"));
     // When
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"database"))
         // Then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining(
@@ -221,7 +227,7 @@ class AlterTableServiceTest {
     Mockito.when(statementMock.executeUpdate(any(String.class)))
         .thenThrow(new RuntimeException("Table 'test7database.xia'" + " doesn't exist"));
     // When
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"database"))
         // Then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("Table 'test7database.xia' doesn't exist");

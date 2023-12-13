@@ -5,22 +5,67 @@
  */
 package com.infosys.camundaconnectors.file.sftp.model.request;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.infosys.camundaconnectors.file.sftp.model.response.Response;
+import com.infosys.camundaconnectors.file.sftp.service.files.CopyFileService;
+import com.infosys.camundaconnectors.file.sftp.service.files.DeleteFileService;
+import com.infosys.camundaconnectors.file.sftp.service.files.ListFilesService;
+import com.infosys.camundaconnectors.file.sftp.service.files.MoveFileService;
+import com.infosys.camundaconnectors.file.sftp.service.files.ReadFileService;
+import com.infosys.camundaconnectors.file.sftp.service.files.WriteFileService;
+import com.infosys.camundaconnectors.file.sftp.service.folders.CopyFolderService;
+import com.infosys.camundaconnectors.file.sftp.service.folders.CreateFolderService;
+import com.infosys.camundaconnectors.file.sftp.service.folders.DeleteFolderService;
+import com.infosys.camundaconnectors.file.sftp.service.folders.ListFoldersService;
+import com.infosys.camundaconnectors.file.sftp.service.folders.MoveFolderService;
 import com.infosys.camundaconnectors.file.sftp.utility.SftpServerClient;
-import io.camunda.connector.api.annotation.Secret;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Null;
 import java.util.Objects;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import net.schmizz.sshj.SSHClient;
 import net.schmizz.sshj.sftp.SFTPClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 public class SFTPRequest<T extends SFTPRequestData> {
-  @NotNull @Valid @Secret private Authentication authentication;
-  @NotBlank private String operation;
-  @Valid @NotNull private T data;
+@Valid  private Authentication authentication;
+  @JsonTypeInfo(
+	      use = JsonTypeInfo.Id.NAME,
+	      include = JsonTypeInfo.As.EXTERNAL_PROPERTY,
+	      property = "operation")
+	  @JsonSubTypes(
+	      value = {
+	        @JsonSubTypes.Type(value =CopyFileService.class , name = "sftp.copy-file"),
+	        @JsonSubTypes.Type(value = CopyFolderService.class, name = "sftp.copy-folder"),
+	        @JsonSubTypes.Type(
+	            value = CreateFolderService.class,
+	            name = "sftp.create-folder"),
+	        @JsonSubTypes.Type(
+	            value = DeleteFileService.class,
+	            name = "sftp.delete-file"),
+	        @JsonSubTypes.Type(
+	            value = DeleteFolderService.class,
+	            name = "sftp.delete-folder"),
+	        @JsonSubTypes.Type(
+	            value = ListFilesService.class,
+	            name = "sftp.list-files"),
+	        @JsonSubTypes.Type(
+	            value = ListFoldersService.class,
+	            name = "sftp.list-folders"),
+	        @JsonSubTypes.Type(
+	            value = MoveFileService.class,
+	            name = "sftp.move-file"),
+	        @JsonSubTypes.Type(
+	            value = MoveFolderService.class,
+	            name = "sftp.move-folder"),
+	        @JsonSubTypes.Type(value = ReadFileService.class, name = "sftp.read-file"),
+	        @JsonSubTypes.Type(value = WriteFileService.class, name = "sftp.write-file")
+	      })
+	  @Valid
+	  private T data;
   private static final Logger LOGGER = LoggerFactory.getLogger(SftpServerClient.class);
 
   public Response invoke(final SftpServerClient sftpServerClient) throws Exception {
@@ -38,13 +83,6 @@ public class SFTPRequest<T extends SFTPRequestData> {
     this.authentication = authentication;
   }
 
-  public String getOperation() {
-    return operation;
-  }
-
-  public void setOperation(String operation) {
-    this.operation = operation;
-  }
 
   public T getData() {
     return data;
@@ -54,30 +92,27 @@ public class SFTPRequest<T extends SFTPRequestData> {
     this.data = data;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    SFTPRequest<?> that = (SFTPRequest<?>) o;
-    return Objects.equals(authentication, that.authentication)
-        && Objects.equals(operation, that.operation)
-        && Objects.equals(data, that.data);
-  }
+@Override
+public int hashCode() {
+	return Objects.hash(authentication, data);
+}
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(authentication, operation, data);
-  }
+@Override
+public boolean equals(Object obj) {
+	if (this == obj)
+		return true;
+	if (obj == null)
+		return false;
+	if (getClass() != obj.getClass())
+		return false;
+	SFTPRequest other = (SFTPRequest) obj;
+	return Objects.equals(authentication, other.authentication) && Objects.equals(data, other.data);
+}
 
-  @Override
-  public String toString() {
-    return "SFTPRequest{"
-        + "authentication=authentication"
-        + ", operation='"
-        + operation
-        + '\''
-        + ", data="
-        + data
-        + '}';
-  }
+@Override
+public String toString() {
+	return "SFTPRequest [authentication=" + authentication + ", data=" + data + "]";
+}
+
+  
 }

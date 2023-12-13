@@ -7,12 +7,17 @@ package com.infosys.camundaconnectors.db.mysql.service;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
+import com.infosys.camundaconnectors.db.mysql.model.request.DatabaseConnection;
 import com.infosys.camundaconnectors.db.mysql.model.response.MySQLResponse;
 import com.infosys.camundaconnectors.db.mysql.model.response.QueryResponse;
+import com.infosys.camundaconnectors.db.mysql.utility.DatabaseClient;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,8 +33,11 @@ import org.mockito.quality.Strictness;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 public class InsertDataServiceTest {
-  @Mock private Connection connectionMock;
-  @Mock private PreparedStatement psMock;
+	@Mock private Connection connectionMock;
+	  @Mock private DatabaseClient databaseClient;
+	  @Mock private DatabaseConnection connection; 
+	  @Mock private Statement statementMock;
+	  @Mock private PreparedStatement psMock;
   private InsertDataService service;
 
   @BeforeEach
@@ -61,6 +69,8 @@ public class InsertDataServiceTest {
                 "St. Louis Avenue",
                 "City",
                 "New Jersey")));
+    when(databaseClient.getConnectionObject(any(DatabaseConnection.class),any(String.class))).thenReturn(connectionMock);
+    when(connectionMock.createStatement()).thenReturn(statementMock);
     Mockito.when(connectionMock.prepareStatement(any(String.class))).thenReturn(psMock);
   }
 
@@ -70,7 +80,7 @@ public class InsertDataServiceTest {
     // given
     service.setDataToInsert(List.of(Map.of()));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("Invalid dataToInsert, can not be empty or null");
@@ -85,7 +95,7 @@ public class InsertDataServiceTest {
     Mockito.when(psMock.executeUpdate())
         .thenThrow(new SQLException("Incorrect integer value: 'op' for column 'personid'"));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("Incorrect integer value: 'op' for column 'personid'");
@@ -101,7 +111,7 @@ public class InsertDataServiceTest {
     Mockito.when(psMock.executeUpdate())
         .thenThrow(new SQLException("Table 'test7database.xia' doesn't exist"));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("Table 'test7database.xia' doesn't exist");
@@ -129,7 +139,7 @@ public class InsertDataServiceTest {
     Mockito.when(connectionMock.prepareStatement(any(String.class))).thenReturn(psMock);
     Mockito.when(psMock.executeUpdate()).thenThrow(new SQLException("Unknown column"));
     // when
-    assertThatThrownBy(() -> service.invoke(connectionMock))
+    assertThatThrownBy(() -> service.invoke(databaseClient,connection,"databaseName"))
         // then
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("Unknown column");
@@ -144,7 +154,7 @@ public class InsertDataServiceTest {
     Mockito.when(connectionMock.prepareStatement(any(String.class))).thenReturn(psMock);
     Mockito.when(psMock.executeUpdate()).thenReturn(2);
     // When
-    MySQLResponse result = service.invoke(connectionMock);
+    MySQLResponse result = service.invoke(databaseClient,connection,"databaseName");
     // Then
     Mockito.verify(psMock, Mockito.times(1)).executeUpdate();
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -170,7 +180,7 @@ public class InsertDataServiceTest {
     Mockito.when(connectionMock.prepareStatement(any(String.class))).thenReturn(psMock);
     Mockito.when(psMock.executeUpdate()).thenReturn(1);
     // When
-    MySQLResponse result = service.invoke(connectionMock);
+    MySQLResponse result = service.invoke(databaseClient,connection,"databaseName");
     // Then
     Mockito.verify(psMock, Mockito.times(1)).executeUpdate();
     Mockito.verify(connectionMock, Mockito.times(1)).close();
@@ -188,7 +198,7 @@ public class InsertDataServiceTest {
     Mockito.when(connectionMock.prepareStatement(any(String.class))).thenReturn(psMock);
     Mockito.when(psMock.executeUpdate()).thenReturn(2);
     // When
-    MySQLResponse result = service.invoke(connectionMock);
+    MySQLResponse result = service.invoke(databaseClient,connection,"databaseName");
     // Then
     Mockito.verify(psMock, Mockito.times(1)).executeUpdate();
     Mockito.verify(connectionMock, Mockito.times(1)).close();

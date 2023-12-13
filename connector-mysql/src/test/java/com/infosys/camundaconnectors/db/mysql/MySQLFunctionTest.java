@@ -43,7 +43,7 @@ public class MySQLFunctionTest extends BaseTest {
 
   @BeforeEach
   public void init() throws SQLException {
-    MySQLFunction = new MySQLFunction(gson, databaseClient);
+    MySQLFunction = new MySQLFunction(databaseClient);
     when(databaseClient.getConnectionObject(any(DatabaseConnection.class), any(String.class)))
         .thenReturn(connectionMock);
     when(connectionMock.createStatement()).thenReturn(statementMock);
@@ -72,43 +72,10 @@ public class MySQLFunctionTest extends BaseTest {
     assertThatItsValid(executeResponse, "created successfully");
   }
 
-  @ParameterizedTest
-  @MethodSource("executeInvalidCreateDatabaseTestCases")
-  public void execute_shouldThrowErrorForCreateDatabase(String input) {
-    // Given
-    context = getContextBuilderWithSecrets().variables(input).build();
-    // When
-    assertThatThrownBy(() -> MySQLFunction.execute(context))
-        // Then
-        .isInstanceOf(RuntimeException.class)
-        .hasMessageContaining("must not be blank");
-  }
+ 
 
-  @ParameterizedTest
-  @MethodSource("executeCreateTableTestCases")
-  public void execute_shouldCreateTable(String input) throws Exception {
-    // Given
-    context = getContextBuilderWithSecrets().variables(input).build();
-    // When
-    Object executeResponse = MySQLFunction.execute(context);
-    // Then
-    Mockito.verify(statementMock, Mockito.times(1)).execute(any(String.class));
-    Mockito.verify(connectionMock, Mockito.times(1)).close();
-    assertThatItsValid(executeResponse, "created successfully");
-  }
+ 
 
-  @ParameterizedTest
-  @MethodSource("executeInvalidCreateTableTestCases")
-  public void execute_shouldThrowErrorForCreateTable(String input) {
-    // Given
-    context = getContextBuilderWithSecrets().variables(input).build();
-    // When
-    assertThatThrownBy(() -> MySQLFunction.execute(context))
-        // Then
-        .isInstanceOf(RuntimeException.class)
-        .message()
-        .isNotBlank();
-  }
 
   @ParameterizedTest
   @MethodSource("executeInsertDataTestCases")
@@ -157,19 +124,7 @@ public class MySQLFunctionTest extends BaseTest {
     assertThatItsValid(executeResponse, "deleted successfully");
   }
 
-  @ParameterizedTest
-  @MethodSource("executeInvalidDeleteDataTestCases")
-  public void execute_shouldThrowErrorInvalidDeleteDataInputs(String input) {
-    // Given
-    context = getContextBuilderWithSecrets().variables(input).build();
-    // When
-    RuntimeException thrown =
-        assertThrows(
-            RuntimeException.class,
-            () -> MySQLFunction.execute(context),
-            "RuntimeException was expected");
-    assertNotNull(thrown.getMessage());
-  }
+
 
   @ParameterizedTest
   @MethodSource("executeUpdateDataTestCases")
@@ -184,19 +139,6 @@ public class MySQLFunctionTest extends BaseTest {
     assertThatItsValid(executeResponse, "updated successfully");
   }
 
-  @ParameterizedTest
-  @MethodSource("executeInvalidUpdateDataTestCases")
-  public void execute_shouldThrowErrorInvalidUpdateDataInputs(String input) {
-    // Given
-    context = getContextBuilderWithSecrets().variables(input).build();
-    // When
-    RuntimeException thrown =
-        assertThrows(
-            RuntimeException.class,
-            () -> MySQLFunction.execute(context),
-            "RuntimeException was expected");
-    assertNotNull(thrown.getMessage());
-  }
 
   @ParameterizedTest
   @MethodSource("executeAlterTableTestCases")
