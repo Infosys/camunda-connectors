@@ -4,10 +4,12 @@
  * or at https://opensource.org/licenses/MIT
  */
 package com.infosys.camundaconnectors.files.ftp;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
 import static org.assertj.core.api.InstanceOfAssertFactories.STRING;
+import static org.mockito.ArgumentMatchers.any;
+
 import com.infosys.camundaconnectors.files.ftp.model.request.Authentication;
 import com.infosys.camundaconnectors.files.ftp.model.response.FTPResponse;
 import com.infosys.camundaconnectors.files.ftp.utility.FTPServerClient;
@@ -29,16 +31,17 @@ import org.mockito.quality.Strictness;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 public class FTPFunctionTest extends BaseTest {
-  
+
   @Mock private FTPServerClient ftpServerClient;
   @Mock private FTPFunction ftpFunction;
   @Mock private FTPClient ftpClient;
   @Mock private FTPFile file;
-  
+
   String folderPath;
+
   @BeforeEach
   public void init() throws Exception {
-    ftpFunction = new FTPFunction(gson, ftpServerClient);
+    ftpFunction = new FTPFunction(ftpServerClient);
     folderPath = "C:/Documents/ftproot";
     Mockito.when(ftpServerClient.loginFTP(any(Authentication.class))).thenReturn(ftpClient);
     FTPFile file1 = new FTPFile();
@@ -50,7 +53,7 @@ public class FTPFunctionTest extends BaseTest {
     FTPFile[] ftpFiles = {file1, file2, file3};
     Mockito.when(ftpClient.listFiles(folderPath)).thenReturn(ftpFiles);
   }
-  
+
   @ParameterizedTest
   @MethodSource("executeListFilesTestCases")
   void execute_shouldListFiles(String input) throws Exception {
@@ -74,15 +77,15 @@ public class FTPFunctionTest extends BaseTest {
   @ParameterizedTest
   @MethodSource("executeListFoldersTestCases")
   void execute_shouldListFolders(String input) throws Exception {
-	String folderPath = "/Documents/ftproot";
-	FTPFile folder1 = new FTPFile();
-	folder1.setName("folderA");
-	FTPFile folder2 = new FTPFile();
-	folder2.setName("folderB");
-	FTPFile folder3 = new FTPFile();
-	folder3.setName("folderC");
-	FTPFile[] ftpFolders = {folder1, folder2, folder3};
-	Mockito.when(ftpClient.listFiles(folderPath)).thenReturn(ftpFolders);
+    String folderPath = "/Documents/ftproot";
+    FTPFile folder1 = new FTPFile();
+    folder1.setName("folderA");
+    FTPFile folder2 = new FTPFile();
+    folder2.setName("folderB");
+    FTPFile folder3 = new FTPFile();
+    folder3.setName("folderC");
+    FTPFile[] ftpFolders = {folder1, folder2, folder3};
+    Mockito.when(ftpClient.listFiles(folderPath)).thenReturn(ftpFolders);
     context = getContextBuilderWithSecrets().variables(input).build();
     Object executeResponse = ftpFunction.execute(context);
     @SuppressWarnings("unchecked")
@@ -93,14 +96,14 @@ public class FTPFunctionTest extends BaseTest {
   @ParameterizedTest
   @MethodSource("invalidListFoldersTestCases")
   void invalid_shouldListFolders(String input) throws Exception {
-	FTPFile folder1 = new FTPFile();
-	folder1.setName("folderA");
-	FTPFile folder2 = new FTPFile();
-	folder2.setName("folderB");
-	FTPFile folder3 = new FTPFile();
-	folder3.setName("folderC");
-	FTPFile[] ftpFolders = {folder1, folder2, folder3};
-	Mockito.when(ftpClient.listFiles(folderPath)).thenReturn(ftpFolders);
+    FTPFile folder1 = new FTPFile();
+    folder1.setName("folderA");
+    FTPFile folder2 = new FTPFile();
+    folder2.setName("folderB");
+    FTPFile folder3 = new FTPFile();
+    folder3.setName("folderC");
+    FTPFile[] ftpFolders = {folder1, folder2, folder3};
+    Mockito.when(ftpClient.listFiles(folderPath)).thenReturn(ftpFolders);
     context = getContextBuilderWithSecrets().variables(input).build();
     assertThatThrownBy(() -> ftpFunction.execute(context))
         .isInstanceOf(RuntimeException.class)
@@ -111,17 +114,17 @@ public class FTPFunctionTest extends BaseTest {
   @ParameterizedTest
   @MethodSource("executeDeleteFileTestCases")
   void execute_shouldDeleteFile(String input) throws Exception {
-	FTPFile file1 = new FTPFile();
-	file1.setName("a.txt");
-	FTPFile file2 = new FTPFile();
-	file2.setName("b.txt");
-	FTPFile file3 = new FTPFile();
-	file3.setName("c.txt");
-	FTPFile[] files = {file1};
-	file1.setType(0);
-	Mockito.when(ftpClient.listFiles(any(String.class))).thenReturn(files);
-	Mockito.when(ftpClient.deleteFile(any(String.class))).thenReturn(true);
-	Mockito.when(ftpClient.changeWorkingDirectory(any(String.class))).thenReturn(true);
+    FTPFile file1 = new FTPFile();
+    file1.setName("a.txt");
+    FTPFile file2 = new FTPFile();
+    file2.setName("b.txt");
+    FTPFile file3 = new FTPFile();
+    file3.setName("c.txt");
+    FTPFile[] files = {file1};
+    file1.setType(0);
+    Mockito.when(ftpClient.listFiles(any(String.class))).thenReturn(files);
+    Mockito.when(ftpClient.deleteFile(any(String.class))).thenReturn(true);
+    Mockito.when(ftpClient.changeWorkingDirectory(any(String.class))).thenReturn(true);
     ftpClient.deleteFile("");
     context = getContextBuilderWithSecrets().variables(input).build();
     Object executeResponse = ftpFunction.execute(context);
@@ -145,10 +148,10 @@ public class FTPFunctionTest extends BaseTest {
   @ParameterizedTest
   @MethodSource("executeDeleteFolderTestCases")
   void execute_shouldDeleteFolder(String input) throws Exception {
-	Mockito.when(ftpClient.deleteFile(any(String.class))).thenReturn(true);
-	Mockito.when(ftpClient.changeWorkingDirectory(any(String.class))).thenReturn(true);
-	FTPFile[] files = {};
-	Mockito.when(ftpClient.listFiles(any(String.class))).thenReturn(files);
+    Mockito.when(ftpClient.deleteFile(any(String.class))).thenReturn(true);
+    Mockito.when(ftpClient.changeWorkingDirectory(any(String.class))).thenReturn(true);
+    FTPFile[] files = {};
+    Mockito.when(ftpClient.listFiles(any(String.class))).thenReturn(files);
     Mockito.when(ftpClient.removeDirectory(any(String.class))).thenReturn(true);
     context = getContextBuilderWithSecrets().variables(input).build();
     Object executeResponse = ftpFunction.execute(context);
@@ -160,13 +163,13 @@ public class FTPFunctionTest extends BaseTest {
   @ParameterizedTest
   @MethodSource("invalidDeleteFolderTestCases")
   void invalid_shouldDeleteFolder(String input) throws Exception {
-	Mockito.when(ftpClient.deleteFile(any(String.class))).thenReturn(true);
-    ftpClient.deleteFile("");
+    Mockito.when(ftpClient.deleteFile(any(String.class))).thenReturn(true);
+    ftpClient.deleteFile(null);
     context = getContextBuilderWithSecrets().variables(input).build();
     assertThatThrownBy(() -> ftpFunction.execute(context))
         .isInstanceOf(RuntimeException.class)
         .message()
-        .contains("must not be blank");
+        .contains("failed");
   }
 
   @ParameterizedTest
@@ -202,15 +205,15 @@ public class FTPFunctionTest extends BaseTest {
     Mockito.when(ftpClient.deleteFile(any(String.class))).thenReturn(true);
     Mockito.when(ftpClient.changeWorkingDirectory(any(String.class))).thenReturn(true);
     FTPFile file1 = new FTPFile();
-	file1.setName("a.txt");
-	FTPFile file2 = new FTPFile();
-	file2.setName("b.txt");
-	FTPFile file3 = new FTPFile();
-	file3.setName("c.txt");
-	file1.setType(0);
-	FTPFile[] files = {file1};
-	FTPFile[] ftpFiles = {file1, file2, file3};
-	Mockito.when(ftpClient.listFiles(any(String.class))).thenReturn(files, ftpFiles);
+    file1.setName("a.txt");
+    FTPFile file2 = new FTPFile();
+    file2.setName("b.txt");
+    FTPFile file3 = new FTPFile();
+    file3.setName("c.txt");
+    file1.setType(0);
+    FTPFile[] files = {file1};
+    FTPFile[] ftpFiles = {file1, file2, file3};
+    Mockito.when(ftpClient.listFiles(any(String.class))).thenReturn(files, ftpFiles);
     context = getContextBuilderWithSecrets().variables(input).build();
     Object executeResponse = ftpFunction.execute(context);
     @SuppressWarnings("unchecked")
@@ -234,13 +237,13 @@ public class FTPFunctionTest extends BaseTest {
   @ParameterizedTest
   @MethodSource("executeWriteFileTestCases")
   void execute_shouldWriteFile(String input) throws Exception {
-	
-	FTPFile file1 = new FTPFile();
-	file1.setName("a.txt");
-	file1.setType(0);
-	FTPFile[] files = {file1};
-	Mockito.when(ftpClient.listFiles(any(String.class))).thenReturn(files);
-	OutputStream os =  new ByteArrayOutputStream();
+
+    FTPFile file1 = new FTPFile();
+    file1.setName("a.txt");
+    file1.setType(0);
+    FTPFile[] files = {file1};
+    Mockito.when(ftpClient.listFiles(any(String.class))).thenReturn(files);
+    OutputStream os = new ByteArrayOutputStream();
     Mockito.doReturn(os).when(ftpClient).storeFileStream(any(String.class));
     Mockito.doReturn(os).when(ftpClient).appendFileStream(any(String.class));
     Mockito.when(file.isFile()).thenReturn(true);
@@ -259,11 +262,11 @@ public class FTPFunctionTest extends BaseTest {
   @ParameterizedTest
   @MethodSource("invalidWriteFileTestCases")
   void invalid_writeFileTestCase(String input) throws Exception {
-	FTPFile file1 = new FTPFile();
-	file1.setName("a.txt");
-	file1.setType(0);
-	FTPFile[] files = {file1};
-	Mockito.when(ftpClient.listFiles(any(String.class))).thenReturn(files);
+    FTPFile file1 = new FTPFile();
+    file1.setName("a.txt");
+    file1.setType(0);
+    FTPFile[] files = {file1};
+    Mockito.when(ftpClient.listFiles(any(String.class))).thenReturn(files);
     Mockito.when(ftpClient.changeWorkingDirectory(any(String.class))).thenReturn(true);
     context = getContextBuilderWithSecrets().variables(input).build();
     assertThatThrownBy(() -> ftpFunction.execute(context))

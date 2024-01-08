@@ -20,25 +20,21 @@ import org.slf4j.LoggerFactory;
     type = "com.infosys.camundaconnectors.email:imap:1")
 public class IMAPFunction implements OutboundConnectorFunction {
   private static final Logger LOGGER = LoggerFactory.getLogger(IMAPFunction.class);
-  private final Gson gson;
   private final MailServerClient mailServerClient;
 
   public IMAPFunction() {
-    this(GsonSupplier.getGson(), new MailServerClient());
+    this(new MailServerClient());
   }
 
-  public IMAPFunction(Gson gson, MailServerClient mailServerClient) {
-    this.gson = gson;
+  public IMAPFunction(MailServerClient mailServerClient) {
     this.mailServerClient = mailServerClient;
   }
 
   @Override
   public Object execute(OutboundConnectorContext outboundConnectorContext) {
-    final var variables = outboundConnectorContext.getVariables();
-    final var imapRequest = gson.fromJson(variables, IMAPRequest.class);
-    outboundConnectorContext.validate(imapRequest);
-    outboundConnectorContext.replaceSecrets(imapRequest);
-    LOGGER.debug("Request verified successfully and all required secrets replaced");
-    return imapRequest.invoke(mailServerClient);
+    LOGGER.info("Request verified successfully and all required secrets replaced");
+    final var variables = outboundConnectorContext.bindVariables(IMAPRequest.class);
+    LOGGER.info("Request verified successfully and all required secrets replaced");
+    return variables.invoke(mailServerClient);
   }
 }

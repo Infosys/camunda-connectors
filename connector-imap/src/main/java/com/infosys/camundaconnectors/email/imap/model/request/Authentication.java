@@ -5,10 +5,9 @@
  */
 package com.infosys.camundaconnectors.email.imap.model.request;
 
-import io.camunda.connector.api.annotation.Secret;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import java.util.Objects;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 
 public class Authentication {
   @NotBlank(message = "Please provide a valid hostName for email server")
@@ -22,14 +21,13 @@ public class Authentication {
   private String username;
 
   @NotBlank(message = "Please provide a valid password for given username")
-  @Secret
   private String password;
 
   @NotBlank(message = "Please provide a valid domainName for email ID")
   private String domainName;
 
   private String keyStorePath;
-  @Secret private String keyStorePassword;
+  private String keyStorePassword;
 
   @NotBlank(message = "Please provide a valid folderPath, e.g. Inbox")
   private String folderPath;

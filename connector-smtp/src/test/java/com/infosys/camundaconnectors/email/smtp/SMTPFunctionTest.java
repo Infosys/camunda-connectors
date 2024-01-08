@@ -46,7 +46,6 @@ class SMTPFunctionTest extends BaseTest {
     // Given
     context = getContextBuilderWithSecrets().variables(input).build();
     SMTPRequest request = gson.fromJson(input, SMTPRequest.class);
-    context.replaceSecrets(request);
     when(service.execute(any(Session.class), any(SMTPRequest.class)))
         .thenReturn(new SMTPResponse(STATUS));
     // When

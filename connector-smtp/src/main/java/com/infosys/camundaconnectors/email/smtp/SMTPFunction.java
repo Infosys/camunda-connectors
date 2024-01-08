@@ -49,11 +49,13 @@ public class SMTPFunction implements OutboundConnectorFunction {
 
   @Override
   public Object execute(final OutboundConnectorContext context) {
-    final SMTPRequest request = new Gson().fromJson(context.getVariables(), SMTPRequest.class);
-    context.validate(request);
-    context.replaceSecrets(request);
-    LOGGER.debug("Request verified successfully and all required secrets replaced");
-    return executeConnector(request);
+    //final SMTPRequest request = new Gson().fromJson(context.getVariables(), SMTPRequest.class);
+    //context.validate(request);
+    //LOGGER.debug("Request verified successfully and all required secrets replaced");
+    //return executeConnector(request);
+	final var smtpRequest = context.bindVariables(SMTPRequest.class);
+	LOGGER.info("Request verified successfully and all required secrets replaced");
+	return executeConnector(smtpRequest);
   }
 
   private SMTPResponse executeConnector(final SMTPRequest request) {

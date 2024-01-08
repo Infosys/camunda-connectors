@@ -39,7 +39,7 @@
     "smtpEmailBccRecipients": [],
     "smtpEmailSubject": "subject",
     "smtpEmailContentType": "html",
-    "smtpEmailContent": "D:/Dump/EmailBody.html",
+    "smtpEmailContent": "C:/Dump/EmailBody.html",
     "smtpEmailAttachments": [],
     "smtpEmailImportance": true,
     "smtpEmailReadReceipt": "",

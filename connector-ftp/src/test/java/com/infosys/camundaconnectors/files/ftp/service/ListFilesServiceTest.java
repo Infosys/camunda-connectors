@@ -9,11 +9,12 @@ package com.infosys.camundaconnectors.files.ftp.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.InstanceOfAssertFactories.*;
 import static org.mockito.ArgumentMatchers.*;
+
+import com.infosys.camundaconnectors.files.ftp.model.response.FTPResponse;
+import com.infosys.camundaconnectors.files.ftp.model.response.Response;
 import java.util.Calendar;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
-import com.infosys.camundaconnectors.files.ftp.model.response.FTPResponse;
-import com.infosys.camundaconnectors.files.ftp.model.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,12 +28,12 @@ import org.mockito.quality.Strictness;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 class ListFilesServiceTest {
-	
+
   @Mock private FTPClient ftpClient;
   @Mock private ListFilesService service;
   @Mock FTPFile file;
   @Mock Calendar cal;
-  
+
   @BeforeEach
   public void init() {
     service = new ListFilesService();
@@ -53,19 +54,19 @@ class ListFilesServiceTest {
     service.setSortBy("name");
     Mockito.when(ftpClient.changeWorkingDirectory(any(String.class))).thenReturn(true);
     Calendar date = Calendar.getInstance();
-    date.set(2023,3,2,6,19,34);
+    date.set(2023, 3, 2, 6, 19, 34);
     FTPFile file1 = new FTPFile();
-	file1.setName("a.txt");
-	file1.setTimestamp(date);
-	date.set(2023, 3, 3, 6, 19, 34);
-	FTPFile file2 = new FTPFile();
-	file2.setName("b.txt");
-	file2.setTimestamp(date);
-	date.set(2023, 3, 3, 6, 19, 34);
-	FTPFile file3 = new FTPFile();
+    file1.setName("a.txt");
+    file1.setTimestamp(date);
+    date.set(2023, 3, 3, 6, 19, 34);
+    FTPFile file2 = new FTPFile();
+    file2.setName("b.txt");
+    file2.setTimestamp(date);
+    date.set(2023, 3, 3, 6, 19, 34);
+    FTPFile file3 = new FTPFile();
     file3.setName("c.txt");
     file3.setTimestamp(date);
-    FTPFile[] ftpFiles = {file1,file2,file3};
+    FTPFile[] ftpFiles = {file1, file2, file3};
     Mockito.when(ftpClient.listFiles(any(String.class))).thenReturn(ftpFiles);
     Response result = service.invoke(ftpClient);
     @SuppressWarnings("unchecked")
@@ -77,25 +78,25 @@ class ListFilesServiceTest {
       "Should return file names when modified before and modified after is given and one directory is given")
   @Test
   void validTestListFilesWithModifiedBeforeAndModifiedAfterWithdirectory() throws Exception {
-	service.setSearchSubFolders("true");
+    service.setSearchSubFolders("true");
     service.setMaxDepth("90");
     service.setOutputType("fileDetails");
     service.setSortBy("name");
     Mockito.when(ftpClient.changeWorkingDirectory(any(String.class))).thenReturn(true);
     Calendar date = Calendar.getInstance();
-    date.set(2023,3,2,6,19,34);
+    date.set(2023, 3, 2, 6, 19, 34);
     FTPFile file1 = new FTPFile();
-	file1.setName("a.txt");
-	file1.setTimestamp(date);
-	date.set(2023, 3, 3, 6, 19, 34);
-	FTPFile file2 = new FTPFile();
-	file2.setName("b.txt");
-	file2.setTimestamp(date);
-	date.set(2023, 3, 3, 6, 19, 34);
-	FTPFile file3 = new FTPFile();
+    file1.setName("a.txt");
+    file1.setTimestamp(date);
+    date.set(2023, 3, 3, 6, 19, 34);
+    FTPFile file2 = new FTPFile();
+    file2.setName("b.txt");
+    file2.setTimestamp(date);
+    date.set(2023, 3, 3, 6, 19, 34);
+    FTPFile file3 = new FTPFile();
     file3.setName("c.txt");
     file3.setTimestamp(date);
-    FTPFile[] ftpFiles = {file1,file2,file3};
+    FTPFile[] ftpFiles = {file1, file2, file3};
     Mockito.when(ftpClient.listFiles(any(String.class))).thenReturn(ftpFiles);
     Response result = service.invoke(ftpClient);
     @SuppressWarnings("unchecked")
@@ -112,16 +113,16 @@ class ListFilesServiceTest {
     service.setModifiedAfter(null);
     Mockito.when(ftpClient.changeWorkingDirectory(any(String.class))).thenReturn(true);
     Calendar date = Calendar.getInstance();
-    date.set(2023,3,2,6,19,34);
+    date.set(2023, 3, 2, 6, 19, 34);
     FTPFile file1 = new FTPFile();
-	file1.setName("a.txt");
-	file1.setTimestamp(date);
-	date.set(2023, 3, 3, 6, 19, 34);
-	FTPFile file2 = new FTPFile();
-	file2.setName("b.txt");
-	file2.setTimestamp(date);
-	date.set(2023, 3, 3, 6, 19, 34);
-	FTPFile file3 = new FTPFile();
+    file1.setName("a.txt");
+    file1.setTimestamp(date);
+    date.set(2023, 3, 3, 6, 19, 34);
+    FTPFile file2 = new FTPFile();
+    file2.setName("b.txt");
+    file2.setTimestamp(date);
+    date.set(2023, 3, 3, 6, 19, 34);
+    FTPFile file3 = new FTPFile();
     file3.setName("c.txt");
     file3.setTimestamp(date);
     file1.setType(0);
@@ -142,27 +143,27 @@ class ListFilesServiceTest {
     service.setMaxDepth("90");
     Mockito.when(ftpClient.changeWorkingDirectory(any(String.class))).thenReturn(true);
     Calendar date = Calendar.getInstance();
-    date.set(2023,3,2,6,19,34);
+    date.set(2023, 3, 2, 6, 19, 34);
     FTPFile file1 = new FTPFile();
-	  file1.setName("a.txt");
-	  file1.setTimestamp(date);
-	  date.set(2023, 3, 3, 6, 19, 34);
-	  FTPFile file2 = new FTPFile();
-	  file2.setName("b.txt");
-	  file2.setTimestamp(date);
-	  date.set(2023, 3, 3, 6, 19, 34);
-	  FTPFile file3 = new FTPFile();
+    file1.setName("a.txt");
+    file1.setTimestamp(date);
+    date.set(2023, 3, 3, 6, 19, 34);
+    FTPFile file2 = new FTPFile();
+    file2.setName("b.txt");
+    file2.setTimestamp(date);
+    date.set(2023, 3, 3, 6, 19, 34);
+    FTPFile file3 = new FTPFile();
     file3.setName("c.txt");
     file3.setTimestamp(date);
     file1.setType(0);
     file2.setType(0);
     file3.setType(0);
-    FTPFile[] ftpFiles = {file1,file2,file3};
+    FTPFile[] ftpFiles = {file1, file2, file3};
     Mockito.when(ftpClient.listFiles(any(String.class))).thenReturn(ftpFiles);
     Response result = service.invoke(ftpClient);
     @SuppressWarnings("unchecked")
     FTPResponse<String> queryResponse = (FTPResponse<String>) result;
-	assertThat(queryResponse).extracting("response").asInstanceOf(STRING).isNotEmpty();
+    assertThat(queryResponse).extracting("response").asInstanceOf(STRING).isNotEmpty();
   }
 
   @DisplayName("Should return filePath in ascending order of their size")
@@ -172,28 +173,28 @@ class ListFilesServiceTest {
     service.setMaxDepth("90");
     Mockito.when(ftpClient.changeWorkingDirectory(any(String.class))).thenReturn(true);
     Calendar date = Calendar.getInstance();
-    date.set(2023,3,2,6,19,34);
+    date.set(2023, 3, 2, 6, 19, 34);
     FTPFile file1 = new FTPFile();
-	file1.setName("a.txt");
-	file1.setTimestamp(date);
-	date.set(2023, 3, 3, 6, 19, 34);
-	FTPFile file2 = new FTPFile();
-	file2.setName("b.txt");
-	file2.setTimestamp(date);
-	date.set(2023, 3, 3, 6, 19, 34);
-	FTPFile file3 = new FTPFile();
+    file1.setName("a.txt");
+    file1.setTimestamp(date);
+    date.set(2023, 3, 3, 6, 19, 34);
+    FTPFile file2 = new FTPFile();
+    file2.setName("b.txt");
+    file2.setTimestamp(date);
+    date.set(2023, 3, 3, 6, 19, 34);
+    FTPFile file3 = new FTPFile();
     file3.setName("c.txt");
     file3.setTimestamp(date);
     file1.setType(0);
     file2.setType(0);
     file3.setType(0);
-    FTPFile[] ftpFiles = {file1,file2,file3};
+    FTPFile[] ftpFiles = {file1, file2, file3};
     Mockito.when(ftpClient.listFiles(any(String.class))).thenReturn(ftpFiles);
     Mockito.when(ftpClient.isConnected()).thenReturn(true);
     Response result = service.invoke(ftpClient);
     @SuppressWarnings("unchecked")
     FTPResponse<String> queryResponse = (FTPResponse<String>) result;
-	assertThat(queryResponse).extracting("response").asInstanceOf(STRING).isNotEmpty();
+    assertThat(queryResponse).extracting("response").asInstanceOf(STRING).isNotEmpty();
   }
 
   @DisplayName("Should return file names when only modified before is given")
@@ -203,27 +204,27 @@ class ListFilesServiceTest {
     service.setMaxDepth("90");
     Mockito.when(ftpClient.changeWorkingDirectory(any(String.class))).thenReturn(true);
     Calendar date = Calendar.getInstance();
-    date.set(2023,3,2,6,19,34);
+    date.set(2023, 3, 2, 6, 19, 34);
     FTPFile file1 = new FTPFile();
-	file1.setName("a.txt");
-	file1.setTimestamp(date);
-	date.set(2023, 3, 3, 6, 19, 34);
-	FTPFile file2 = new FTPFile();
-	file2.setName("b.txt");
-	file2.setTimestamp(date);
-	date.set(2023, 3, 3, 6, 19, 34);
-	FTPFile file3 = new FTPFile();
+    file1.setName("a.txt");
+    file1.setTimestamp(date);
+    date.set(2023, 3, 3, 6, 19, 34);
+    FTPFile file2 = new FTPFile();
+    file2.setName("b.txt");
+    file2.setTimestamp(date);
+    date.set(2023, 3, 3, 6, 19, 34);
+    FTPFile file3 = new FTPFile();
     file3.setName("c.txt");
     file3.setTimestamp(date);
     file1.setType(0);
     file2.setType(0);
     file3.setType(0);
-    FTPFile[] ftpFiles = {file1,file2,file3};
+    FTPFile[] ftpFiles = {file1, file2, file3};
     Mockito.when(ftpClient.listFiles(any(String.class))).thenReturn(ftpFiles);
     Response result = service.invoke(ftpClient);
     @SuppressWarnings("unchecked")
     FTPResponse<String> queryResponse = (FTPResponse<String>) result;
-	assertThat(queryResponse).extracting("response").asInstanceOf(STRING).isNotEmpty();
+    assertThat(queryResponse).extracting("response").asInstanceOf(STRING).isNotEmpty();
   }
 
   @DisplayName("Should return file names when only modified After is given")
@@ -233,27 +234,26 @@ class ListFilesServiceTest {
     service.setMaxDepth("90");
     Mockito.when(ftpClient.changeWorkingDirectory(any(String.class))).thenReturn(true);
     Calendar date = Calendar.getInstance();
-    date.set(2023,3,2,6,19,34);
+    date.set(2023, 3, 2, 6, 19, 34);
     FTPFile file1 = new FTPFile();
-	file1.setName("a.txt");
-	file1.setTimestamp(date);
-	date.set(2023, 3, 3, 6, 19, 34);
-	FTPFile file2 = new FTPFile();
-	file2.setName("b.txt");
-	file2.setTimestamp(date);
-	date.set(2023, 3, 3, 6, 19, 34);
-	FTPFile file3 = new FTPFile();
+    file1.setName("a.txt");
+    file1.setTimestamp(date);
+    date.set(2023, 3, 3, 6, 19, 34);
+    FTPFile file2 = new FTPFile();
+    file2.setName("b.txt");
+    file2.setTimestamp(date);
+    date.set(2023, 3, 3, 6, 19, 34);
+    FTPFile file3 = new FTPFile();
     file3.setName("c.txt");
     file3.setTimestamp(date);
     file1.setType(0);
     file2.setType(0);
     file3.setType(0);
-    FTPFile[] ftpFiles = {file1,file2,file3};
+    FTPFile[] ftpFiles = {file1, file2, file3};
     Mockito.when(ftpClient.listFiles(any(String.class))).thenReturn(ftpFiles);
     Response result = service.invoke(ftpClient);
     @SuppressWarnings("unchecked")
     FTPResponse<String> queryResponse = (FTPResponse<String>) result;
-	assertThat(queryResponse).extracting("response").asInstanceOf(STRING).isNotEmpty();
+    assertThat(queryResponse).extracting("response").asInstanceOf(STRING).isNotEmpty();
   }
-  
 }

@@ -10,6 +10,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.InstanceOfAssertFactories.*;
 import static org.mockito.ArgumentMatchers.*;
+
+import com.infosys.camundaconnectors.files.ftp.model.response.FTPResponse;
+import com.infosys.camundaconnectors.files.ftp.model.response.Response;
 import java.io.IOException;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
@@ -22,8 +25,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
-import com.infosys.camundaconnectors.files.ftp.model.response.FTPResponse;
-import com.infosys.camundaconnectors.files.ftp.model.response.Response;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -43,19 +44,20 @@ class MoveFolderServiceTest {
   @DisplayName("Should move folder")
   @Test
   void validTestMoveFile() throws Exception {
-	Mockito.when(ftpClient.changeWorkingDirectory(any(String.class))).thenReturn(true,true,true,false,true,true);
+    Mockito.when(ftpClient.changeWorkingDirectory(any(String.class)))
+        .thenReturn(true, true, true, false, true, true);
     Mockito.when(ftpClient.removeDirectory(any(String.class))).thenReturn(true);
     Mockito.when(ftpClient.deleteFile(any(String.class))).thenReturn(true);
     Mockito.when(ftpClient.makeDirectory(any(String.class))).thenReturn(true);
     FTPFile file1 = new FTPFile();
-	file1.setName("a.txt");
-	FTPFile file2 = new FTPFile();
-	file2.setName("b.txt");
-	FTPFile file3 = new FTPFile();
+    file1.setName("a.txt");
+    FTPFile file2 = new FTPFile();
+    file2.setName("b.txt");
+    FTPFile file3 = new FTPFile();
     file3.setName("c.txt");
     FTPFile[] files = {};
     Mockito.when(ftpClient.listFiles(any(String.class))).thenReturn(files);
-    Mockito.when(ftpClient.rename(any(String.class),any(String.class))).thenReturn(true);
+    Mockito.when(ftpClient.rename(any(String.class), any(String.class))).thenReturn(true);
     Mockito.when(ftpClient.isConnected()).thenReturn(true);
     Response result = service.invoke(ftpClient);
     @SuppressWarnings("unchecked")
@@ -78,19 +80,20 @@ class MoveFolderServiceTest {
   @DisplayName("Should rename file when source file is already present in a target folder")
   @Test
   void validTestMoveFileWithRenameWhenSourceFileIsPresentInTarget() throws Exception {
-	Mockito.when(ftpClient.changeWorkingDirectory(any(String.class))).thenReturn(true,true,true,true,false,true,true);
+    Mockito.when(ftpClient.changeWorkingDirectory(any(String.class)))
+        .thenReturn(true, true, true, true, false, true, true);
     Mockito.when(ftpClient.removeDirectory(any(String.class))).thenReturn(true);
     Mockito.when(ftpClient.deleteFile(any(String.class))).thenReturn(true);
     Mockito.when(ftpClient.makeDirectory(any(String.class))).thenReturn(true);
     FTPFile file1 = new FTPFile();
-	file1.setName("a.txt");
-	FTPFile file2 = new FTPFile();
-	file2.setName("b.txt");
-	FTPFile file3 = new FTPFile();
+    file1.setName("a.txt");
+    FTPFile file2 = new FTPFile();
+    file2.setName("b.txt");
+    FTPFile file3 = new FTPFile();
     file3.setName("c.txt");
     FTPFile[] files = {};
     Mockito.when(ftpClient.listFiles(any(String.class))).thenReturn(files);
-    Mockito.when(ftpClient.rename(any(String.class),any(String.class))).thenReturn(true);
+    Mockito.when(ftpClient.rename(any(String.class), any(String.class))).thenReturn(true);
     Mockito.when(ftpClient.isConnected()).thenReturn(true);
     Response result = service.invoke(ftpClient);
     @SuppressWarnings("unchecked")
@@ -104,19 +107,19 @@ class MoveFolderServiceTest {
   @Test
   void validTestMoveFileWhenSourceFileIsPresentInTargetAndReplaceFile() throws Exception {
     service.setActionIfFolderExists("replace");
-	Mockito.when(ftpClient.changeWorkingDirectory(any(String.class))).thenReturn(true);
+    Mockito.when(ftpClient.changeWorkingDirectory(any(String.class))).thenReturn(true);
     Mockito.when(ftpClient.removeDirectory(any(String.class))).thenReturn(true);
     Mockito.when(ftpClient.deleteFile(any(String.class))).thenReturn(true);
     Mockito.when(ftpClient.makeDirectory(any(String.class))).thenReturn(true);
     FTPFile file1 = new FTPFile();
-	file1.setName("a.txt");
-	FTPFile file2 = new FTPFile();
-	file2.setName("b.txt");
-	FTPFile file3 = new FTPFile();
+    file1.setName("a.txt");
+    FTPFile file2 = new FTPFile();
+    file2.setName("b.txt");
+    FTPFile file3 = new FTPFile();
     file3.setName("c.txt");
     FTPFile[] files = {};
     Mockito.when(ftpClient.listFiles(any(String.class))).thenReturn(files);
-    Mockito.when(ftpClient.rename(any(String.class),any(String.class))).thenReturn(true);
+    Mockito.when(ftpClient.rename(any(String.class), any(String.class))).thenReturn(true);
     Mockito.when(ftpClient.isConnected()).thenReturn(true);
     Response result = service.invoke(ftpClient);
     @SuppressWarnings("unchecked")
@@ -130,19 +133,19 @@ class MoveFolderServiceTest {
   @Test
   void validTestMoveFileWhenSourceFileIsPresentInTargetAndSkipFile() throws Exception {
     service.setActionIfFolderExists("skip");
-	Mockito.when(ftpClient.changeWorkingDirectory(any(String.class))).thenReturn(true);
+    Mockito.when(ftpClient.changeWorkingDirectory(any(String.class))).thenReturn(true);
     Mockito.when(ftpClient.removeDirectory(any(String.class))).thenReturn(true);
     Mockito.when(ftpClient.deleteFile(any(String.class))).thenReturn(true);
     Mockito.when(ftpClient.makeDirectory(any(String.class))).thenReturn(true);
     FTPFile file1 = new FTPFile();
-	file1.setName("a.txt");
-	FTPFile file2 = new FTPFile();
-	file2.setName("b.txt");
-	FTPFile file3 = new FTPFile();
+    file1.setName("a.txt");
+    FTPFile file2 = new FTPFile();
+    file2.setName("b.txt");
+    FTPFile file3 = new FTPFile();
     file3.setName("c.txt");
     FTPFile[] files = {};
     Mockito.when(ftpClient.listFiles(any(String.class))).thenReturn(files);
-    Mockito.when(ftpClient.rename(any(String.class),any(String.class))).thenReturn(true);
+    Mockito.when(ftpClient.rename(any(String.class), any(String.class))).thenReturn(true);
     Mockito.when(ftpClient.isConnected()).thenReturn(true);
     Response result = service.invoke(ftpClient);
     @SuppressWarnings("unchecked")

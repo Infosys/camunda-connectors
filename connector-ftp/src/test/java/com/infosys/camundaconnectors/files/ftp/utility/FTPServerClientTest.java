@@ -7,6 +7,7 @@ package com.infosys.camundaconnectors.files.ftp.utility;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
+
 import com.infosys.camundaconnectors.files.ftp.model.request.Authentication;
 import org.apache.commons.net.ftp.FTPClient;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,9 +21,9 @@ class FTPServerClientTest {
   @Mock private FTPServerClient ftpServerClient;
 
   void ShouldReturnClient() throws Exception {
-	  when(authentication.getUsername()).thenReturn("curation.bot");
-	  when(authentication.getPort()).thenReturn("21");
-	  when(ftpServerClient.loginFTP(authentication)).thenReturn(ftpClient);
-	  assertThat(ftpServerClient.loginFTP(authentication)).isInstanceOf(FTPClient.class);
+    when(authentication.getUsername()).thenReturn("curation.bot");
+    when(authentication.getPort()).thenReturn("21");
+    when(ftpServerClient.loginFTP(authentication)).thenReturn(ftpClient);
+    assertThat(ftpServerClient.loginFTP(authentication)).isInstanceOf(FTPClient.class);
   }
 }

@@ -19,15 +19,14 @@ import java.util.stream.Stream;
 import org.junit.jupiter.params.provider.Arguments;
 
 public abstract class BaseTest {
-  protected static final Gson gson = GsonSupplier.getGson();
   protected static OutboundConnectorContext context;
 
   protected interface ActualValue {
-	
+
     String METHOD = "ftp.delete-file";
     String folderPath = "C:/Users/Documents";
     String fileName = "a.txt";
-    String TOKEN = "TOKEN";  
+    String TOKEN = "TOKEN";
 
     interface Authentication {
       String HOST = "HostName";
@@ -40,11 +39,9 @@ public abstract class BaseTest {
   protected interface SecretsConstant {
     String TOKEN = "TOKEN";
   }
-  
 
   protected static OutboundConnectorContextBuilder getContextBuilderWithSecrets() {
-    return OutboundConnectorContextBuilder.create()
-        .secret(SecretsConstant.TOKEN, "TOKEN");
+    return OutboundConnectorContextBuilder.create().secret(SecretsConstant.TOKEN, "TOKEN");
   }
 
   protected static Stream<String> replaceSecretsSuccessTestCases() throws IOException {
@@ -56,7 +53,7 @@ public abstract class BaseTest {
   }
 
   protected static Stream<String> executeListFilesTestCases() throws IOException {
-	return loadTestCasesFromResourceFile(TestCasesPath.EXECUTE_LIST_FILES);
+    return loadTestCasesFromResourceFile(TestCasesPath.EXECUTE_LIST_FILES);
   }
 
   protected static Stream<String> invalidListFilesTestCases() throws IOException {
@@ -110,13 +107,14 @@ public abstract class BaseTest {
   protected static Stream<String> invalidWriteFileTestCases() throws IOException {
     return loadTestCasesFromResourceFile(TestCasesPath.INVALID_WRITE_FILE);
   }
-  
+
   protected static Stream<String> executeCopyFileTestCases() throws IOException {
-	return loadTestCasesFromResourceFile(TestCasesPath.VALID_COPY_FILE);  
+    return loadTestCasesFromResourceFile(TestCasesPath.VALID_COPY_FILE);
   }
-  
+
   @SuppressWarnings("unchecked")
-  protected static Stream<String> loadTestCasesFromResourceFile(final String fileWithTestCasesUri) throws IOException {
+  protected static Stream<String> loadTestCasesFromResourceFile(final String fileWithTestCasesUri)
+      throws IOException {
     final String cases = readString(new File(fileWithTestCasesUri).toPath(), UTF_8);
     final Gson testingGson = new Gson();
     var array = testingGson.fromJson(cases, ArrayList.class);

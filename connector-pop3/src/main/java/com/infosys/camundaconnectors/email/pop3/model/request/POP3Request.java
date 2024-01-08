@@ -5,19 +5,37 @@
  */
 package com.infosys.camundaconnectors.email.pop3.model.request;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.infosys.camundaconnectors.email.pop3.model.response.Response;
+import com.infosys.camundaconnectors.email.pop3.service.DeleteEmailService;
+import com.infosys.camundaconnectors.email.pop3.service.DownloadEmailService;
+import com.infosys.camundaconnectors.email.pop3.service.ListEmailsService;
+import com.infosys.camundaconnectors.email.pop3.service.SearchEmailsService;
 import com.infosys.camundaconnectors.email.pop3.utility.MailServerClient;
-import io.camunda.connector.api.annotation.Secret;
 import java.util.Objects;
 import javax.mail.Folder;
 import javax.mail.Store;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class POP3Request<T extends POP3RequestData> {
-  @NotNull @Valid @Secret private Authentication authentication;
+  @NotNull @Valid private Authentication authentication;
   @NotBlank private String operation;
+  
+  @JsonTypeInfo(
+	      use = JsonTypeInfo.Id.NAME,
+	      include = JsonTypeInfo.As.EXTERNAL_PROPERTY,
+	      property = "operation")
+	  @JsonSubTypes(
+	      value = {
+	        @JsonSubTypes.Type(value = DeleteEmailService.class, name = "pop3.delete-email"),
+	        @JsonSubTypes.Type(value = DownloadEmailService.class, name = "pop3.download-email"),
+	        @JsonSubTypes.Type(value = ListEmailsService.class, name = "pop3.list-emails"),
+	        @JsonSubTypes.Type(value = SearchEmailsService.class, name = "pop3.search-emails")
+	      })
+  
   @Valid @NotNull private T data;
 
   public Response invoke(final MailServerClient mailServerClient) {

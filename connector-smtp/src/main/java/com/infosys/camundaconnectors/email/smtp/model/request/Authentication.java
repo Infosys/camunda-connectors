@@ -5,10 +5,9 @@
  */
 package com.infosys.camundaconnectors.email.smtp.model.request;
 
-import io.camunda.connector.api.annotation.Secret;
 import java.util.Objects;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 public class Authentication {
   @NotBlank private String hostname;
@@ -18,7 +17,7 @@ public class Authentication {
   private String port;
 
   @NotBlank private String username;
-  @NotBlank @Secret private String password;
+  @NotBlank private String password;
 
   public String getHostname() {
     return hostname;

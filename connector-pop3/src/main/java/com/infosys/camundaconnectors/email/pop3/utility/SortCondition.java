@@ -13,8 +13,8 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 
 /**
- * This will take the list of messages and sort based on - size, from, subject, message number, messageID, sent date or
- * received date
+ * This will take the list of messages and sort based on - size, from, subject, message number,
+ * messageID, sent date or received date
  */
 public class SortCondition {
   /**
@@ -31,7 +31,7 @@ public class SortCondition {
     String order = sortBy.get("order").toLowerCase();
     if (!(order.contains("asc") || order.contains("desc")))
       throw new RuntimeException(
-              "SortException: Sorted order error. It should be - ascending or descending.");
+          "SortException: Sorted order error. It should be - ascending or descending.");
 
     Comparator<Message> messageComparator;
 
@@ -41,18 +41,18 @@ public class SortCondition {
     else if (sortField.contains("message") && sortField.contains("number"))
       messageComparator = messageNumberTerm(order);
     else if (sortField.contains("sent")
-            && (sortField.contains("date") || sortField.contains("time")))
+        && (sortField.contains("date") || sortField.contains("time")))
       messageComparator = sentDateTerm(order);
     else if (sortField.contains("message") && sortField.contains("id"))
       messageComparator = messageIDTerm(order);
     else if (sortField.contains("received")
-            && (sortField.contains("date") || sortField.contains("time")))
+        && (sortField.contains("date") || sortField.contains("time")))
       messageComparator = receivedDateTerm(order);
     else messageComparator = null;
     if (messageComparator == null)
       throw new RuntimeException(
-              "Unable to sort message. You can sort message on size,"
-                      + " from, subject, message number, messageID, sent date and received date.");
+          "Unable to sort message. You can sort message on size,"
+              + " from, subject, message number, messageID, sent date and received date.");
 
     Arrays.sort(messages, messageComparator);
   }
@@ -79,7 +79,7 @@ public class SortCondition {
         return (order.contains("asc")) ? res : (-1 * res);
       } catch (MessagingException e) {
         throw new RuntimeException(
-                "Unable to sort messages on sender email: " + e.getLocalizedMessage());
+            "Unable to sort messages on sender email: " + e.getLocalizedMessage());
       }
     };
   }
@@ -92,7 +92,7 @@ public class SortCondition {
         return (order.contains("asc")) ? res : (-1 * res);
       } catch (MessagingException e) {
         throw new RuntimeException(
-                "Unable to sort messages on subject: " + e.getLocalizedMessage());
+            "Unable to sort messages on subject: " + e.getLocalizedMessage());
       }
     };
   }
@@ -112,7 +112,7 @@ public class SortCondition {
         return (order.contains("asc")) ? res : (-1 * res);
       } catch (MessagingException e) {
         throw new RuntimeException(
-                "Unable to sort messages on sent date: " + e.getLocalizedMessage());
+            "Unable to sort messages on sent date: " + e.getLocalizedMessage());
       }
     };
   }
@@ -127,7 +127,7 @@ public class SortCondition {
         return (order.contains("asc")) ? res : (-1 * res);
       } catch (MessagingException e) {
         throw new RuntimeException(
-                "Unable to sort messages on message ID: " + e.getLocalizedMessage());
+            "Unable to sort messages on message ID: " + e.getLocalizedMessage());
       }
     };
   }
@@ -140,7 +140,7 @@ public class SortCondition {
         return (order.contains("asc")) ? res : (-1 * res);
       } catch (MessagingException e) {
         throw new RuntimeException(
-                "Unable to sort messages on received date: " + e.getLocalizedMessage());
+            "Unable to sort messages on received date: " + e.getLocalizedMessage());
       }
     };
   }

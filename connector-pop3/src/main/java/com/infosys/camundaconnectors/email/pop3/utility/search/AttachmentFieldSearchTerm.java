@@ -18,15 +18,13 @@ public class AttachmentFieldSearchTerm extends SearchTerm {
     try {
       if (hasAttachments(message)) return true;
     } catch (MessagingException | IOException ex) {
-	    throw new RuntimeException(
-			    "Error in declaring search condition: " + ex.getLocalizedMessage());
+      throw new RuntimeException(
+          "Error in declaring search condition: " + ex.getLocalizedMessage());
     }
     return false;
   }
 
-	/**
-	 * Check if email have attachment
-	 */
+  /** Check if email have attachment */
   boolean hasAttachments(Message message) throws MessagingException, IOException {
     if (message.isMimeType("multipart/mixed")) {
       Multipart mp = (Multipart) message.getContent();

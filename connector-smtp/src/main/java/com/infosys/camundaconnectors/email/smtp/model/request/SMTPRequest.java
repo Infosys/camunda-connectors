@@ -5,17 +5,16 @@
  */
 package com.infosys.camundaconnectors.email.smtp.model.request;
 
-import io.camunda.connector.api.annotation.Secret;
 import java.util.List;
 import java.util.Objects;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 public class SMTPRequest {
-  @Valid @NotNull @Secret private Authentication authentication;
+  @Valid @NotNull private Authentication authentication;
   @NotBlank private String smtpEmailMailBoxName;
   @NotEmpty private List<String> smtpEmailToRecipients;
   private List<String> smtpEmailCcRecipients;

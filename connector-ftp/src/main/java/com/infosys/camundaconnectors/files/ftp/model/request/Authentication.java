@@ -4,21 +4,21 @@
  * or at https://opensource.org/licenses/MIT
  */
 
-
 package com.infosys.camundaconnectors.files.ftp.model.request;
 
-import io.camunda.connector.api.annotation.Secret;
 import java.util.Objects;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 public class Authentication {
   @NotBlank private String host;
+
   @NotBlank
   @Pattern(regexp = "^\\d+$", message = "Port must be a number")
   private String port;
+
   @NotBlank private String username;
-  @NotBlank @Secret private String password;
+  @NotBlank private String password;
 
   public String getHost() {
     return host;
@@ -67,5 +67,4 @@ public class Authentication {
   public int hashCode() {
     return Objects.hash(host, port, username, password);
   }
-
 }

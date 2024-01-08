@@ -5,20 +5,43 @@
  */
 package com.infosys.camundaconnectors.email.imap.model.request;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.infosys.camundaconnectors.email.imap.model.response.Response;
+import com.infosys.camundaconnectors.email.imap.service.DeleteEmailService;
+import com.infosys.camundaconnectors.email.imap.service.DownloadEmailService;
+import com.infosys.camundaconnectors.email.imap.service.ListEmailsService;
+import com.infosys.camundaconnectors.email.imap.service.MoveEmailService;
+import com.infosys.camundaconnectors.email.imap.service.ReadEmailService;
+import com.infosys.camundaconnectors.email.imap.service.SearchEmailsService;
 import com.infosys.camundaconnectors.email.imap.utility.MailServerClient;
-import io.camunda.connector.api.annotation.Secret;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.util.Objects;
 import javax.mail.Folder;
 import javax.mail.Store;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 public class IMAPRequest<T extends IMAPRequestData> {
-  @NotNull @Valid @Secret private Authentication authentication;
+  @NotNull @Valid private Authentication authentication;
   @NotBlank private String operation;
-  @Valid @NotNull private T data;
+
+  @JsonTypeInfo(
+      use = JsonTypeInfo.Id.NAME,
+      include = JsonTypeInfo.As.EXTERNAL_PROPERTY,
+      property = "operation")
+  @JsonSubTypes(
+      value = {
+        @JsonSubTypes.Type(value = DeleteEmailService.class, name = "imap.delete-email"),
+        @JsonSubTypes.Type(value = DownloadEmailService.class, name = "imap.download-email"),
+        @JsonSubTypes.Type(value = ListEmailsService.class, name = "imap.list-emails"),
+        @JsonSubTypes.Type(value = MoveEmailService.class, name = "imap.move-email"),
+        @JsonSubTypes.Type(value = ReadEmailService.class, name = "imap.read-email"),
+        @JsonSubTypes.Type(value = SearchEmailsService.class, name = "imap.search-emails")
+      })
+  @Valid
+  @NotNull
+  private T data;
 
   public Response invoke(final MailServerClient mailServerClient) {
     Store store = mailServerClient.getStore(authentication);

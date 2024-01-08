@@ -13,7 +13,7 @@ public class FTPResponse<T> implements Response {
   public FTPResponse(T response) {
     this.response = response;
   }
-  
+
   public T getResponse() {
     return response;
   }

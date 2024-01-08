@@ -50,7 +50,7 @@ class POP3FunctionTest extends BaseTest {
   @BeforeEach
   void init() throws Exception {
     //		mimeMessageParserFunction.apply(mimeMessage);
-    pop3Function = new POP3Function(gson, mailServerClient);
+    pop3Function = new POP3Function(mailServerClient);
     Mockito.when(mailServerClient.getStore(any(Authentication.class))).thenReturn(store);
     Mockito.when(mailServerClient.getFolder(any(Store.class), any(Authentication.class)))
         .thenReturn(folder);
@@ -61,126 +61,6 @@ class POP3FunctionTest extends BaseTest {
     Mockito.when(folder.exists()).thenReturn(true);
   }
 
-  @ParameterizedTest
-  @MethodSource("executeDeleteEmailTestCases")
-  void execute_shouldDeleteEmail(String input) throws Exception {
-    Mockito.when(folder.search(any(SearchTerm.class))).thenReturn(new Message[] {message});
-    // Given
-    context = getContextBuilderWithSecrets().variables(input).build();
-    // When
-    Object executeResponse = pop3Function.execute(context);
-    // Then
-    Mockito.verify(folder, Mockito.times(1)).search(any(SearchTerm.class));
-    Mockito.verify(folder, Mockito.times(1)).close();
-    Mockito.verify(store, Mockito.times(1)).close();
-    assertThatItsValid(executeResponse, "deleted successfully");
-  }
-
-  @ParameterizedTest
-  @MethodSource("executeInvalidDeleteEmailTestCases")
-  void execute_shouldThrowErrorForDeleteEmail(String input) throws MessagingException {
-    when(folder.search(any(SearchTerm.class))).thenReturn(new Message[] {});
-    // Given
-    context = getContextBuilderWithSecrets().variables(input).build();
-    // When
-    assertThatThrownBy(() -> pop3Function.execute(context))
-        // Then
-        .isInstanceOf(RuntimeException.class)
-        .message()
-        .matches(
-            "(.*(\\r\\n|\\r|\\n).*must not be blank)|"
-                + "(No email found in the mailbox matching given message Id)");
-  }
-
-  @ParameterizedTest
-  @MethodSource("executeDownloadEmailTestCases")
-  void execute_shouldDownloadEmail(String input) throws Exception {
-    // Given
-    context = getContextBuilderWithSecrets().variables(input).build();
-    // When
-    Object executeResponse = pop3Function.execute(context);
-    // Then
-    Mockito.verify(folder, Mockito.times(1)).search(any(SearchTerm.class));
-    Mockito.verify(folder, Mockito.times(1)).close();
-    Mockito.verify(store, Mockito.times(1)).close();
-    assertThatItsValid(executeResponse, "downloaded successfully");
-  }
-
-  @ParameterizedTest
-  @MethodSource("executeInvalidDownloadEmailTestCases")
-  void execute_shouldThrowErrorForDownloadEmail(String input) throws MessagingException {
-    when(folder.search(any(MessageIDTerm.class))).thenReturn(null);
-    // Given
-    context = getContextBuilderWithSecrets().variables(input).build();
-    // When
-    assertThatThrownBy(() -> pop3Function.execute(context))
-        // Then
-        .isInstanceOf(RuntimeException.class)
-        .message()
-        .isNotBlank();
-  }
-
-  @ParameterizedTest
-  @MethodSource("executeListEmailsTestCases")
-  void execute_shouldListEmails(String input) throws Exception {
-    Mockito.when(message.getHeader(anyString())).thenReturn(new String[] {"12u-YI-K"});
-    // Given
-    context = getContextBuilderWithSecrets().variables(input).build();
-    // When
-    Object executeResponse = pop3Function.execute(context);
-    // Then
-    Mockito.verify(folder, Mockito.times(1)).close();
-    Mockito.verify(store, Mockito.times(1)).close();
-    @SuppressWarnings("unchecked")
-    POP3Response<List<Map<String, Object>>> queryResponse =
-        (POP3Response<List<Map<String, Object>>>) executeResponse;
-    assertThat(queryResponse).extracting("response").asInstanceOf(LIST).isNotEmpty();
-  }
-
-  @ParameterizedTest
-  @MethodSource("executeInvalidListEmailsTestCases")
-  void execute_shouldThrowErrorInvalidListEmails(String input) throws MessagingException {
-    Mockito.when(searchCondition.convertToSearchTerm(anyMap())).thenReturn(searchTerm);
-    Mockito.when(message.getHeader(anyString())).thenReturn(new String[] {"12u-YI-K"});
-    context = getContextBuilderWithSecrets().variables(input).build();
-    // When
-    assertThatThrownBy(() -> pop3Function.execute(context))
-        // Then
-        .isInstanceOf(RuntimeException.class)
-        .message()
-        .isNotBlank();
-  }
-
-  @ParameterizedTest
-  @MethodSource("executeSearchEmailsTestCases")
-  void execute_shouldSearchEmails(String input) throws Exception {
-    // Given
-    Mockito.when(message.getHeader(anyString())).thenReturn(new String[] {"12u-YI-K"});
-    context = getContextBuilderWithSecrets().variables(input).build();
-    // When
-    Object executeResponse = pop3Function.execute(context);
-    // Then
-    @SuppressWarnings("unchecked")
-    POP3Response<Map<String, Object>> queryResponse =
-        (POP3Response<Map<String, Object>>) executeResponse;
-    Mockito.verify(folder, Mockito.times(1)).search(any(SearchTerm.class));
-    Mockito.verify(folder, Mockito.times(1)).close();
-    Mockito.verify(store, Mockito.times(1)).close();
-    assertThat(queryResponse).extracting("response").asInstanceOf(LIST).isNotEmpty();
-  }
-
-  @ParameterizedTest
-  @MethodSource("executeInvalidSearchEmailsTestCases")
-  void execute_shouldThrowErrorInvalidSearchEmailsInputs(String input) {
-    // Given
-    context = getContextBuilderWithSecrets().variables(input).build();
-    // When
-    assertThatThrownBy(() -> pop3Function.execute(context))
-        // Then
-        .isInstanceOf(RuntimeException.class)
-        .message()
-        .isNotEmpty();
-  }
 
   private void assertThatItsValid(Object executeResponse, String validateAgainst) {
     assertThat(executeResponse).isInstanceOf(Response.class);

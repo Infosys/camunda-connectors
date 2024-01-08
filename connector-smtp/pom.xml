@@ -10,12 +10,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>io.camunda.connector</groupId>
-        <artifactId>connector-parent</artifactId>
-        <version>0.8.1</version>
-        <relativePath/>
-    </parent>
 
     <name>connector-smtp</name>
     <description>SMTP Email Connector</description>
@@ -41,15 +35,19 @@
             <groupId>io.camunda.connector</groupId>
             <artifactId>connector-core</artifactId>
             <scope>provided</scope>
+            <version>8.3.1</version>
         </dependency>
         <dependency>
             <groupId>io.camunda.connector</groupId>
             <artifactId>connector-validation</artifactId>
             <scope>provided</scope>
+            <version>8.3.1</version>
         </dependency>
         <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
+            <groupId>io.camunda.connector</groupId>
+            <artifactId>connector-test</artifactId>
+            <scope>provided</scope>
+            <version>8.3.1</version>
         </dependency>
         <!--  Java Mail Dependency -->
         <dependency>
@@ -87,6 +85,11 @@
             <artifactId>slf4j-simple</artifactId>
             <version>${version.slf4j}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
         </dependency>
         <!--        Logging Dependency      -->
         <dependency>

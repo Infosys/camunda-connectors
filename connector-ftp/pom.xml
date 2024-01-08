@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2022 Infosys Ltd.
+  ~ Copyright (c) 2023 Infosys Ltd.
   ~ Use of this source code is governed by MIT license that can be found in the LICENSE file
   ~ or at https://opensource.org/licenses/MIT
   -->
@@ -10,12 +10,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>io.camunda.connector</groupId>
-        <artifactId>connector-parent</artifactId>
-        <version>0.8.1</version>
-        <relativePath/>
-    </parent>
 
     <name>connector-ftp</name>
     <description>FTP Connector</description>
@@ -35,19 +29,39 @@
         <plugin.version.maven-surefire-plugin>3.0.0-M7</plugin.version.maven-surefire-plugin>
     </properties>
     <dependencies>
-        <dependency>
+		<dependency>
             <groupId>io.camunda.connector</groupId>
             <artifactId>connector-core</artifactId>
+            <version>8.3.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.camunda.connector</groupId>
             <artifactId>connector-validation</artifactId>
+            <version>8.3.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.camunda.connector</groupId>
+            <artifactId>connector-runtime-core</artifactId>
+            <version>8.3.1</version>
+            <scope>provided</scope>
+         </dependency>
+        <dependency>
+            <groupId>io.camunda.connector</groupId>
+            <artifactId>jackson-datatype-feel</artifactId>
+            <version>8.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>io.camunda.connector</groupId>
+            <artifactId>connector-test</artifactId>
+            <version>8.3.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
+             <version>2.10.1</version>
         </dependency>
         <!-- Test Dependencies -->
         <dependency>

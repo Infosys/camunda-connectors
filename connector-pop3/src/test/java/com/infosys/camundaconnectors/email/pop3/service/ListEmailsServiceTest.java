@@ -35,18 +35,12 @@ import org.mockito.quality.Strictness;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 class ListEmailsServiceTest {
-  @Mock
-  private Store store;
-  @Mock
-  private Folder folder;
-  @Mock
-  private Message message;
-  @Mock
-  private SearchTerm searchTerm;
-  @Mock
-  private SearchCondition searchCondition;
-  @Mock
-  private ListEmailsService service;
+  @Mock private Store store;
+  @Mock private Folder folder;
+  @Mock private Message message;
+  @Mock private SearchTerm searchTerm;
+  @Mock private SearchCondition searchCondition;
+  @Mock private ListEmailsService service;
 
   @BeforeEach
   public void init() {

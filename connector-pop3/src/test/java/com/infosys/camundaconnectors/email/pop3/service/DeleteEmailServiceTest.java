@@ -29,14 +29,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class DeleteEmailServiceTest {
-  @Mock
-  private Store store;
-  @Mock
-  private Folder folder;
-  @Mock
-  private Message message;
-  @Mock
-  private DeleteEmailService service;
+  @Mock private Store store;
+  @Mock private Folder folder;
+  @Mock private Message message;
+  @Mock private DeleteEmailService service;
 
   @BeforeEach
   public void init() {

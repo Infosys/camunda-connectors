@@ -10,6 +10,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.InstanceOfAssertFactories.*;
 import static org.mockito.ArgumentMatchers.*;
+
+import com.infosys.camundaconnectors.files.ftp.model.response.FTPResponse;
+import com.infosys.camundaconnectors.files.ftp.model.response.Response;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,8 +24,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
-import com.infosys.camundaconnectors.files.ftp.model.response.FTPResponse;
-import com.infosys.camundaconnectors.files.ftp.model.response.Response;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -31,7 +32,7 @@ class MoveFileServiceTest {
   @Mock private FTPClient ftpClient;
   @Mock private MoveFileService service;
   @Mock private FTPFile file;
-  
+
   @BeforeEach
   public void init() {
     service = new MoveFileService();
@@ -45,11 +46,11 @@ class MoveFileServiceTest {
   @DisplayName("Should move file")
   @Test
   void validTestMoveFile() throws Exception {
-	FTPFile file1 = new FTPFile();
-	file1.setName("a.txt");
-	FTPFile file2 = new FTPFile();
-	file2.setName("b.txt");
-	FTPFile file3 = new FTPFile();
+    FTPFile file1 = new FTPFile();
+    file1.setName("a.txt");
+    FTPFile file2 = new FTPFile();
+    file2.setName("b.txt");
+    FTPFile file3 = new FTPFile();
     file3.setName("c.txt");
     FTPFile[] ftpFiles = {file1, file2, file3};
     FTPFile[] files = {file1};
@@ -85,11 +86,11 @@ class MoveFileServiceTest {
   @DisplayName("Should rename file when source file is already present in a target folder")
   @Test
   void validTestMoveFileWithRenameWhenSourceFileIsPresentInTarget() throws Exception {
-	FTPFile file1 = new FTPFile();
-	file1.setName("a.txt");
-	FTPFile file2 = new FTPFile();
-	file2.setName("b.txt");
-	FTPFile file3 = new FTPFile();
+    FTPFile file1 = new FTPFile();
+    file1.setName("a.txt");
+    FTPFile file2 = new FTPFile();
+    file2.setName("b.txt");
+    FTPFile file3 = new FTPFile();
     file3.setName("c.txt");
     FTPFile[] ftpFiles = {file1, file2, file3};
     FTPFile[] files = {file1};
@@ -109,18 +110,18 @@ class MoveFileServiceTest {
     assertThat(queryResponse)
         .extracting("response")
         .asInstanceOf(STRING)
-	    .contains("File moved successfully!!");
+        .contains("File moved successfully!!");
   }
 
   @DisplayName("Should replace file when source file is already present in a target folder")
   @Test
   void validTestMoveFileWhenSourceFileIsPresentInTargetAndReplaceFile() throws Exception {
     service.setActionIfFileExists("replace");
-	FTPFile file1 = new FTPFile();
-	file1.setName("a.txt");
-	FTPFile file2 = new FTPFile();
-	file2.setName("b.txt");
-	FTPFile file3 = new FTPFile();
+    FTPFile file1 = new FTPFile();
+    file1.setName("a.txt");
+    FTPFile file2 = new FTPFile();
+    file2.setName("b.txt");
+    FTPFile file3 = new FTPFile();
     file3.setName("c.txt");
     FTPFile[] files = {file1};
     file1.setType(0);
@@ -139,18 +140,18 @@ class MoveFileServiceTest {
     assertThat(queryResponse)
         .extracting("response")
         .asInstanceOf(STRING)
-	    .contains("File moved successfully!!");
+        .contains("File moved successfully!!");
   }
 
   @DisplayName("Should skip file when source file is already present in a target folder")
   @Test
   void validTestMoveFileWhenSourceFileIsPresentInTargetAndSkipFile() throws Exception {
     service.setActionIfFileExists("skip");
-	FTPFile file1 = new FTPFile();
-	file1.setName("a.txt");
-	FTPFile file2 = new FTPFile();
-	file2.setName("b.txt");
-	FTPFile file3 = new FTPFile();
+    FTPFile file1 = new FTPFile();
+    file1.setName("a.txt");
+    FTPFile file2 = new FTPFile();
+    file2.setName("b.txt");
+    FTPFile file3 = new FTPFile();
     file3.setName("c.txt");
     FTPFile[] files = {file1};
     file1.setType(0);
@@ -169,6 +170,6 @@ class MoveFileServiceTest {
     assertThat(queryResponse)
         .extracting("response")
         .asInstanceOf(STRING)
-	    .contains("Operation skipped!!");
-    }
+        .contains("Operation skipped!!");
+  }
 }

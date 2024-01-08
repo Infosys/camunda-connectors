@@ -6,27 +6,26 @@
 
 package com.infosys.camundaconnectors.email.pop3;
 
-import com.google.gson.Gson;
-import io.camunda.connector.api.outbound.OutboundConnectorContext;
-import io.camunda.connector.test.outbound.OutboundConnectorContextBuilder;
-import org.junit.jupiter.params.provider.Arguments;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.Files.readString;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.Stream;
+import org.junit.jupiter.params.provider.Arguments;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.readString;
+import com.google.gson.Gson;
+import com.infosys.camundaconnectors.email.pop3.TestCasesPath;
+import io.camunda.connector.api.outbound.OutboundConnectorContext;
 
 public abstract class BaseTest {
-  protected static final Gson gson = GsonSupplier.getGson();
   protected static OutboundConnectorContext context;
 
-  protected static OutboundConnectorContextBuilder getContextBuilderWithSecrets() {
+  /*protected static OutboundConnectorContextBuilder getContextBuilderWithSecrets() {
     return OutboundConnectorContextBuilder.create()
-            .secret(SecretsConstant.TOKEN, ActualValue.TOKEN);
-  }
+        .secret(SecretsConstant.TOKEN, ActualValue.TOKEN);
+  }*/
 
   protected static Stream<String> replaceSecretsSuccessTestCases() throws IOException {
     return loadTestCasesFromResourceFile(TestCasesPath.REPLACE_SECRETS);
@@ -70,7 +69,7 @@ public abstract class BaseTest {
 
   @SuppressWarnings("unchecked")
   protected static Stream<String> loadTestCasesFromResourceFile(final String fileWithTestCasesUri)
-          throws IOException {
+      throws IOException {
     final String cases = readString(new File(fileWithTestCasesUri).toPath(), UTF_8);
     final Gson testingGson = new Gson();
     var array = testingGson.fromJson(cases, ArrayList.class);

@@ -5,10 +5,9 @@
  */
 package com.infosys.camundaconnectors.email.pop3.model.request;
 
-import io.camunda.connector.api.annotation.Secret;
 import java.util.Objects;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 public class Authentication {
   @NotBlank(message = "Please provide a valid hostName for email server")
@@ -22,14 +21,12 @@ public class Authentication {
   private String username;
 
   @NotBlank(message = "Please provide a valid password for given username")
-  @Secret
   private String password;
 
   @NotBlank(message = "Please provide a valid domainName for email ID")
   private String domainName;
 
   private String keyStorePath;
-  @Secret
   private String keyStorePassword;
 
   public String getHostname() {
@@ -94,17 +91,17 @@ public class Authentication {
     if (o == null || getClass() != o.getClass()) return false;
     Authentication that = (Authentication) o;
     return Objects.equals(hostname, that.hostname)
-            && Objects.equals(portNumber, that.portNumber)
-            && Objects.equals(username, that.username)
-            && Objects.equals(password, that.password)
-            && Objects.equals(domainName, that.domainName)
-            && Objects.equals(keyStorePath, that.keyStorePath)
-            && Objects.equals(keyStorePassword, that.keyStorePassword);
+        && Objects.equals(portNumber, that.portNumber)
+        && Objects.equals(username, that.username)
+        && Objects.equals(password, that.password)
+        && Objects.equals(domainName, that.domainName)
+        && Objects.equals(keyStorePath, that.keyStorePath)
+        && Objects.equals(keyStorePassword, that.keyStorePassword);
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(
-            hostname, portNumber, username, password, domainName, keyStorePath, keyStorePassword);
+        hostname, portNumber, username, password, domainName, keyStorePath, keyStorePassword);
   }
 }

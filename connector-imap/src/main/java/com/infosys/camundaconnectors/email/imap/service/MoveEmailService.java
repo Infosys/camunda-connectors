@@ -8,10 +8,10 @@ package com.infosys.camundaconnectors.email.imap.service;
 import com.infosys.camundaconnectors.email.imap.model.request.IMAPRequestData;
 import com.infosys.camundaconnectors.email.imap.model.response.IMAPResponse;
 import com.infosys.camundaconnectors.email.imap.model.response.Response;
+import jakarta.validation.constraints.NotBlank;
 import java.util.Objects;
 import javax.mail.*;
 import javax.mail.search.MessageIDTerm;
-import javax.validation.constraints.NotBlank;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

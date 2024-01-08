@@ -9,24 +9,23 @@ package com.infosys.camundaconnectors.files.ftp.utility;
 import org.apache.commons.net.ftp.FTPFile;
 
 public class FTPFilePath {
-	
-	private FTPFile file;
-	private String path;
-	
-	public void setFTPFile(FTPFile file) {
-		this.file = file;
-	}
-	
-	public FTPFile getFTPFile() {
-		return this.file;
-	}
-	
-	public void setPath(String path) {
-		this.path = path;
-	}
-	
-	public String getPath() {
-		return this.path;
-	}
-	
+
+  private FTPFile file;
+  private String path;
+
+  public void setFTPFile(FTPFile file) {
+    this.file = file;
+  }
+
+  public FTPFile getFTPFile() {
+    return this.file;
+  }
+
+  public void setPath(String path) {
+    this.path = path;
+  }
+
+  public String getPath() {
+    return this.path;
+  }
 }

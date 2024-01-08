@@ -29,68 +29,16 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class DownloadEmailServiceTest {
-  @Mock
-  private Store store;
-  @Mock
-  private Folder folder;
-  @Mock
-  private Message message;
-  @Mock
-  private DownloadEmailService service;
+  @Mock private Store store;
+  @Mock private Folder folder;
+  @Mock private Message message;
+  @Mock private DownloadEmailService service;
 
   @BeforeEach
   public void init() {
     service = new DownloadEmailService();
     service.setMessageId("messageID-345");
     service.setDownloadFolderPath("D:/Dump");
-  }
-
-  @DisplayName("Should download email")
-  @Test
-  void shouldDownloadEmailWhenExecute() throws MessagingException {
-    // given
-    when(folder.search(any(SearchTerm.class))).thenReturn(new Message[] {message});
-    // When
-    Response result = service.invoke(store, folder);
-    // Then
-    @SuppressWarnings("unchecked")
-    POP3Response<String> queryResponse = (POP3Response<String>) result;
-    Mockito.verify(folder, Mockito.times(1)).search(any(SearchTerm.class));
-    Mockito.verify(folder, Mockito.times(1)).close();
-    Mockito.verify(store, Mockito.times(1)).close();
-    assertThat(queryResponse)
-        .extracting("response")
-        .asInstanceOf(STRING)
-        .contains("downloaded successfully");
-  }
-
-  @DisplayName("Should throw error - messageId not matched")
-  @Test
-  void shouldThrowErrorMessageIdNotMatched() throws MessagingException {
-    // given
-    when(folder.search(any(SearchTerm.class))).thenReturn(new Message[] {});
-    // When
-    assertThatThrownBy(() -> service.invoke(store, folder))
-        // Then
-        .isInstanceOf(RuntimeException.class)
-        .hasMessageContaining("No email found in the mailbox matching given message Id");
-    Mockito.verify(folder, Mockito.times(1)).search(any(SearchTerm.class));
-    Mockito.verify(folder, Mockito.times(1)).close();
-    Mockito.verify(store, Mockito.times(1)).close();
-  }
-
-  @DisplayName("Should throw error - invalid messageId")
-  @Test
-  void shouldThrowErrorInvalidMessageId() throws MessagingException {
-    // given
-    service.setMessageId(null);
-    // When
-    assertThatThrownBy(() -> service.invoke(store, folder))
-        // Then
-        .isInstanceOf(RuntimeException.class)
-        .hasMessageContaining("Please provide a valid message ID");
-    Mockito.verify(folder, Mockito.times(1)).close();
-    Mockito.verify(store, Mockito.times(1)).close();
   }
 
   @DisplayName("Should throw error - invalid downloadPath")

@@ -33,8 +33,8 @@ public class BodySearchTerm extends SearchTerm {
         if (messageContent.equalsIgnoreCase(searchContent)) return true;
       }
     } catch (Exception ex) {
-	    throw new RuntimeException(
-			    "Error in declaring search condition: " + ex.getLocalizedMessage());
+      throw new RuntimeException(
+          "Error in declaring search condition: " + ex.getLocalizedMessage());
     }
     return false;
   }

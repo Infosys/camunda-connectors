@@ -31,7 +31,7 @@ mvn clean package
 
 ```json
 {
-     	"authentication": {},
+       "authentication": {},
       "operation": "ftp.copy-file",
       "data": {
         "sourceFolderPath": "/Documents/ftproot",
@@ -55,7 +55,7 @@ mvn clean package
     "sourcePath": "C:/Users/user/Documents/Source/demo.txt",
     "targetPath":"C:/Users/user/Documents/Target",
     "actionIfFolderExists":"rename",
-    "createTargetFolder": "false"	
+    "createTargetFolder": "false"
   }
 }
 ```
@@ -358,7 +358,7 @@ You can use an output mapping to map the response:
 1. In the ***Operation** section*, set the field value *Operation* as **Copy File**.
 2. Set the required parameters and credentials in the **Authentication** section.
 3. In the **Input Mapping** section, set the field **sourceFolderPath**, **sourceFileName**, **targetFolderPath**, **actionIfFileExists**, **createTargetFolder**".
-4. Set **sourceFolderPath**, which is basically a path of folder of file. 
+4. Set **sourceFolderPath**, which is basically a path of folder of file.
 5. Set **sourceFilePath**, which is the path of file which has to be copied.
 6. Set **targetPath**, which is basically a path of folder where file is going to copied.
 7. Set "Action If File Exists" as "rename", "replace" or "skip". This operations are performed when the file is already exists in a target folder.

@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import java.util.List;
 import java.util.Map;
 import javax.mail.search.SearchTerm;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +23,7 @@ class SearchConditionTest {
   void shouldReturnSearchTerm() {
     // When
     SearchTerm searchTerm =
-            searchCondition.convertToSearchTerm(Map.of("filter", "subject = 'Test Email'"));
+        searchCondition.convertToSearchTerm(Map.of("filter", "subject = 'Test Email'"));
     // Then
     assertNotNull(searchTerm);
   }
@@ -34,19 +33,19 @@ class SearchConditionTest {
   void shouldReturnAndTerm() {
     // When
     SearchTerm searchTerm =
-            searchCondition.convertToSearchTerm(
-                    Map.of(
-                            "logicalOperator",
-                            "And",
-                            "filterList",
-                            List.of(
-                                    Map.of("filter", "subject = 'Test Email'"),
-                                    Map.of("filter", "Flag seen false"),
-                                    Map.of("filter", "SentDate <= '14/03/2023 12:01:00 AM'"),
-                                    Map.of("filter", "Size > 2465"),
-                                    Map.of("filter", "from = 'dev@abc.com'"),
-                                    Map.of("filter", "body contains 'this string'"),
-                                    Map.of("filter", "recipient cc 'test@abc.com'"))));
+        searchCondition.convertToSearchTerm(
+            Map.of(
+                "logicalOperator",
+                "And",
+                "filterList",
+                List.of(
+                    Map.of("filter", "subject = 'Test Email'"),
+                    Map.of("filter", "Flag seen false"),
+                    Map.of("filter", "SentDate <= '14/03/2023 12:01:00 AM'"),
+                    Map.of("filter", "Size > 2465"),
+                    Map.of("filter", "from = 'dev@abc.com'"),
+                    Map.of("filter", "body contains 'this string'"),
+                    Map.of("filter", "recipient cc 'test@abc.com'"))));
     // Then
     assertNotNull(searchTerm);
   }

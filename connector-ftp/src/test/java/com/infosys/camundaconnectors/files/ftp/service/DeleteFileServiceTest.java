@@ -10,11 +10,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.InstanceOfAssertFactories.*;
 import static org.mockito.ArgumentMatchers.*;
+
+import com.infosys.camundaconnectors.files.ftp.model.response.FTPResponse;
+import com.infosys.camundaconnectors.files.ftp.model.response.Response;
+import com.infosys.camundaconnectors.files.ftp.utility.FTPServerClient;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
-import com.infosys.camundaconnectors.files.ftp.model.response.FTPResponse;
-import com.infosys.camundaconnectors.files.ftp.utility.FTPServerClient;
-import com.infosys.camundaconnectors.files.ftp.model.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -46,10 +47,10 @@ class DeleteFileServiceTest {
     Mockito.when(ftpClient.deleteFile(any(String.class))).thenReturn(true);
     Mockito.when(ftpClient.changeWorkingDirectory(any(String.class))).thenReturn(true);
     FTPFile file1 = new FTPFile();
-	file1.setName("a.txt");
-	FTPFile file2 = new FTPFile();
-	file2.setName("b.txt");
-	FTPFile file3 = new FTPFile();
+    file1.setName("a.txt");
+    FTPFile file2 = new FTPFile();
+    file2.setName("b.txt");
+    FTPFile file3 = new FTPFile();
     file3.setName("c.txt");
     FTPFile[] ftpFiles = {file1};
     file1.setType(0);
@@ -73,16 +74,16 @@ class DeleteFileServiceTest {
     Mockito.when(ftpClient.deleteFile(any(String.class))).thenReturn(false);
     Mockito.when(ftpClient.changeWorkingDirectory(any(String.class))).thenReturn(false);
     FTPFile file1 = new FTPFile();
-	file1.setName("a.txt");
-	FTPFile file2 = new FTPFile();
-	file2.setName("b.txt");
-	FTPFile file3 = new FTPFile();
+    file1.setName("a.txt");
+    FTPFile file2 = new FTPFile();
+    file2.setName("b.txt");
+    FTPFile file3 = new FTPFile();
     file3.setName("c.txt");
-    FTPFile[] ftpFiles = {file1,file2,file3};
+    FTPFile[] ftpFiles = {file1, file2, file3};
     Mockito.when(ftpClient.listFiles(any(String.class))).thenReturn(ftpFiles);
-    Mockito.when(ftpClient.isConnected()).thenReturn(true); 
+    Mockito.when(ftpClient.isConnected()).thenReturn(true);
     assertThatThrownBy(() -> service.invoke(ftpClient))
-    .isInstanceOf(RuntimeException.class)
-    .hasMessageContaining("Error");
-	}
+        .isInstanceOf(RuntimeException.class)
+        .hasMessageContaining("Error");
+  }
 }

@@ -9,7 +9,6 @@ package com.infosys.camundaconnectors.files.ftp;
 import com.google.gson.Gson;
 import com.infosys.camundaconnectors.files.ftp.model.request.FTPRequest;
 import com.infosys.camundaconnectors.files.ftp.utility.FTPServerClient;
-
 import io.camunda.connector.api.annotation.OutboundConnector;
 import io.camunda.connector.api.outbound.OutboundConnectorContext;
 import io.camunda.connector.api.outbound.OutboundConnectorFunction;
@@ -22,23 +21,21 @@ import org.slf4j.LoggerFactory;
     type = "com.infosys.camundaconnectors.files:ftp:1")
 public class FTPFunction implements OutboundConnectorFunction {
   private static final Logger LOGGER = LoggerFactory.getLogger(FTPFunction.class);
-  private final Gson gson;
   private final FTPServerClient fTPServerClient;
+
   public FTPFunction() {
-    this(GsonSupplier.getGson(), new FTPServerClient());
+    this(new FTPServerClient());
   }
-  public FTPFunction(Gson gson, FTPServerClient fTPServerClient) {
-    this.gson = gson;
+
+  public FTPFunction(FTPServerClient fTPServerClient) {
     this.fTPServerClient = fTPServerClient;
   }
+
   @Override
   public Object execute(OutboundConnectorContext outboundConnectorContext) throws Exception {
-	LOGGER.info("Request verified successfully and all required secrets replaced"); 
-    final var variables = outboundConnectorContext.getVariables();
-    final var ftpRequest = gson.fromJson(variables, FTPRequest.class);
-    outboundConnectorContext.validate(ftpRequest);
-    outboundConnectorContext.replaceSecrets(ftpRequest);
     LOGGER.info("Request verified successfully and all required secrets replaced");
-    return ftpRequest.invoke(fTPServerClient);
+    final var variables = outboundConnectorContext.bindVariables(FTPRequest.class);
+    LOGGER.info("Request verified successfully and all required secrets replaced");
+    return variables.invoke(fTPServerClient);
   }
 }

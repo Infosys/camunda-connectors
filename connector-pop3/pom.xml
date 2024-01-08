@@ -10,13 +10,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>io.camunda.connector</groupId>
-        <artifactId>connector-parent</artifactId>
-        <version>0.8.1</version>
-        <relativePath/>
-    </parent>
-
     <name>connector-pop3</name>
     <description>POP3 Email Connector</description>
     <groupId>com.infosys.camundaconnectors.email.pop3</groupId>
@@ -41,15 +34,23 @@
             <groupId>io.camunda.connector</groupId>
             <artifactId>connector-core</artifactId>
             <scope>provided</scope>
+            <version>8.3.1</version>
         </dependency>
         <dependency>
             <groupId>io.camunda.connector</groupId>
             <artifactId>connector-validation</artifactId>
             <scope>provided</scope>
+            <version>8.3.1</version>
         </dependency>
+        <dependency>
+    		<groupId>io.camunda.connector</groupId>
+    		<artifactId>jackson-datatype-feel</artifactId>
+    		<version>8.3.1</version>
+		</dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
+            <version>2.10.1</version>
         </dependency>
         <!--  Java Mail Dependency -->
         <dependency>

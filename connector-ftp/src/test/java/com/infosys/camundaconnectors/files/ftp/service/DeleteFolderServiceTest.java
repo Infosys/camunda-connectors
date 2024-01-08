@@ -5,9 +5,13 @@
  */
 
 package com.infosys.camundaconnectors.files.ftp.service;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.InstanceOfAssertFactories.*;
 import static org.mockito.ArgumentMatchers.*;
+
+import com.infosys.camundaconnectors.files.ftp.model.response.FTPResponse;
+import com.infosys.camundaconnectors.files.ftp.model.response.Response;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,8 +23,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
-import com.infosys.camundaconnectors.files.ftp.model.response.FTPResponse;
-import com.infosys.camundaconnectors.files.ftp.model.response.Response;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -42,10 +44,10 @@ class DeleteFolderServiceTest {
     Mockito.when(ftpClient.removeDirectory(any(String.class))).thenReturn(true);
     Mockito.when(ftpClient.changeWorkingDirectory(any(String.class))).thenReturn(true);
     FTPFile file1 = new FTPFile();
-	file1.setName("a.txt");
-	FTPFile file2 = new FTPFile();
-	file2.setName("b.txt");
-	FTPFile file3 = new FTPFile();
+    file1.setName("a.txt");
+    FTPFile file2 = new FTPFile();
+    file2.setName("b.txt");
+    FTPFile file3 = new FTPFile();
     file3.setName("c.txt");
     FTPFile[] ftpFiles = {file1};
     file1.setType(0);

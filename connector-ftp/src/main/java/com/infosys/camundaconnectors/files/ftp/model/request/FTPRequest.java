@@ -6,35 +6,66 @@
 
 package com.infosys.camundaconnectors.files.ftp.model.request;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.infosys.camundaconnectors.files.ftp.model.response.FTPResponse;
+import com.infosys.camundaconnectors.files.ftp.service.CopyFileService;
+import com.infosys.camundaconnectors.files.ftp.service.CopyFolderService;
+import com.infosys.camundaconnectors.files.ftp.service.CreateFolderService;
+import com.infosys.camundaconnectors.files.ftp.service.DeleteFileService;
+import com.infosys.camundaconnectors.files.ftp.service.DeleteFolderService;
+import com.infosys.camundaconnectors.files.ftp.service.ListFilesService;
+import com.infosys.camundaconnectors.files.ftp.service.ListFoldersService;
+import com.infosys.camundaconnectors.files.ftp.service.MoveFileService;
+import com.infosys.camundaconnectors.files.ftp.service.MoveFolderService;
+import com.infosys.camundaconnectors.files.ftp.service.ReadFileService;
+import com.infosys.camundaconnectors.files.ftp.service.WriteFileService;
 import com.infosys.camundaconnectors.files.ftp.utility.FTPServerClient;
-import io.camunda.connector.api.annotation.Secret;
 import java.util.Objects;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 
 import org.apache.commons.net.ftp.FTPClient;
 
 public class FTPRequest<T extends FTPRequestData> {
-  @NotNull @Valid @Secret private Authentication authentication;
+  @NotNull @Valid private Authentication authentication;
   @NotBlank private String operation;
+  @JsonTypeInfo(
+	      use = JsonTypeInfo.Id.NAME,
+	      include = JsonTypeInfo.As.EXTERNAL_PROPERTY,
+	      property = "operation")
+	  @JsonSubTypes(
+	      value = {
+	        @JsonSubTypes.Type(value = CopyFileService.class, name = "ftp.copy-file"),
+	        @JsonSubTypes.Type(value = CopyFolderService.class, name = "ftp.copy-folder"),
+	        @JsonSubTypes.Type(value = CreateFolderService.class, name = "ftp.create-folder"),
+	        @JsonSubTypes.Type(value = DeleteFileService.class, name = "ftp.delete-file"),
+	        @JsonSubTypes.Type(value = DeleteFolderService.class, name = "ftp.delete-folder"),
+	        @JsonSubTypes.Type(value = ListFilesService.class, name = "ftp.list-files"),
+	        @JsonSubTypes.Type(value = ListFoldersService.class, name = "ftp.list-folders"),
+	        @JsonSubTypes.Type(value = MoveFileService.class, name = "ftp.move-file"),
+	        @JsonSubTypes.Type(value = MoveFolderService.class, name = "ftp.move-folder"),
+	        @JsonSubTypes.Type(value = ReadFileService.class, name = "ftp.read-file"),
+	        @JsonSubTypes.Type(value = WriteFileService.class, name = "ftp.write-file")
+	      })  
   @Valid @NotNull private T data;
-
-  public FTPResponse<String> invoke(FTPServerClient ftpServerClient)  {
-	FTPResponse<String> resp;	
+  
+  public FTPResponse<String> invoke(FTPServerClient ftpServerClient) {
+    FTPResponse<String> resp;
     try {
-		FTPClient client = ftpServerClient.loginFTP(authentication);
-		if(operation.equalsIgnoreCase("ftp.copy-file") || operation.equalsIgnoreCase("ftp.copy-folder")) {
-			FTPClient client2 = ftpServerClient.loginFTP(authentication);
-    		return data.invoke(client, client2);
-    	}
-		return data.invoke(client);
-	} catch (Exception e) {
-		resp = new FTPResponse<>("Login Failed!!");
-		return resp;
-	}
-    
+      FTPClient client = ftpServerClient.loginFTP(authentication);
+      if (operation.equalsIgnoreCase("ftp.copy-file")
+          || operation.equalsIgnoreCase("ftp.copy-folder")) {
+        FTPClient client2 = ftpServerClient.loginFTP(authentication);
+        return data.invoke(client, client2);
+      }
+      return data.invoke(client);
+    } catch (Exception e) {
+      resp = new FTPResponse<>("Login Failed!!");
+      return resp;
+    }
   }
 
   public Authentication getAuthentication() {

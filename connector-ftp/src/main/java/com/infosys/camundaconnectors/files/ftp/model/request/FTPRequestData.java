@@ -5,10 +5,11 @@
  */
 package com.infosys.camundaconnectors.files.ftp.model.request;
 
-import org.apache.commons.net.ftp.FTPClient;
 import com.infosys.camundaconnectors.files.ftp.model.response.FTPResponse;
+import org.apache.commons.net.ftp.FTPClient;
 
 public interface FTPRequestData {
   FTPResponse<String> invoke(FTPClient client);
+
   FTPResponse<String> invoke(FTPClient client1, FTPClient client2);
 }

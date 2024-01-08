@@ -10,8 +10,6 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.readString;
 
 import com.google.gson.Gson;
-import io.camunda.connector.api.outbound.OutboundConnectorContext;
-import io.camunda.connector.test.outbound.OutboundConnectorContextBuilder;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,8 +17,6 @@ import java.util.stream.Stream;
 import org.junit.jupiter.params.provider.Arguments;
 
 public abstract class BaseTest {
-  protected static final Gson gson = GsonSupplier.getGson();
-  protected static OutboundConnectorContext context;
 
   protected interface ActualValue {
     String TOKEN = "TOKEN_KEY";
@@ -45,11 +41,6 @@ public abstract class BaseTest {
 
   protected interface SecretsConstant {
     String TOKEN = "TOKEN";
-  }
-
-  protected static OutboundConnectorContextBuilder getContextBuilderWithSecrets() {
-    return OutboundConnectorContextBuilder.create()
-        .secret(SecretsConstant.TOKEN, ActualValue.TOKEN);
   }
 
   protected static Stream<String> replaceSecretsSuccessTestCases() throws IOException {

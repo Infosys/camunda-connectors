@@ -26,5 +26,4 @@ public interface TestCasesPath {
   String EXECUTE_MOVE_FILE = PATH + "valid-move-file.json";
   String INVALID_MOVE_FILE = PATH + "invalid-move-file.json";
   String VALID_COPY_FILE = PATH + "valid-copy-file.json";
-
 }

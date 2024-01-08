@@ -62,3 +62,4 @@ build/
 # environment
 .env
 request*.json
+/bin/

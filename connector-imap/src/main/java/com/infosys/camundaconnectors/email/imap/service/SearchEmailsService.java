@@ -10,11 +10,11 @@ import com.infosys.camundaconnectors.email.imap.model.request.IMAPRequestData;
 import com.infosys.camundaconnectors.email.imap.model.response.IMAPResponse;
 import com.infosys.camundaconnectors.email.imap.model.response.Response;
 import com.infosys.camundaconnectors.email.imap.utility.search.*;
+import jakarta.validation.constraints.NotBlank;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.search.OrTerm;
 import javax.mail.search.SearchTerm;
-import javax.validation.constraints.NotBlank;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

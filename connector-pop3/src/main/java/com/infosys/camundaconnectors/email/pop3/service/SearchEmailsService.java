@@ -17,7 +17,7 @@ import java.util.*;
 import javax.mail.*;
 import javax.mail.search.OrTerm;
 import javax.mail.search.SearchTerm;
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
