@@ -44,7 +44,7 @@ public class CreateEnvelopeTest {
     JsonObject documentObject = new JsonObject();
     documentObject.addProperty(
         "documentPath",
-        "C:\\Users\\rohitashokashok.s\\Documents\\rohitashokashok.s-TehCohere Technology Awards Q2.pdf");
+        "./Contribution License Agreement.docx");
     documentObject.addProperty("documentId", "12");
     service.setDocuments(List.of(gson.fromJson(documentObject, Map.class)));
     service.setEmailSubject("Please sign the following documents");
@@ -147,7 +147,7 @@ public class CreateEnvelopeTest {
     JsonObject documentObject = new JsonObject();
     documentObject.addProperty(
         "documentPath",
-        "C:\\Users\\rohitashokashok.s\\Documents\rohitashokashok.s-TehCohere Technology Awards Q2");
+        "./Contribution License Agreement");
     documentObject.addProperty("documentId", "12");
     service.setDocuments(List.of(gson.fromJson(documentObject, Map.class)));
     Mockito.when(

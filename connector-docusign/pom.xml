@@ -23,6 +23,7 @@
         <version.junit.jupiter>5.9.2</version.junit.jupiter>
         <version.slf4j>2.0.6</version.slf4j>
         <version.assertj-core>3.24.2</version.assertj-core>
+        <version.bytebuddy>1.14.18</version.bytebuddy>
         <version.mockito>5.2.0</version.mockito>
         <plugin.version.maven-shade-plugin>3.4.1</plugin.version.maven-shade-plugin>
         <plugin.version.maven-surefire-plugin>3.0.0-M7</plugin.version.maven-surefire-plugin>
@@ -90,6 +91,12 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>${version.junit.jupiter}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+            <version>${version.bytebuddy}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
